@@ -1,0 +1,12 @@
+// Prisma schema for Thapar SNS.
+// Slice 1a: generator and datasource only. Tables arrive with their owning slice
+// (identity in 1b); see docs/database/database-design.md.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}

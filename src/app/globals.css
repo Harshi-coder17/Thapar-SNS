@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens sampled from the reference montage with `npm run design:sample-colors`
+ * (docs/design/frontend-design-rules.md §2). Light theme only, as in the reference.
+ * Contrast: white on brand about 9.6:1; muted on white about 6:1 (WCAG AA).
+ */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-brand: #8c0828;
+  --color-brand-hover: #73061f;
+  --color-brand-foreground: #ffffff;
+  --color-accent: #f8ecf0;
+  --color-accent-foreground: #73061f;
+  --color-canvas: #f8f8f8;
+  --color-surface: #ffffff;
+  --color-ink: #0b0a21;
+  --color-muted: #5c5e75;
+  --color-line: #e6e6ee;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+}

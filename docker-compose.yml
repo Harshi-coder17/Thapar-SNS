@@ -1,0 +1,46 @@
+# Local development infrastructure only. Not used in production (see docs/deployment/).
+# Images are pinned by tag and digest (ADR-0008). Ports bind to 127.0.0.1 only.
+# Postgres uses host port 55432 so it does not clash with a locally installed PostgreSQL on 5432.
+# First run: `npm run setup:local` (generates gitignored local secrets), then `npm run db:up`.
+name: thapar-sns
+
+services:
+  postgres:
+    image: postgres:17.9-alpine@sha256:c7526c0f6c3f30260a563d7bcf8ad778effac59a44f8ffa86678c35418338609
+    environment:
+      POSTGRES_USER: thapar_sns
+      # Local-only development password for a container reachable only from this machine.
+      POSTGRES_PASSWORD: local_dev_only
+      POSTGRES_DB: thapar_sns
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thapar_sns -d thapar_sns"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  garage:
+    image: dxflrs/garage:v2.4.1@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020
+    # Single-node mode creates the access key and default bucket on first start (Garage >= 2.3).
+    command: ["/garage", "server", "--single-node", "--default-bucket"]
+    env_file:
+      - docker/garage/credentials.local.env
+    ports:
+      - "127.0.0.1:3900:3900"
+    volumes:
+      - ./docker/garage/garage.local.toml:/etc/garage.toml:ro
+      - garage-meta:/var/lib/garage/meta
+      - garage-data:/var/lib/garage/data
+    healthcheck:
+      test: ["CMD", "/garage", "status"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  postgres-data:
+  garage-meta:
+  garage-data:

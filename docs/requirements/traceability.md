@@ -13,9 +13,9 @@ Slices are defined in `docs/status/phases-and-acceptance.md`.
 
 | ID | Slice(s) | Delivery | Decisions | Complete only when | Tests | Status |
 |---|---|---|---|---|---|---|
-| FR-AUTH-1 | 1b | Required | OI-01 (owner verifying), OI-09 | Non-@thapar.edu, unverified, and `hd`-mismatch logins rejected server-side | – | Not started |
+| FR-AUTH-1 | 1b | Required | OI-01 (owner verifying; non-blocking), OI-09, **OI-51** | Non-@thapar.edu, unverified, and `hd`-mismatch logins rejected server-side | – | Not started |
 | FR-AUTH-2 | 1b | Required | OI-42 | Profile gate enforced for all app routes; ≥3 tags from controlled set | – | Not started |
-| FR-AUTH-3 | 1b | Required | **OI-04**, OI-05 | Spike findings reviewed and representation approved; DB never holds usable tokens; cookie HTTP-only + Secure | – | Not started |
+| FR-AUTH-3 | 1b | Required | **OI-04**, OI-05 | Spike findings reviewed and representation approved; DB never holds usable tokens; cookie HTTP-only + Secure | `spikes/auth/auth-spike.test.ts` T01 to T09, T14 (spike only) | In progress (spike passed; production not started) |
 | FR-AUTH-4 | 1b (API), 5 (UI) | Required | OI-28 | Admin revokes a session → next request 401; UI available | – | Not started |
 | FR-SOC-1 | 2a | Required | OI-09 | Admin-only create with name, description, category, logo, banner (logo/banner via upload pipeline, 3a) | – | Not started |
 | FR-SOC-2 | 2a | Required | **OI-10** | Four roles stored per membership row; per-row checks | – | Not started |

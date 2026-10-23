@@ -53,8 +53,7 @@ OI-43 (montage commit), OI-44 (ESLint plugin gap), OI-45 (GitHub repository and 
 
 ### Repository
 - `origin` is set to `https://github.com/Harshi-coder17/Thapar-SNS.git` (owner-created, private, verified empty).
-- Nothing has been committed or pushed.
-- A snapshot of the pre-review tree is kept in a temporary git index (`.git/slice1a-snapshot.index`, not tracked), so the review changes can be committed separately from the original skeleton.
+- Committed and pushed by the owner afterwards: `84d73ec` (docs, `main`), `47cb31f` (skeleton and review fixes) and `d002d49` (served TIET logo) on `feat/platform/skeleton`. The committed tree was verified identical to the reviewed tree (except `project-docs/`, kept local).
 
 ### Findings and fixes
 | Finding | How found | Fix |

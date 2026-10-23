@@ -1,6 +1,6 @@
 # ADR-0005: Authentication library: Better Auth (spike), Arctic fallback
 
-Status: **Approved for spike only (2026-10-23).** Not production-approved. Final status is set after the owner reviews `docs/auth/spike-findings.md`.
+Status: **Spike complete (2026-10-23): recommendation GO with conditions C1 to C7; awaiting owner review at gate G-1b-spike.** Google Sign-In itself is approved as the authentication method (owner, 2026-10-23, G-1b-oauth). Findings: `docs/auth/spike-findings.md`.
 
 ## Context
 - The spec names NextAuth.js (Table 4.1).

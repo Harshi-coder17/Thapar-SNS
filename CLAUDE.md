@@ -48,7 +48,7 @@ Update, as relevant: `docs/requirements/traceability.md`, `docs/status/implement
 
 ## Current state
 
-- Phase 0 approved 2026-10-23. Slice 1a (skeleton) complete and reviewed; awaiting owner approval to commit and push. `origin` is configured (private, empty); no commits yet (OI-45). Do not start Slice 1b without explicit approval.
+- Phase 0 approved 2026-10-23. Slice 1a committed and pushed by the owner (`main`: docs; `feat/platform/skeleton`: skeleton and logo). Slice 1b: auth spike complete (`npm run spike:auth`, 37 pass); stopped at gate G-1b-spike awaiting owner review. Google Sign-In approved as the method; allowed domain pending OI-51. Never commit or push; the owner does it.
 - Toolchain: Node 24.22.1 via nvm (`source "$NVM_DIR/nvm.sh" && nvm use` in non-interactive shells). Docker Desktop for local services and integration tests.
 - Commands: `npm run check` (em-dash, pins, lint, typecheck, unit), `npm run test:integration`, `npm run test:e2e`, `npm run setup:local`, `npm run db:up`. Full list in `README.md`.
 - Local PostgreSQL is on host port 55432 (5432 is taken by another install, OI-47).

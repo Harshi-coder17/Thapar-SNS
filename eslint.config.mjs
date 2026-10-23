@@ -1,7 +1,9 @@
 // ESLint 10 flat config.
 // eslint-config-next 16.4.2 is not used: three of its bundled plugins (react, import, jsx-a11y)
 // declare ESLint <= 9 peer ranges and npm installs them only by overriding peers.
+// React rules come from @eslint-react/eslint-plugin instead (OI-44, approved 2026-10-23).
 // See docs/decisions/ADR-0008-version-baseline.md.
+import eslintReact from "@eslint-react/eslint-plugin";
 import js from "@eslint/js";
 import nextPlugin from "@next/eslint-plugin-next";
 import boundaries from "eslint-plugin-boundaries";
@@ -11,9 +13,18 @@ import tseslint from "typescript-eslint";
 
 import { boundariesConfig } from "./eslint/boundaries.mjs";
 
+// eslint-react ships ports of the React Hooks rules. The official eslint-plugin-react-hooks stays the
+// authority for those, so the eslint-react copies are switched off. The overlap is derived from
+// eslint-react's own conflict preset (react-hooks/<name> -> @eslint-react/<name>), so new
+// overlapping rules in later versions are excluded automatically.
+const reactRecommended = eslintReact.configs["recommended-typescript"];
+const hooksOverlap = Object.keys(eslintReact.configs["disable-conflict-eslint-plugin-react-hooks"].rules)
+  .map((rule) => rule.replace(/^react-hooks\//, "@eslint-react/"))
+  .filter((rule) => rule in reactRecommended.rules);
+
 export default tseslint.config(
   {
-    ignores: [".next/**", "node_modules/**", "src/generated/**", "coverage/**", "playwright-report/**", "test-results/**", "tests/fixtures/**", "next-env.d.ts"],
+    ignores: [".next/**", "node_modules/**", "src/generated/**", "coverage/**", "playwright-report/**", "test-results/**", "tests/fixtures/**", "spikes/auth/generated/**", "next-env.d.ts"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -36,6 +47,11 @@ export default tseslint.config(
         { property: "$executeRawUnsafe", message: "Use the $executeRaw tagged template (threat model §3)." },
       ],
     },
+  },
+  {
+    ...reactRecommended,
+    files: ["**/*.tsx"],
+    rules: { ...reactRecommended.rules, ...Object.fromEntries(hooksOverlap.map((rule) => [rule, "off"])) },
   },
   boundariesConfig({ files: ["src/**/*.{ts,tsx}"], tsconfigProject: "./tsconfig.json", plugin: boundaries }),
 );

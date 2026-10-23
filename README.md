@@ -36,6 +36,7 @@ npm run dev             # http://localhost:3000
 | `npm run test:unit` | Vitest unit tests and lint-rule tests |
 | `npm run test:integration` | Vitest with Testcontainers: PostgreSQL client and S3 storage contract (Docker required) |
 | `npm run test:e2e` | Production build, then Playwright across 14 emulated phone, tablet and desktop profiles (emulation, not physical devices; see `docs/testing/device-test-checklist.md`) |
+| `npm run spike:auth` | Auth spike: Better Auth + hashed sessions + simulated Google, T01 to T18 (Docker required; spike code only, not the app) |
 | `npm run db:up` / `npm run db:down` | Start or stop local PostgreSQL and Garage |
 | `npm run design:sample-colors` | Samples design tokens from the local montage (not committed) |
 
@@ -44,4 +45,4 @@ npm run dev             # http://localhost:3000
 - **No em-dash characters anywhere** (files, UI text, commit messages). A commit-msg hook in `.githooks/` enforces it; enable it once with `git config core.hooksPath .githooks`.
 - Dependencies are pinned exactly (`.npmrc` sets `save-exact`). Dependency install scripts are denied unless approved in `package.json` `allowScripts`.
 - Branches: `feat/<module>/<description>` or `fix/<module>/<description>`. Every pull request is reviewed by the owner.
-- The original requirements PDF and the design montage are kept locally in `project-docs/` and are not committed (privacy).
+- `project-docs/` (specification PDF, design montage, original logo) is kept locally and is gitignored (privacy). The served logo is `public/brand/tiet-logo.png`, an unchanged copy.

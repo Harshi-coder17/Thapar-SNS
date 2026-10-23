@@ -33,6 +33,18 @@ export default defineConfig({
           fileParallelism: false,
         },
       },
+      {
+        // Auth spike (ADR-0005, gate G-1b-spike). Run with `npm run spike:auth`; needs Docker.
+        extends: true,
+        test: {
+          name: "spike",
+          environment: "node",
+          include: ["spikes/**/*.test.ts"],
+          testTimeout: 60_000,
+          hookTimeout: 300_000,
+          fileParallelism: false,
+        },
+      },
     ],
   },
 });

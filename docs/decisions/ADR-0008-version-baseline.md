@@ -1,12 +1,12 @@
 # ADR-0008: Version baseline and pinning policy
 
-Status: **Applied in Slice 1a (2026-10-23), pending owner review.** The owner specified Next.js 16.4.2, Prisma 7.10.1, TypeScript 6.0.3 and ESLint 10.13.0. The 7-day release cooldown (below) was proposed in the Slice 1a plan and applied; it awaits explicit approval.
+Status: **Applied in Slice 1a (2026-10-23), pending owner review.** The owner specified Next.js 16.4.2, Prisma 7.10.1, TypeScript 6.0.3 and ESLint 10.13.0. The 7-day release cooldown (below) was **approved by the owner on 2026-10-23** (OI-46).
 
 ## Policy
 - Exact version pins (no `^`/`~`), `.npmrc` `save-exact=true`, committed lockfile, `npm ci` in CI.
 - No beta, RC, canary or "next" versions as direct dependencies. `npm run check:prerelease` fails CI otherwise and lists transitive prereleases for review.
 - **Never install by bare name where `latest` is a prerelease.** On 2026-10-23 npm `prisma@latest` was `8.0.0-rc.27`, and the Prisma CLI prints an "update available" notice pointing to it. Ignore it.
-- **Release cooldown `[PROPOSED]`:** choose the newest stable release published at least 7 days before install (cutoff for Slice 1a: 2026-10-16), unless the owner names a version or it is a security fix. Reduces exposure to compromised or broken fresh releases (OWASP A03:2025).
+- **Release cooldown `[APPROVED 2026-10-23]`:** choose the newest stable release published at least 7 days before install (cutoff on 2026-10-23: 2026-10-16), unless the owner names a version. Exceptions: urgent security fixes or critical blockers, with the reason recorded here. Keep locked versions unless an update is justified. Reduces exposure to compromised or broken fresh releases (OWASP A03:2025).
 - **Compatibility:** declared peer ranges must be satisfied. An install that prints `ERESOLVE overriding peer dependency` is treated as a failure, never forced.
 - **Install scripts:** npm 11.19 blocks dependency install scripts unless listed in `package.json` `allowScripts`. Every skipped script is reviewed and recorded as an explicit approval or denial.
 - Upgrades are deliberate PRs with changelog review and a full test run.
@@ -23,7 +23,8 @@ Status: **Applied in Slice 1a (2026-10-23), pending owner review.** The owner sp
   - `eslint-import-resolver-typescript` 4.4.5
 
   The dry run of this set and of the full dependency tree printed **zero** peer warnings.
-- **Trade-off:** the rules from `eslint-plugin-react` and `eslint-plugin-jsx-a11y` are not active. Accessibility is covered by axe-core in every E2E route test. Re-evaluate when those plugins declare ESLint 10 support (tracked as OI-44).
+- **Trade-off:** the rules from `eslint-plugin-react` and `eslint-plugin-jsx-a11y` are not active. Accessibility is covered by axe-core in every E2E route test.
+- **React rules restored (OI-44, approved 2026-10-23):** `@eslint-react/eslint-plugin` 5.28.0 `recommended-typescript` on `.tsx`, with its 9 rules that duplicate `eslint-plugin-react-hooks` switched off (derived from its `disable-conflict-eslint-plugin-react-hooks` preset). Dry run clean; no install scripts.
 
 ## Install-script decisions (2026-10-23)
 All denied; none is needed:
@@ -49,6 +50,8 @@ All denied; none is needed:
 | @eslint/js / typescript-eslint | 10.0.1 / 8.71.2 | 8.72.0 is inside the cooldown window |
 | @next/eslint-plugin-next | 16.4.2 | |
 | eslint-plugin-react-hooks | 7.1.1 | |
+| @eslint-react/eslint-plugin | 5.28.0 | Added 2026-10-23 (OI-44) |
+| better-auth | 1.7.10 | **Dev dependency, auth spike only** (ADR-0005). 1.7.11/1.7.12 are inside the cooldown and contain no security fixes; 1.7.10 includes every published advisory fix (critical GHSA-965c-763c-88jm fixed in 1.7.7) |
 | eslint-plugin-boundaries | **7.2.1** | Upgraded from 7.2.0 in the Slice 1a review under the security-fix exception (bundled handlebars 4.7.9 to 4.7.10; GHSA-8r5x-fm3f-whwj, GHSA-p8wg-vrv2-v86f, GHSA-xw65-4hp5-5hc7) |
 | eslint-import-resolver-typescript | 4.4.5 | |
 | globals | 17.13.0 | |
@@ -82,4 +85,4 @@ All denied; none is needed:
 - The 3 critical `handlebars` advisories were fixed by the boundaries upgrade above.
 
 ## Planned later (not installed in 1a)
-better-auth 1.7.12 (spike, 1b), arctic 3.7.0 (fallback), file-type, sanitize-html or isomorphic-dompurify (2a), ws (3b), ioredis / @upstash/redis (3b), ical-generator and an rrule library (4d), serwist (6), k6 binary (5). Versions are re-verified when installed.
+arctic 3.7.0 (auth fallback, only if the spike is rejected), file-type, sanitize-html or isomorphic-dompurify (2a), ws (3b), ioredis / @upstash/redis (3b), ical-generator and an rrule library (4d), serwist (6), k6 binary (5). Versions are re-verified when installed.

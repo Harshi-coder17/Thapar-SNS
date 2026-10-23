@@ -1,6 +1,6 @@
 # ADR-0006: Session token representation for FR-AUTH-3
 
-Status: **Proposed.** Pending spike findings and owner review. Not production-approved.
+Status: **Proposed; spike evidence available (2026-10-23).** T01 to T09 and T14 pass with the single hashed token (`docs/auth/spike-findings.md`). Not production-approved until the owner accepts it.
 
 ## Context
 FR-AUTH-3: "store sessions as hashed refresh tokens in the database, with access tokens delivered via HTTP-only secure cookies." Database-session libraries use a single opaque token rather than an access/refresh pair.

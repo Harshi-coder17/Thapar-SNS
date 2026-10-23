@@ -19,13 +19,14 @@ All other issues are needed only by the slice listed in *Blocks*.
 
 ## 2. Blockers and risks
 
-### OI-01 Thapar Google Workspace third-party OAuth access (**blocker for FR-AUTH-1 in production**)
+### OI-01 Thapar Google Workspace third-party OAuth access (needed before production launch; **not** a development blocker)
 - *Affects:* FR-AUTH-1, all modules · *Blocks:* 1b (real OAuth), 1c
 - *Context:* university Workspace admins can restrict which third-party apps may use Google sign-in. If restricted, no one can log in.
 - *Recommended default:* the team asks Thapar IT now. After gate G-1b-oauth, test with a throwaway OAuth client using a team member's account.
 - *Alternatives:* none that satisfy FR-AUTH-1. Request IT allow-listing of the app's client ID.
 - *Approval needed:* creating the Google Cloud OAuth client (G-1b-oauth).
 - *Owner update 2026-10-23:* the owner will verify Thapar IT Google Workspace sign-in separately.
+- *Owner decision 2026-10-23 (G-1b-oauth):* Google Sign-In is **approved** as the authentication method. This check must not block development of the integration. Still to verify with Thapar IT: whether external apps may request `openid email profile` for @thapar.edu accounts, or whether the client ID must be allow-listed. Setup steps: `docs/auth/google-oauth-setup.md`.
 
 ### OI-02 Final deadline and schedule `[RESOLVED 2026-10-23]`
 - *Affects:* all · *Blocks:* G-0
@@ -44,12 +45,14 @@ All other issues are needed only by the slice listed in *Blocks*.
 
 ### OI-04 FR-AUTH-3 representation (see ADR-0006)
 - *Blocks:* 1b production auth · Decision after spike findings and owner review.
+- *Spike result 2026-10-23:* the single hashed-token design passed T01 to T09 and T14 (`docs/auth/spike-findings.md`). **Decision needed:** accept it as satisfying FR-AUTH-3.
 
 ### OI-05 Session rotation and lifetime
 - *Affects:* FR-AUTH-3, A-R12/A-R14
 - *Recommended default:* new token on every sign-in; revoke all sessions on privilege change; 7-day sliding expiry; **30-day absolute cap**; no periodic rotation.
 - *Alternatives:* 24-hour rotation with a grace window. This gives theft signals, but adds complexity and race handling with parallel requests.
 - *Approval needed:* yes.
+- *Spike fact:* Better Auth does not rotate the token on refresh (T17); the absolute cap needs our own check. Spike test T10 waits on this decision.
 
 ### OI-08 Identifying faculty vs students
 - *Affects:* FACULTY role, FR-FAC-3
@@ -309,7 +312,7 @@ Each item separates **Fact** (verified), **Recommendation** (proposed) and **Dec
 - *Recommendation:* keep the montage local only for now. Development works from the measured tokens recorded in `docs/design/frontend-design-rules.md` §2.1.
 - *Decision:* whether a **redacted** copy (panel 10 name and email blurred) should ever be committed. Not needed for Slice 1b.
 
-### OI-44 React and accessibility lint rules on ESLint 10
+### OI-44 React and accessibility lint rules on ESLint 10 `[RESOLVED 2026-10-23]`
 - *Facts (npm registry, 2026-10-23):*
   - `eslint-plugin-react` 7.37.5 (last release 2025-04-03) declares ESLint up to `^9.7`.
   - `eslint-plugin-jsx-a11y` 6.10.2 (2024-10-26) declares up to `^9`.
@@ -321,21 +324,22 @@ Each item separates **Fact** (verified), **Recommendation** (proposed) and **Dec
   3. **Add `eslint-plugin-jsx-a11y-x` 0.2.0** (a fork of jsx-a11y; declares ESLint `^9 || ^10`; last release 2026-05-10; pre-1.0). It restores static accessibility rules, but the project's maturity is lower.
   4. Force the original plugins with npm overrides. **Rejected:** contradicts the "no forced peers" rule.
 - *Recommendation:* option 2 now, plus option 3 only after a trial run shows it is stable on our code. Both would be pinned and dry-run first, like every other dependency.
-- *Decision:* approve option 1, 2, 2+3, or another. No change is made until approved.
+- *Decision (owner, 2026-10-23):* option 2 approved.
+- *Resolution:* `@eslint-react/eslint-plugin` 5.28.0 added (dry-run clean, no install scripts). `recommended-typescript` rules apply to `.tsx` files (56 active). The 9 rules that duplicate the official `eslint-plugin-react-hooks` are switched off, derived from eslint-react's own conflict preset. Lint passes; a planted violation was reported. Option 3 (jsx-a11y fork) not adopted; axe-core still covers runtime accessibility.
 
-### OI-45 GitHub repository and first push (remote `[CONFIGURED 2026-10-23]`)
+### OI-45 GitHub repository and first push `[RESOLVED 2026-10-23]`
 - *Facts:*
   - The owner created the empty private repository `https://github.com/Harshi-coder17/Thapar-SNS.git`.
   - `origin` points to exactly that URL.
   - A non-interactive `git ls-remote` succeeded using credentials already stored in the macOS keychain (no token shared in chat) and returned no refs, so the remote is empty.
   - The `gh` CLI is not installed; it is not required for pushing. It would only be needed to open pull requests from the terminal; PRs can also be opened on github.com.
-  - There are no local commits yet.
-- *Decision:* approve the proposed commits and the push (see the review report).
+  - The owner committed and pushed `main` (`84d73ec`) and `feat/platform/skeleton` (`47cb31f`, `d002d49`).
+- *Resolution:* pushed by the owner. Pull request review and CI results are visible on github.com (not verifiable from here without the `gh` CLI).
 
-### OI-46 Release cooldown policy
+### OI-46 Release cooldown policy `[APPROVED 2026-10-23]`
 - *Fact:* applied in Slice 1a. Used once more in the review: `eslint-plugin-boundaries` 7.2.0 to 7.2.1 under the **security-fix exception**. 7.2.0 bundled `handlebars` 4.7.9, which has critical advisories GHSA-8r5x-fm3f-whwj and GHSA-p8wg-vrv2-v86f; 7.2.1 bundles 4.7.10.
 - *Recommendation:* keep the 7-day cooldown with the security-fix exception.
-- *Decision:* approve, change the period, or drop it. Still **not approved**.
+- *Decision (owner, 2026-10-23):* approved. New releases wait at least 7 days; exceptions for urgent security fixes or critical blockers, with the reason documented (ADR-0008). Keep locked versions unless an update is justified.
 
 ### OI-47 Local port for PostgreSQL
 - *Fact:* another PostgreSQL install already listens on 5432 on the development machine; it is not touched. The project database uses host port **55432**. No action needed.
@@ -344,14 +348,24 @@ Each item separates **Fact** (verified), **Recommendation** (proposed) and **Dec
 - *Fact:* native apps are out of scope (LIM-1). Play Integrity and App Attest/DeviceCheck apply only to native apps; a web app or PWA cannot use them, nor reliably detect rooted or jailbroken devices (SEC-CLIENT-1).
 - *Decision:* none now. Revisit only if native apps are proposed.
 
-### OI-49 Edge-to-edge PWA layout (`viewport-fit=cover`)
+### OI-49 Edge-to-edge PWA layout (`viewport-fit=cover`) `[APPROVED DEFERRAL 2026-10-23]`
 - *Fact:* the app uses the browser default viewport fit, so iOS and Android keep content inside safe areas. Edge-to-edge needs `env(safe-area-inset-*)` padding and cannot be verified by emulation.
 - *Recommendation:* introduce it only with the PWA work (Slice 6), verified on physical iPhone and Android devices.
-- *Decision:* confirm the deferral.
+- *Decision (owner, 2026-10-23):* deferral approved until the PWA phase. Meanwhile the interface must stay usable on mobile, with essential content and controls never obscured by system UI (current browser-default viewport fit; checked in the physical-device checklist).
 
-### OI-50 npm audit: withdrawn `braces` advisory
+### OI-50 npm audit: withdrawn `braces` advisory `[RESOLVED 2026-10-23]`
 - *Fact:* after the boundaries fix, `npm audit` still lists 6 "high" entries. All of them trace to `braces` 3.0.3 (GHSA-vfj7-8cjw-p6xm), which GitHub has marked **withdrawn**, with no patched version. They are dev-only lint dependencies. npm's suggested "fix" is a major downgrade of `@next/eslint-plugin-next` to 14.2.35, which is rejected. Production dependencies: 0 vulnerabilities.
 - *Recommendation:* no action; recheck each slice.
+- *Resolution:* a later `npm audit` (2026-10-23) reports **0** vulnerabilities across all dependencies; npm has dropped the withdrawn advisory.
+
+### OI-51 Allowed sign-in accounts: @thapar.edu only, or any Google account?
+- *Fact:* the specification requires it explicitly. **FR-AUTH-1** `[SPEC]`: "authenticate users exclusively via Google OAuth restricted to @thapar.edu email addresses"; also OBJ-5 and spec §6.1.4 ("non-Thapar email addresses are rejected"). The owner asked (2026-10-23) not to impose a domain restriction silently without confirming it.
+- *Current state:* nothing is enforced in the application yet. The spike implements the restriction as **configuration** (`AUTH_ALLOWED_EMAIL_DOMAIN`), applied both through Google's `hd` and a server-side check (exact domain, verified email). Tested with `thapar.edu` and another domain.
+- *Options:*
+  1. **Keep FR-AUTH-1:** @thapar.edu only (current spec; recommended, because the platform is campus-only and other modules assume TIET identities).
+  2. Allow any Google account. This changes FR-AUTH-1 and the trust model (faculty claims, placement, society roles), so it needs a spec change and threat-model update.
+  3. @thapar.edu plus an explicit allow-list (e.g. invited guests).
+- *Decision:* confirm option 1, or choose another. Production configuration waits for this answer.
 
 ## 6. Assumptions (to be confirmed or corrected)
 

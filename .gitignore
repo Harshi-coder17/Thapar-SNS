@@ -1,7 +1,7 @@
-# Privacy: original requirements PDF contains student names and roll numbers (owner decision 2026-10-23).
-project-docs/Thapar_SNS_AI_Style_Reviewed.pdf
-# Privacy: design montage shows a student's name and email (panel 10). Kept local until the owner decides.
-project-docs/design-reference/
+# project-docs/ is the owner's local baseline and is never committed (owner decision 2026-10-23):
+# the specification PDF contains student names and roll numbers, the design montage shows a
+# student's name and email, and the original TIET logo is served from public/brand/tiet-logo.png.
+project-docs/
 
 # Dependencies and build output
 node_modules/
@@ -14,6 +14,7 @@ next-env.d.ts
 
 # Generated code
 src/generated/
+spikes/auth/generated/
 
 # Tests
 coverage/

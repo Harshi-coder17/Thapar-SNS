@@ -1,0 +1,40 @@
+# Privacy: original requirements PDF contains student names and roll numbers (owner decision 2026-10-23).
+project-docs/Thapar_SNS_AI_Style_Reviewed.pdf
+# Privacy: design montage shows a student's name and email (panel 10). Kept local until the owner decides.
+project-docs/design-reference/
+
+# Dependencies and build output
+node_modules/
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Generated code
+src/generated/
+
+# Tests
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# Environment and secrets (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+docker/garage/garage.local.toml
+docker/garage/credentials.local.env
+
+# Tooling and OS
+.vercel/
+.DS_Store
+*.log
+npm-debug.log*
+.idea/
+.vscode/*
+!.vscode/extensions.json

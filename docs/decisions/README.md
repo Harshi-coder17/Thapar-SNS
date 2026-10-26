@@ -10,14 +10,15 @@ Status values: `Proposed` · `Approved` (with date and scope) · `Approved for s
 | [0002](ADR-0002-hosting-vercel-plus-fly.md) | Hosting: Vercel + long-running service (Fly.io candidate) | Approved 2026-10-23 (Fly.io = candidate) |
 | [0003](ADR-0003-neon-postgres.md) | Neon PostgreSQL, Free tier for initial development | Approved 2026-10-23 (development scope) |
 | [0004](ADR-0004-outbox-nudge-and-sweep.md) | Outbox processing: nudge + 5-minute sweep | Approved 2026-10-23 as proposed design; parameters proposed |
-| [0005](ADR-0005-authentication-library.md) | Authentication library: Better Auth (spike), Arctic fallback | Spike complete: GO recommended with conditions; awaiting owner review (G-1b-spike). Google Sign-In approved as the method |
-| [0006](ADR-0006-session-token-representation.md) | Session token representation for FR-AUTH-3 | Proposed; spike evidence passes; awaiting owner decision |
+| [0005](ADR-0005-authentication-library.md) | Authentication library: Better Auth with conditions C1 to C7 | Approved 2026-10-24 (G-1b-spike). Google Sign-In is the method |
+| [0006](ADR-0006-session-token-representation.md) | Session token representation for FR-AUTH-3 | Approved 2026-10-24 (with OI-05 lifetime rules) |
 | [0007](ADR-0007-object-storage.md) | Object storage: R2 + Garage; worker-side SHA-256 verification | Proposed (Slice 1a findings added) |
 | [0008](ADR-0008-version-baseline.md) | Version baseline and pinning policy | Applied; 7-day cooldown approved 2026-10-23 |
 | [0009](ADR-0009-placement-aggregate-only.md) | Placement Matrix: aggregate-only, unofficial, k = 5 | Approved 2026-10-23 |
 | [0010](ADR-0010-faculty-claim-admin-approval.md) | Faculty claims require admin approval | Approved 2026-10-23 |
 | [0011](ADR-0011-repository-layout.md) | Repository layout: one package, two entry points | Applied in 1a; pending review |
 | [0012](ADR-0012-realtime-delivery.md) | Realtime delivery on the service with ticket auth | Proposed |
+| [0013](ADR-0013-society-identity-and-multiple-heads.md) | Society workspace, equal Heads and the society list import | Proposed, revision 2 (2026-10-25; owner's corrected model recorded; §8 questions open) |
 
 Template:
 

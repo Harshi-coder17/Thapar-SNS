@@ -53,3 +53,9 @@ Phase 0 documentation set, created 2026-10-23. Baseline: `project-docs/Thapar_SN
 | 2026-10-23 | Academic timelines disregarded; own schedule | CLAUDE.md rule 11, OI-02 |
 | 2026-10-23 | Claude is solo implementer; owner reviews all PRs | CLAUDE.md rule 12, OI-03 |
 | 2026-10-23 | OI-01 Workspace sign-in verified by the owner separately | open-issues |
+| 2026-10-23 | OI-44 eslint-react, OI-46 7-day cooldown, OI-49 edge-to-edge deferral, G-1b-oauth Google Sign-In | open-issues, ADR-0008 |
+| 2026-10-24 | G-1b-spike: Better Auth with conditions C1 to C7 | ADR-0005, spike-findings |
+| 2026-10-24 | Single hashed session token (FR-AUTH-3) | ADR-0006, OI-04 |
+| 2026-10-24 | Sessions: 7-day sliding, 30-day absolute maximum (server-side), new token at sign-in, no periodic rotation | OI-05 |
+| 2026-10-24 | @thapar.edu only, enforced server-side from verified Google claims | OI-51 |
+| 2026-10-24 | Thapar IT check is a production-readiness requirement, not a development blocker | OI-01, google-oauth-setup §6 |

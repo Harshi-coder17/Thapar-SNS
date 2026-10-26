@@ -1,6 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 
+import { e2eDatabaseUrl } from "./scripts/e2e/database-url.mjs";
+import { STUDENT_STATE } from "./tests/e2e/support";
+
 const PORT = 3100;
+const SERVICE_PORT = 4101;
 
 /*
  * Cross-device matrix (docs/testing/test-strategy.md §8).
@@ -40,14 +44,55 @@ export default defineConfig({
     baseURL: `http://127.0.0.1:${PORT}`,
     trace: "retain-on-failure",
   },
-  projects: matrix.map(({ name, device, ...overrides }) => ({
-    name,
-    use: { ...devices[device], ...overrides },
-  })),
-  webServer: {
-    command: `npx next start -p ${PORT} -H 127.0.0.1`,
-    url: `http://127.0.0.1:${PORT}`,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  projects: [
+    // Signs in once through the E2E-only test sign-in (tests/e2e/auth.setup.ts).
+    { name: "auth-setup", testMatch: /auth\.setup\.ts/, use: { ...devices["Desktop Chrome"] } },
+    ...matrix.map(({ name, device, ...overrides }) => ({
+      name,
+      dependencies: ["auth-setup"],
+      use: { ...devices[device], ...overrides, storageState: STUDENT_STATE },
+    })),
+  ],
+  webServer: [
+    {
+      // Serves the E2E build (`E2E_BUILD=1 next build`, output in .next-e2e), never the normal build.
+      command: `npx next start -p ${PORT} -H 127.0.0.1`,
+      // E2E-only identity settings (never on a deployment; config.ts refuses E2E_TEST_AUTH there).
+      // The Google values are placeholders: no request ever reaches Google in these tests.
+      env: {
+        // Fixture isolation: E2E runs use their own database (scripts/e2e/prepare-db.mjs), never the
+        // development one. Environment values take precedence over .env in `next start`.
+        DATABASE_URL: e2eDatabaseUrl(),
+        E2E_BUILD: "1",
+        E2E_TEST_AUTH: "1",
+        // Fictitious admin used by tests/e2e/societies.spec.ts (admin bootstrap, OI-09).
+        ADMIN_EMAILS: "e2e.admin@thapar.edu",
+        BETTER_AUTH_URL: `http://127.0.0.1:${PORT}`,
+        GOOGLE_CLIENT_ID: "e2e-test-client.apps.googleusercontent.com",
+        GOOGLE_CLIENT_SECRET: "e2e-test-client-secret",
+        // The E2E background service below (uploads, notifications, realtime).
+        SERVICE_URL: `http://127.0.0.1:${SERVICE_PORT}`,
+        REALTIME_PUBLIC_URL: `ws://127.0.0.1:${SERVICE_PORT}/ws`,
+      },
+      url: `http://127.0.0.1:${PORT}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+    {
+      // Background service bound to the E2E database, so uploads are validated and approved in E2E.
+      command: "npx tsx --conditions=react-server --env-file=.env src/service/main.ts",
+      env: {
+        DATABASE_URL: e2eDatabaseUrl(),
+        SERVICE_PORT: String(SERVICE_PORT),
+        BETTER_AUTH_URL: `http://127.0.0.1:${PORT}`,
+        // Keep the development origin allowed on the shared local bucket.
+        STORAGE_CORS_EXTRA_ORIGINS: "http://localhost:3000",
+        // Own key space on the shared local Valkey, apart from the development service.
+        REALTIME_KEY_PREFIX: "rt-e2e:",
+      },
+      url: `http://127.0.0.1:${SERVICE_PORT}/healthz`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 60_000,
+    },
+  ],
 });

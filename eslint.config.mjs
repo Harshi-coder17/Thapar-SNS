@@ -24,7 +24,7 @@ const hooksOverlap = Object.keys(eslintReact.configs["disable-conflict-eslint-pl
 
 export default tseslint.config(
   {
-    ignores: [".next/**", "node_modules/**", "src/generated/**", "coverage/**", "playwright-report/**", "test-results/**", "tests/fixtures/**", "spikes/auth/generated/**", "next-env.d.ts"],
+    ignores: [".next/**", "node_modules/**", "src/generated/**", "coverage/**", "playwright-report/**", "test-results/**", "tests/fixtures/**", "spikes/auth/generated/**", "next-env.d.ts", ".next-e2e/**"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -52,6 +52,14 @@ export default tseslint.config(
     ...reactRecommended,
     files: ["**/*.tsx"],
     rules: { ...reactRecommended.rules, ...Object.fromEntries(hooksOverlap.map((rule) => [rule, "off"])) },
+  },
+  {
+    // E2E-only code (OI-53) is reachable only from E2E-build routes (`*.e2e.ts`, next.config.ts).
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/app/**/*.e2e.ts", "src/modules/*/e2e.ts"],
+    rules: {
+      "no-restricted-imports": ["error", { patterns: [{ regex: "^@/modules/[^/]+/e2e$", message: "E2E-only code: import it only from *.e2e.ts routes (OI-53)." }] }],
+    },
   },
   boundariesConfig({ files: ["src/**/*.{ts,tsx}"], tsconfigProject: "./tsconfig.json", plugin: boundaries }),
 );

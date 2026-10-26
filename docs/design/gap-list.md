@@ -9,9 +9,9 @@ Every item is `[OPEN]` and **will not be built** unless approved. "Related" show
 | G-03 | 2 | "Trending This Week" carousel | – | Omit |
 | G-04 | 2 | "Recent Activity" feed with **Follow** button | – | Omit Follow. Home shows upcoming events + quick links (no new features) |
 | G-05 | 2 | Personalised greeting, quick module tiles with counts | Navigation | Build (presentation only, uses existing data) |
-| G-06 | 3 | **Join Society** button | FR-SOC-2 (how Members join is OI-10) | Depends on OI-10 |
+| G-06 | 3 | **Join Society** button | FR-SOC-2 (how Members join is OI-10) | **Built (Slice 2a, OI-10 approved 2026-10-24):** "Request to join" (Head approves) plus a separate "Follow" button |
 | G-07 | 3 | **Message** society button | – (chat is MateConnection-only per spec) | Omit |
-| G-08 | 3 | Tabs Members / Resources; member/event counts; "Est. year" | FR-SOC-1 fields | Members tab if OI-10 allows member visibility; omit Resources; omit "Est." unless added to society fields |
+| G-08 | 3 | Tabs Members / Resources; member/event counts; "Est. year" | FR-SOC-1 fields | **Slice 2a:** member and follower counts and a public core team (Head, Editors, Event Managers); full Members tab for members only; Resources and "Est." omitted |
 | G-09 | 4 | Event category chips (Technical, Cultural, Sports, Workshop, Seminar); "My Events / My Registrations" tabs | EVT fields have no category | Category: OI-12. "My Registrations": build (derived from FR-EVT-3 data) |
 | G-10 | 5 | **DOCX** file in list | FR-MAT-1 allows PDF/JPEG/PNG only | Omit (requirement wins) |
 | G-11 | 5 | Comment counts on materials | No comments FR for materials | Omit |
@@ -28,3 +28,4 @@ Every item is `[OPEN]` and **will not be built** unless approved. "Related" show
 | G-22 | 11 | "Shared a file" / attachments, emoji picker | – | Omit attachments (new upload surface); emoji via OS keyboard only |
 | G-23 | 11 | "Active now" presence, unread badges | – | Unread badges: build (notifications). Presence: omit |
 | G-24 | 11 | Messages entry point (not in sidebar) | FR-MATE-4 | Access chat from Find Mates → My Connections; adding a sidebar item needs approval |
+| G-25 | 1 | Campus photograph in the login page's right-hand panel | Design (no FR) | **Owner will provide a photo** they have the right to use (2026-10-24). The montage crop is too small (about 380 × 360 px) and appears AI-generated with the institute's name on the building, so it is not reused. Until then the panel shows the brand colour. Added in whichever slice is current when the photo arrives |

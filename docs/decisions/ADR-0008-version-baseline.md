@@ -85,4 +85,4 @@ All denied; none is needed:
 - The 3 critical `handlebars` advisories were fixed by the boundaries upgrade above.
 
 ## Planned later (not installed in 1a)
-arctic 3.7.0 (auth fallback, only if the spike is rejected), file-type, sanitize-html or isomorphic-dompurify (2a), ws (3b), ioredis / @upstash/redis (3b), ical-generator and an rrule library (4d), serwist (6), k6 binary (5). Versions are re-verified when installed.
+arctic 3.7.0 (auth fallback, only if the spike is rejected), file-type, sanitize-html (**installed in 2a: 2.18.1**, published 2026-10-14, inside the 7-day cooldown cutoff of 2026-10-17; `@types/sanitize-html` 2.16.2 as a dev dependency; 0 audit findings on 2026-10-24), ws (3b), ioredis / @upstash/redis (3b), ical-generator and an rrule library (4d), serwist (6), k6 binary (5). Versions are re-verified when installed.

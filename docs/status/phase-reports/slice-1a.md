@@ -1,6 +1,6 @@
 # Phase Report: Slice 1a (Project Skeleton)
 
-Date: 2026-10-23. Status: **complete, awaiting owner acceptance review.** No commit or push has been made (OI-45).
+Date: 2026-10-23. Status: **complete; accepted, committed and pushed by the owner** (OI-45).
 
 ## Scope delivered
 - Project skeleton and folder structure (ADR-0011): `src/app`, `src/modules`, `src/shared/{db,layout,ui}`, `src/service/{realtime,workers}`.

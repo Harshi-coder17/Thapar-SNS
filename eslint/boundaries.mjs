@@ -4,6 +4,10 @@
 /** Architectural elements, classified by path. The first matching element wins. */
 export const boundaryElements = [
   { type: "app", pattern: "src/app" },
+  // Next.js requires the proxy as a single file (src/proxy.ts). Element patterns match folders only;
+  // `mode: "file"` is deprecated in eslint-plugin-boundaries 7 but is the only way to keep this file
+  // classified (and its imports checked). Revisit when upgrading to the plugin's next major version.
+  { type: "proxy", pattern: "src/proxy.ts", mode: "file" },
   { type: "module", pattern: "src/modules/*", capture: ["moduleName"] },
   { type: "shared-db", pattern: "src/shared/db" },
   { type: "shared", pattern: "src/shared" },
@@ -16,6 +20,8 @@ export const boundaryElements = [
 const allowTo = (from, to) => ({ from: { element: from }, allow: { to } });
 const elementTypes = (...types) => ({ element: { types: { anyOf: types } } });
 const moduleEntry = { element: { type: "module", fileInternalPath: "index.ts" } };
+/** E2E-only module entry points (e2e.ts); only `*.e2e.ts` routes may use them (eslint.config.mjs). */
+const moduleE2eEntry = { element: { type: "module", fileInternalPath: "e2e.ts" } };
 const sameModule = { element: { type: "module", captured: { moduleName: "{{from.element.captured.moduleName}}" } } };
 
 /** Dependency policies. Default is disallow; the last matching policy wins. */
@@ -24,9 +30,14 @@ export const boundaryPolicies = [
   { allow: { to: { module: { origin: "external" } } } },
   { allow: { to: { module: { origin: "core" } } } },
 
+  // The request proxy (src/proxy.ts): shared code and module public interfaces only.
+  allowTo({ type: "proxy" }, elementTypes("shared")),
+  allowTo({ type: "proxy" }, moduleEntry),
+
   // Next.js routes: shared code and module public interfaces (index.ts) only.
   allowTo({ type: "app" }, elementTypes("app", "shared", "shared-db")),
   allowTo({ type: "app" }, moduleEntry),
+  allowTo({ type: "app" }, moduleE2eEntry),
 
   // Modules: shared code, their own internals, other modules' index.ts only.
   allowTo({ type: "module" }, elementTypes("shared", "shared-db")),

@@ -3,20 +3,24 @@ import { expect, test } from "@playwright/test";
 
 import { primaryNav } from "../../src/shared/layout/nav";
 
-import { EM_DASH, mainNav, openNavIfDrawer, ROUTES, usesDrawer } from "./support";
+import { EM_DASH, isPublicRoute, mainNav, openNavIfDrawer, ROUTES, SIGNED_OUT, usesDrawer } from "./support";
 
 test.describe("static app shell", () => {
   for (const route of ROUTES) {
-    test(`${route} renders without em-dashes or serious accessibility violations`, async ({ page }) => {
-      const response = await page.goto(route);
-      expect(response?.status()).toBe(200);
-      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-      expect(await page.locator("body").innerText()).not.toContain(EM_DASH);
-      expect(await page.title()).not.toContain(EM_DASH);
+    test.describe(route, () => {
+      if (isPublicRoute(route)) test.use({ storageState: SIGNED_OUT });
 
-      const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
-      const serious = axe.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
-      expect(serious.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+      test(`${route} renders without em-dashes or serious accessibility violations`, async ({ page }) => {
+        const response = await page.goto(route);
+        expect(response?.status()).toBe(200);
+        await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+        expect(await page.locator("body").innerText()).not.toContain(EM_DASH);
+        expect(await page.title()).not.toContain(EM_DASH);
+
+        const axe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+        const serious = axe.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
+        expect(serious.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+      });
     });
   }
 
@@ -46,11 +50,24 @@ test.describe("static app shell", () => {
     await expect(region.getByText("Unofficial student project")).toBeVisible();
   });
 
-  test("login page keeps sign-in disabled until Slice 1b", async ({ page }) => {
-    await page.goto("/login");
-    await expect(page.getByRole("button", { name: "Sign in with Google" })).toBeDisabled();
-    await expect(page.getByText("Only @thapar.edu accounts are allowed.")).toBeVisible();
-    await expect(page.getByText(/Not affiliated with or endorsed by Thapar Institute/)).toBeVisible();
+  test.describe("login page", () => {
+    test.use({ storageState: SIGNED_OUT });
+
+    test("offers Google sign-in and states the @thapar.edu rule", async ({ page }) => {
+      await page.goto("/login");
+      await expect(page.getByRole("button", { name: "Sign in with Google" })).toBeEnabled();
+      await expect(page.getByText("Only @thapar.edu accounts are allowed.")).toBeVisible();
+      await expect(page.getByText(/Not affiliated with or endorsed by Thapar Institute/)).toBeVisible();
+    });
+
+    test("explains a rejected sign-in without revealing internals", async ({ page }) => {
+      // Next.js also renders an empty route-announcer alert, so match the alert that has text.
+      const alert = page.getByRole("alert").filter({ hasText: /\S/ });
+      await page.goto("/login?error=unable_to_create_user");
+      await expect(alert).toHaveText("Sign in with your verified @thapar.edu Google account.");
+      await page.goto("/login?error=<script>alert(1)</script>");
+      await expect(alert).toHaveText("Sign-in failed. Please try again.");
+    });
   });
 
   test("unknown routes return 404 without internal details", async ({ page }) => {

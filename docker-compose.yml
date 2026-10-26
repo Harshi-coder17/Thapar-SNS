@@ -40,6 +40,19 @@ services:
       timeout: 5s
       retries: 20
 
+  # Realtime fan-out (ADR-0012) and ticket nonces. Valkey is the BSD-licensed Redis fork; ioredis speaks
+  # to it unchanged. Disposable: nothing authoritative is stored here (spec §4.1).
+  redis:
+    image: valkey/valkey:8.1.4-alpine@sha256:e706d1213aaba6896c162bb6a3a9e1894e1a435f28f8f856d14fab2e10aa098b
+    command: ["valkey-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "127.0.0.1:56379:6379"
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
 volumes:
   postgres-data:
   garage-meta:

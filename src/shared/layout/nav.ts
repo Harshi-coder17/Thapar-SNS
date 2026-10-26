@@ -4,9 +4,12 @@ import {
   BookOpen,
   BriefcaseBusiness,
   CalendarDays,
+  CircleUser,
   GraduationCap,
   House,
   type LucideIcon,
+  MessagesSquare,
+  ShieldCheck,
   Ticket,
   UserRoundSearch,
   Users,
@@ -37,9 +40,16 @@ export const primaryNav: readonly NavItem[] = [
 
 export const secondaryNav: readonly NavItem[] = [
   { href: "/notifications", label: "Notifications", icon: Bell, slice: "3a", summary: "Updates about registrations, requests and uploads." },
+  { href: "/chat", label: "Messages", icon: MessagesSquare, slice: "4a", summary: "Chats with the teammates you connected with." },
+  { href: "/profile", label: "Profile", icon: CircleUser, slice: "5", summary: "Your profile, registrations, requests and uploads." },
 ];
 
-export const allNav: readonly NavItem[] = [...primaryNav, ...secondaryNav];
+/** Shown only to ADMIN accounts (display only: every admin page and API re-checks the role). */
+export const adminNav: readonly NavItem[] = [
+  { href: "/admin", label: "Administration", icon: ShieldCheck, slice: "5", summary: "Platform administration and moderation." },
+];
+
+export const allNav: readonly NavItem[] = [...primaryNav, ...secondaryNav, ...adminNav];
 
 /** True when `href` is the current section. Home matches only "/" exactly. */
 export function isActive(pathname: string, href: string): boolean {

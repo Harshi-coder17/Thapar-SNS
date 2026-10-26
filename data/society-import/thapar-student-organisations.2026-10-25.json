@@ -1,0 +1,4092 @@
+{
+  "dataset": "Thapar student organisations (research dataset, unverified)",
+  "fetchedAt": "2026-10-25",
+  "source": {
+    "directory": "https://studentsocieties.thapar.edu/",
+    "endpoints": [
+      "https://studentsocieties.thapar.edu/api/organizations",
+      "https://studentsocieties.thapar.edu/api/org-types",
+      "https://studentsocieties.thapar.edu/api/organizations/{id}"
+    ],
+    "note": "The directory renders organisation details from these public JSON endpoints; there are no separate HTML detail pages. Detail records were fetched for every organisation and contain the same fields as the list. Source categories (type/subtype) are kept as reference only."
+  },
+  "rules": [
+    "Names are preserved exactly as published, except leading/trailing and doubled spaces (flagged).",
+    "Nothing is invented: missing values are null and flagged.",
+    "Faculty listed by the source are faculty associations (as published). They are NOT society Heads or administrators in Thapar SNS, and nothing about society leadership or permissions is inferred from them.",
+    "Faculty details come ONLY from https://www.thapar.edu/faculties and the official department or school faculty pages it redirects to (owner decisions 2026-10-25); officially published values are verified. A dataset person is linked to an official record by exact institutional email, or by the same name in the same department (verification.matchBasis). A same-name entry in another department is needs_review. Without an official record the status is no_official_record. Official values are kept next to the published ones (verification.official, verification.discrepancies); nothing is replaced.",
+    "Redactions (owner-approved 2026-10-25): faculty photo links are removed (unused personal data) and personal (non-@thapar.edu) faculty email addresses are removed; faculty[].redactions records each one.",
+    "Logo references are links only. Reuse rights are unknown; nothing is downloaded or hot-linked.",
+    "Owner decision (2026-10-25): information published on the official Thapar website (including studentsocieties.thapar.edu, the institute's official student-activities portal) and on official department or school pages is treated as verified (review.sourceStatus = official_published). This grants nobody any application permission.",
+    "review.appReview = pending: an imported society stays hidden, inactive and awaiting its first Head until an admin activates it in the application; this is a workflow step, not a doubt about the data.",
+    "review.questionableFields lists fields where the official source contradicts itself or is malformed (e.g. one organisation's email or website repeated on another, text that is not a URL); they are kept raw and flagged for review.",
+    "review.possibleDuplicateOf lists other keys that may be the same organisation; records are never merged automatically."
+  ],
+  "records": [
+    {
+      "key": "acm-computing-chapter",
+      "name": "ACM Computing Chapter",
+      "shortName": null,
+      "description": "To provide a platform for serving as a professional network, encouraging students to take active interest in organizing high-quality ACM workshops, symposiums, seminars, expert lectures, and conferences in India, and also provide logistical support.",
+      "contactEmail": "acmcomputingchapter@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/tiet-acm/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/tiet-acm/home",
+      "logoReference": "http://thapar.edu/upload/images/ACM.png",
+      "faculty": [
+        {
+          "name": "Dr. Amrita Kaur",
+          "department": "Assistant Professor, CSED",
+          "email": "amrita@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Amrita Kaur",
+              "designation": "Assistant Professor (Contractual -II)",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "amrita@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTM2NQ==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor (Contractual -II)\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Karun Verma",
+          "department": "Assistant Professor, CSED",
+          "email": "karun.verma@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Karun Verma",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "karun.verma@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/OTg0",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Associate Professor\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782729",
+        "sourceId": "69b3c8031047a732f5782729",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:11.892Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "aiche-student-chapter",
+      "name": "AICHE Student Chapter",
+      "shortName": null,
+      "description": "AICHE is the world's leading organization for Chemical Engineering professionals, with more than 50,000 members from over 100 countries. The members of the AICHE Student Chapter take part in a wide range of projects and activities aimed at enhancing their college experience and helping each other achieve a more successful career.",
+      "contactEmail": "aiche_sc@thapar.edu",
+      "websites": [
+        "https://aichetiet.wixsite.com/home"
+      ],
+      "websiteAsPublished": "https://aichetiet.wixsite.com/home",
+      "logoReference": "http://thapar.edu/upload/images/AICHE.png",
+      "faculty": [
+        {
+          "name": "Dr. J.P. Kushwaha",
+          "department": "Associate Professor, CHED",
+          "email": "jpkushwaha@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Jai Prakash Kushwaha",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Chemical Engineering",
+              "email": "jpkushwaha@thapar.edu",
+              "profileUrl": "https://ched.thapar.edu/facultydetails/OTIw",
+              "listingUrl": "https://ched.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/chemical-engineering"
+            },
+            "discrepancies": [
+              "name: published \"Dr. J.P. Kushwaha\", official \"Dr. Jai Prakash Kushwaha\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578272c",
+        "sourceId": "69b3c8031047a732f578272c",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:15.292Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "adventure-club",
+      "name": "Adventure Club",
+      "shortName": null,
+      "description": "A forum for adventure enthusiasts, trekkers, climbers and armchair mountaineers in the student community. It works to develop the spirit of adventure in Thaparians. While the stock activities are trekking, rock climbing and mountain cycling, the adventure club has also organized skiing and river rafting sporadically.",
+      "contactEmail": "adventureclub@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/tac/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/tac/home",
+      "logoReference": "http://thapar.edu/upload/images/Adventure Club.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Gagandeep Kaur",
+          "department": "Associate Professor, EIED",
+          "email": "gagandeep@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gagandeep Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Thapar Learn",
+              "email": "gagandeep@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Gagandeep-Kaur/MTAx/OTU=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Anil Arora",
+          "department": "Assistant Professor, ECED",
+          "email": "anil.arora@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Anil Arora",
+              "designation": "Assistant Professor",
+              "listedUnder": "Experiential Learning Centre",
+              "email": "anil.arora@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Anil-Arora/Mjcw/OTM=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/experiential-learning-centre1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/experiential-learning-centre1"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782706",
+        "sourceId": "69b3c8031047a732f5782706",
+        "sourceType": "club",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.926Z",
+        "sourceUpdatedAt": "2026-05-02T20:02:47.537Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "creative-computing-society-ccs",
+      "name": "CREATIVE COMPUTING SOCIETY (CCS)",
+      "shortName": "CCS",
+      "description": "Creative Computing Society strive to encourage students to develop an analytical temperament in the field of technology and innovation. The society conducts workshops and coding competitions on a regular basis, thus acting as a platform for students to showcase and nurture their technical skill to discover their best lying potential. Over the years the society has had numerous pivotal collaborations with organizations like Google Developers Group, Women Techmaker, Mozilla Webmaker, PyData to name a few.",
+      "contactEmail": "ccs@thapar.edu",
+      "websites": [
+        "https://www.ccstiet.com"
+      ],
+      "websiteAsPublished": "https://www.ccstiet.com",
+      "logoReference": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAUnY7opxCE0em9YbuWSb3kWo0i55fEarOcA&s",
+      "faculty": [
+        {
+          "name": "Dr. Anju Bala",
+          "department": "Assistant Professor, CSED",
+          "email": "anjubala@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Anju Bala",
+              "designation": "Professor & Associate Head",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "anjubala@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/OTg2",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Professor & Associate Head\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Kaustuv Roy",
+          "department": "Professor, TSLAS",
+          "email": "kaustuv.roy@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578274f",
+        "sourceId": "69b3c8031047a732f578274f",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:27:21.631Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [
+          "websites"
+        ],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "website_shared_with: Chemist’s Association for Research and Education Society (CARE)",
+          "image_on_third_party_host: encrypted-tbn0.gstatic.com"
+        ]
+      }
+    },
+    {
+      "key": "chemists-association-for-research-and-education-society-care",
+      "name": "Chemist’s Association for Research and Education Society (CARE)",
+      "shortName": "CARE",
+      "description": "To promote the chemical research and education for the benefit of the society. This society encourages students to join the science stream as a career option and provides single platform to students and researchers for their scientific and methodical growth.",
+      "contactEmail": "score@thapar.edu",
+      "websites": [
+        "https://www.ccstiet.com"
+      ],
+      "websiteAsPublished": "https://www.ccstiet.com",
+      "logoReference": "https://thapar.edu/upload/images/CARE.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Soumen Basu",
+          "department": "Professor, SCBC",
+          "email": "soumen.basu@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Dr. Vikas Tyagi",
+          "department": "Assistant Professor, TSLAS",
+          "email": "vikas.tyagi@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578274c",
+        "sourceId": "69b3c8031047a732f578274c",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:27:27.180Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [
+          "websites"
+        ],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "website_shared_with: CREATIVE COMPUTING SOCIETY (CCS)"
+        ]
+      }
+    },
+    {
+      "key": "dance-club-nox",
+      "name": "Dance Club ‘NOX’",
+      "shortName": null,
+      "description": "Thapar dance club ‘NOX’ is an excellent platform for the students to augment their dancing skills through workshops conducted by professionally trained choreographers. The students showcase their dancing talents at the various events in the college and also represent the institute in various competitions.",
+      "contactEmail": "nox@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/NOX.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Meenu Rani",
+          "department": "Assistant Professor, SOM",
+          "email": "meenu_rani@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Dr. Sangita Roy",
+          "department": "Assistant Professor, CSED",
+          "email": "Sangita.roy@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Sangita Roy",
+              "designation": "Assistant Professor -II",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "sangita.roy@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/OTk2",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor -II\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578270b",
+        "sourceId": "69b3c8031047a732f578270b",
+        "sourceType": "club",
+        "sourceSubtype": "cultural-/-visual-arts",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-05-06T07:22:51.457Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "developer-student-club",
+      "name": "Developer Student Club",
+      "shortName": null,
+      "description": "The aim of the Developer Student Club is to collaborate with other students interested in developer technologies. It also intends to make the students learn about a wide range of technical topics where new skills are gained through hands-on workshops, in-person training and project building activities.",
+      "contactEmail": "google.dsctiet@thapar.edu",
+      "websites": [
+        "https://dsctiet.com/#/"
+      ],
+      "websiteAsPublished": "https://dsctiet.com/#/",
+      "logoReference": "http://thapar.edu/upload/images/DSC.png",
+      "faculty": [
+        {
+          "name": "Dr. Ashima Singh",
+          "department": "Associate Professor, CSED",
+          "email": "ashima@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Ashima Singh",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "ashima@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/OTgx",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Jaspinder Kaur",
+          "department": "Assistant Professor, CSED",
+          "email": "jaspinder.kaur@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Jaspinder Kaur",
+              "designation": "Assistant Professor - I",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "jaspinder.kaur@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTY5OA==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor - I\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578270e",
+        "sourceId": "69b3c8031047a732f578270e",
+        "sourceType": "club",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-09-21T12:06:55.476Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "enactus",
+      "name": "ENACTUS",
+      "shortName": null,
+      "description": "ENACTUS is a community of students, academic and business leaders committed to using entrepreneurial action to transform lives and shape a better world.",
+      "contactEmail": "enactus@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": "ENACTUS Website",
+      "logoReference": "https://thapar.edu/upload/images/ENACTUS.jpeg",
+      "faculty": [
+        {
+          "name": "Dr. Gagandeep Kaur",
+          "department": "Associate Professor, EIED",
+          "email": "gagandeep@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gagandeep Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Thapar Learn",
+              "email": "gagandeep@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Gagandeep-Kaur/MTAx/OTU=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Ashish Kumar Gupta",
+          "department": "Assistant Professor, EIED",
+          "email": "ashish.gupta@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Ashish Kumar Gupta",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "ashish.gupta@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTUzMg==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782755",
+        "sourceId": "69b3c8031047a732f5782755",
+        "sourceType": "society",
+        "sourceSubtype": "entrepreneurship",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:33:41.227Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [
+          "websiteAsPublished"
+        ],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "website_not_a_url: \"ENACTUS Website\""
+        ]
+      }
+    },
+    {
+      "key": "echoes-club",
+      "name": "Echoes Club",
+      "shortName": null,
+      "description": "Echoes Club operates on the grounds of publishing quarterly periodicals, run for the students and designed by the students. This periodical covers everything that happens in TIET, from Cultural, Technical and Sports related activities to Academic Accomplishments.",
+      "contactEmail": "echoes@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/echoestiet/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/echoestiet/home",
+      "logoReference": "http://thapar.edu/upload/images/Echoes.png",
+      "faculty": [
+        {
+          "name": "Dr. Sonam Dullat",
+          "department": "Sr. Manager (Student Counsellor), TICC",
+          "email": "sonam.dullat@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782711",
+        "sourceId": "69b3c8031047a732f5782711",
+        "sourceType": "club",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-05-06T07:22:59.581Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "economics-club-econ-club",
+      "name": "Economics Club (ECON CLUB)",
+      "shortName": "ECON CLUB",
+      "description": "Econ Club provides a forum to identify and discuss economic, social and political issues. The Econ Club organises Economics Quizzes; Debating competitions; World Economic Forum to help find solutions to emerging issues.\nWork with Markfin Society",
+      "contactEmail": "econclub@thapar.edu",
+      "websites": [
+        "https://sites.google.com/view/econclub/"
+      ],
+      "websiteAsPublished": "https://sites.google.com/view/econclub/",
+      "logoReference": "http://thapar.edu/upload/images/econ.png",
+      "faculty": [
+        {
+          "name": "Dr. Rakesh Kumar Sharma",
+          "department": "Associate Professor, DHSS",
+          "email": "rakesh.kumar@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Dr. Jitendra Sharma",
+          "department": "Assistant Professor, TSLAS",
+          "email": "jitendra.singh@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        },
+        {
+          "name": "Dr. Kavitha Pradeep",
+          "department": "Assistant Professor, TSLAS",
+          "email": "kavitha@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Kavitha Pradeep",
+              "designation": "Assistant Professor",
+              "listedUnder": "Thapar School of Liberal Arts & Sciences (TSLAS)",
+              "email": "kavitha@thapar.edu",
+              "profileUrl": "https://tslas.thapar.edu/facultymaster/91",
+              "listingUrl": "https://tslas.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/schools/thapar-school-of-liberal-arts-sciences-tslas-1"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782714",
+        "sourceId": "69b3c8031047a732f5782714",
+        "sourceType": "club",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-09-21T11:54:16.470Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "ek-bharat-shreshtha-bharat-club",
+      "name": "Ek Bharat Shreshtha Bharat Club",
+      "shortName": null,
+      "description": "Ek Bharat Shreshtha Bharat (EBSB) programme has been initiated by AICTE for promoting National Integration through systematic exchange between paired States/UTs in the Cultural, Literary and Linguistic fields. The expectation is that the students of the paired Institutions should learn the linguistic and cultural aspects of the paired state Institutes covering history, culture, language, cuisine, festivals, clothing etc.",
+      "contactEmail": "ebsb@thapar.edu",
+      "websites": [
+        "https://sites.google.com/view/ebsb-tiet/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/view/ebsb-tiet/home",
+      "logoReference": "http://thapar.edu/upload/images/EBSB.png",
+      "faculty": [
+        {
+          "name": "Dr. Amanpreet Kaur",
+          "department": "Assistant Professor, ECED",
+          "email": "amanpreet.kaur@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Amanpreet Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Thapar Learn",
+              "email": "amanpreet.kaur@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Amanpreet-Kaur/MTM1/OTU=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, ECED\", official \"Associate Professor\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782717",
+        "sourceId": "69b3c8031047a732f5782717",
+        "sourceType": "club",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-05-06T07:23:07.517Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [
+          "contactEmail",
+          "websites"
+        ],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "contact_email_shared_with: Energy Conservation Club (ECC)",
+          "website_shared_with: Energy Conservation Club (ECC)"
+        ]
+      }
+    },
+    {
+      "key": "electoral-club",
+      "name": "Electoral Club",
+      "shortName": null,
+      "description": "To organize various events and student activities as desired by the Election Commissioner of Punjab/ Deputy Commissioner of Punjab/ Tehsildar Election of Patiala. To encourage young voters about their voting rights through various student activities on campus. To assist students and staff in enrolling and making their voting ID card through an online portal, and participate in competitive events conducted by the Election Commissioner of Punjab.",
+      "contactEmail": null,
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/electoral_club.png",
+      "faculty": [
+        {
+          "name": "Dr. Rakesh Kumar Sharma",
+          "department": "Assistant Professor, SHSS",
+          "email": "rakesh.kumar@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Dr. Shilpi Tyagi",
+          "department": "Assistant Professor, SHSS",
+          "email": "shilpi.tyagi@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782726",
+        "sourceId": "69b3c8031047a732f5782726",
+        "sourceType": "club",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:23:11.030Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [
+          "thapar-electoral-club"
+        ],
+        "flags": [
+          "missing_contact_email",
+          "missing_website",
+          "possible_duplicate_kept_separate: Thapar Electoral Club"
+        ]
+      }
+    },
+    {
+      "key": "energy-conservation-club-ecc",
+      "name": "Energy Conservation Club (ECC)",
+      "shortName": "ECC",
+      "description": "Empowering sustainability at Thapar! Where ideas shine, and conservation matters, let's power a change together!",
+      "contactEmail": "ebsb@thapar.edu",
+      "websites": [
+        "https://sites.google.com/view/ebsb-tiet/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/view/ebsb-tiet/home",
+      "logoReference": "http://thapar.edu/upload/images/ECC.png",
+      "faculty": [
+        {
+          "name": "Dr. Amit Dhir",
+          "department": "Associate Professor, SEE",
+          "email": "amit.dhir@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Dr. Amit Munjal",
+          "department": "Associate Professor, SEE",
+          "email": "amit.munjal@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Amit Munjal",
+              "designation": "Assistant Professor-II",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "amit.munjal@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTIzOQ==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Associate Professor, SEE\", official \"Assistant Professor-II\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782719",
+        "sourceId": "69b3c8031047a732f5782719",
+        "sourceType": "club",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-05-06T07:23:14.812Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [
+          "contactEmail",
+          "websites"
+        ],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "contact_email_shared_with: Ek Bharat Shreshtha Bharat Club",
+          "website_shared_with: Ek Bharat Shreshtha Bharat Club"
+        ]
+      }
+    },
+    {
+      "key": "fine-arts-and-photography-society-faps",
+      "name": "Fine Arts and Photography Society (FAPS)",
+      "shortName": "FAPS",
+      "description": "FAPS is grooming the engineering and management graduates of TIET to converse through the medium of art. FAPS is a vibrant society having a tradition of mentoring the youngsters through workshops on Sketching, Painting, Photography, Calligraphy and Photoshop.",
+      "contactEmail": "faps@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/faps/"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/faps/",
+      "logoReference": "http://thapar.edu/upload/images/FAPS.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Ashima Singh",
+          "department": "Associate Professor, CSED",
+          "email": "ashima@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Ashima Singh",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "ashima@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/OTgx",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Vikas Sharma",
+          "department": "Assistant Professor, SOM",
+          "email": "vikas.sharma@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578275f",
+        "sourceId": "69b3c8031047a732f578275f",
+        "sourceType": "society",
+        "sourceSubtype": "cultural-/-visual-arts",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:31:27.825Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "frosh",
+      "name": "Frosh",
+      "shortName": null,
+      "description": "Frosh Society welcomes the first year students in TIET. This society basically involves with all the activities of first year students just after they join institute. Arranging Infodesk, supporting in person counselling and organising orientation program for first year students are the major activities.",
+      "contactEmail": "frosh@thapar.edu",
+      "websites": [
+        "https://froshtiet.com/"
+      ],
+      "websiteAsPublished": "https://froshtiet.com/",
+      "logoReference": "http://thapar.edu/upload/images/Frosh.jpg",
+      "faculty": [
+        {
+          "name": "Dr. M.D. Singh",
+          "department": "Assistant Professor, EIED",
+          "email": "mdsingh@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Mandeep Singh-2",
+              "designation": "Professor, Associate Dean Entrepreneurship",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "mdsingh@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTM1OQ==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": [
+              "name: published \"Dr. M.D. Singh\", official \"Dr. Mandeep Singh-2\"",
+              "designation: published \"Assistant Professor, EIED\", official \"Professor, Associate Dean Entrepreneurship\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Avinash Chandra",
+          "department": "Associate Professor, CHED",
+          "email": "avinash.chandra@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Avinash Chandra",
+              "designation": "Professor & Head",
+              "listedUnder": "Department of Chemical Engineering",
+              "email": "avinash.chandra@thapar.edu",
+              "profileUrl": "https://ched.thapar.edu/facultydetails/OTIx",
+              "listingUrl": "https://ched.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/chemical-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Associate Professor, CHED\", official \"Professor & Head\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Vishal Gupta",
+          "department": "Assistant Professor, ECED",
+          "email": "Vishal.Gupta@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Vishal Gupta",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "vishal.gupta@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTE5NQ==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, ECED\", official \"Associate Professor\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Devender Kumar",
+          "department": "Assistant Professor, MED",
+          "email": "devenderkr@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Devender Kumar",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "devenderkr@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTE2OQ==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Hem Dutt Joshi",
+          "department": "Associate Professor, ECED",
+          "email": "hemdutt.joshi@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Hem Dutt Joshi",
+              "designation": "Professor & Associate Dean (DCT)",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "hemdutt.joshi@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTIzMw==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Associate Professor, ECED\", official \"Professor & Associate Dean (DCT)\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Tarunpreet Bhatia",
+          "department": "Assistant Professor, CSED",
+          "email": "tarunpreet@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Tarunpreet Bhatia",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "tarunpreet@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTAwOA==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Associate Professor\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782762",
+        "sourceId": "69b3c8031047a732f5782762",
+        "sourceType": "society",
+        "sourceSubtype": "entrepreneurship",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:32:13.738Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "name_whitespace_trimmed"
+        ]
+      }
+    },
+    {
+      "key": "gene",
+      "name": "GENE",
+      "shortName": null,
+      "description": "GENE Society promotes student's professional development by sponsoring technical activities such as workshops, panel discussions and guest lectures. Furthermore, we offer a variety of educational opportunities in biotechnology, technological advancements, and ethical conduct to encourage continued learning and professional progress. Our Cultural flagship event encourages member's personal, professional and creative development along with celebrating unity in diversity.",
+      "contactEmail": "gene@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/genesociety/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/genesociety/home",
+      "logoReference": "http://thapar.edu/upload/images/genesoc.png",
+      "faculty": [
+        {
+          "name": "Dr. Bunushree Behera",
+          "department": "Assistant Professor, BTD",
+          "email": "bunushree.behera@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Bunushree Behera",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Biotechnology",
+              "email": "bunushree.behera@thapar.edu",
+              "profileUrl": "https://btd.thapar.edu/facultydetails/MTUyNg==",
+              "listingUrl": "https://btd.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/department-of-biotechnology"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Jyotsana Mehta",
+          "department": "Assistant Professor, BTD",
+          "email": "jyotsana.mehta@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Jyotsana Mehta",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Biotechnology",
+              "email": "jyotsana.mehta@thapar.edu",
+              "profileUrl": "https://btd.thapar.edu/facultydetails/MTU2NQ==",
+              "listingUrl": "https://btd.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/department-of-biotechnology"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782769",
+        "sourceId": "69b3c8031047a732f5782769",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:27:33.978Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "gender-champions-club",
+      "name": "Gender Champions Club",
+      "shortName": null,
+      "description": "TIET has taken special initiatives for gender sensitization. It has a Gender Champions Club which looks after the issues pertaining to gender equity in particular. Nodal teachers of this club help in providing overall guidance to the gender champions on various aspects of activity implementation and also collect quarterly reports, assess them, and send it to the head of the institution. The club also conducts training programs so as to motivate, influence, and communicate with different stakeholders.",
+      "contactEmail": "gcc@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/GCC.png",
+      "faculty": [
+        {
+          "name": "Dr. Deepti Mittal",
+          "department": "Associate Professor, EIED",
+          "email": "deepti.mittal@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Deepti Mittal",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "deepti.mittal@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTEwMw==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Pramod Kumar Vaishnav",
+          "department": "Assistant Professor, DoM",
+          "email": "pramod.kumar@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578271c",
+        "sourceId": "69b3c8031047a732f578271c",
+        "sourceType": "club",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-05-06T07:23:18.607Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "girluptiet-society",
+      "name": "GirlUpTIET Society",
+      "shortName": null,
+      "description": "Girl Up is a United Nations Foundation’s adolescent girl campaign. This society envisions a world where every girl can reach her full potential and lead the way to bigger dreams, healthier communities and stronger nations. The Girl Up platform exposes girls to issues at the intersection of gender equality, sports and storytelling. This society organizes events that instil social empowerment amongst girls through higher self-confidence, compassion, empathy, social collaboration and civic participation.",
+      "contactEmail": "girlup@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/girlup/"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/girlup/",
+      "logoReference": "http://thapar.edu/upload/images/GIRLUPTIET.png",
+      "faculty": [
+        {
+          "name": "Dr. Surbhi Sharma",
+          "department": "Assistant Professor, ECED",
+          "email": "surbhi.sharma@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Surbhi Sharma",
+              "designation": "Professor",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "surbhi.sharma@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTIyNQ==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, ECED\", official \"Professor\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Neeta Lohani",
+          "department": "Assistant Professor, BTD",
+          "email": "neeta.lohani@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Neeta Lohani",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Biotechnology",
+              "email": "neeta.lohani@thapar.edu",
+              "profileUrl": "https://btd.thapar.edu/facultydetails/MTc5Ng==",
+              "listingUrl": "https://btd.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/department-of-biotechnology"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578276c",
+        "sourceId": "69b3c8031047a732f578276c",
+        "sourceType": "society",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-08-19T04:36:35.172Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "indian-institute-of-chemical-engineers-iiche",
+      "name": "Indian Institute Of Chemical Engineers (IICHE)",
+      "shortName": "IICHE",
+      "description": "The IICHE student chapter at TIET organizes various activities like quizzes, group discussions, gaming events, article writing competitions, paper presentations, etc.",
+      "contactEmail": "iiche@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/IICHE.png",
+      "faculty": [
+        {
+          "name": "Dr. Neetu Singh",
+          "department": "Associate Professor, CHED",
+          "email": "neetu.singh@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Neetu Singh",
+              "designation": "Professor & Associate Dean of Faculty",
+              "listedUnder": "Department of Chemical Engineering",
+              "email": "neetu.singh@thapar.edu",
+              "profileUrl": "https://ched.thapar.edu/facultydetails/OTIz",
+              "listingUrl": "https://ched.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/chemical-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Associate Professor, CHED\", official \"Professor & Associate Dean of Faculty\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782738",
+        "sourceId": "69b3c8031047a732f5782738",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:19.212Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "indian-society-of-technical-education-iste",
+      "name": "Indian Society of Technical Education (ISTE)",
+      "shortName": "ISTE",
+      "description": "Providing guidance and training to students to develop better technical, learning skills and personality. Organizes lectures by experts from industry, R&D organizations, defense services, government departments, and other institutions. It also conducts training programs on report writing, project management, cultural programs, entrepreneurship development programs, moral values, ethics, leadership, and personality development.",
+      "contactEmail": "iste@thapar.edu",
+      "websites": [
+        "https://www.istetiet.com"
+      ],
+      "websiteAsPublished": "https://www.istetiet.com",
+      "logoReference": "http://thapar.edu/upload/images/ISTE.png",
+      "faculty": [
+        {
+          "name": "Dr. Bharat Garg",
+          "department": "Associate Professor, ECED",
+          "email": "bharat.garg@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Bharat Garg",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "bharat.garg@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTI1MQ==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Chandramohan Dhasarathan",
+          "department": "Assistant Professor, ECED",
+          "email": "chandramohan@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Chandramohan Dhasarathan",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "chandramohan@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTgzOA==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578273a",
+        "sourceId": "69b3c8031047a732f578273a",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-09-21T12:00:13.517Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "institution-of-electronics-and-telecommunication-engineers-i",
+      "name": "Institution of Electronics And Telecommunication Engineers (IETE)",
+      "shortName": "IETE",
+      "description": "The main objective of the IETE society is to organize technical events in the areas of electronics, telecommunication, and IT. The society organizes workshops on topics like Arduino, Line Follower, and Bluetooth-controlled robots. It aims to enhance students' interest and knowledge in electronics and communication by imparting practical knowledge through workshops, technical talks, and minor projects.",
+      "contactEmail": "iete_sc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/view/tiet-ece-iete-isf/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/view/tiet-ece-iete-isf/home",
+      "logoReference": "http://thapar.edu/upload/images/IETE.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Hem Dutt Joshi",
+          "department": "Associate Professor, ECED",
+          "email": "hemdutt.joshi@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Hem Dutt Joshi",
+              "designation": "Professor & Associate Dean (DCT)",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "hemdutt.joshi@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTIzMw==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Associate Professor, ECED\", official \"Professor & Associate Dean (DCT)\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782733",
+        "sourceId": "69b3c8031047a732f5782733",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:22.883Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "institution-of-engineers-india-student-chapter-iei",
+      "name": "Institution of Engineers(India) - Student Chapter (IEI)",
+      "shortName": "India",
+      "description": "IEI (Institution of Engineers, India) organizes various workshops, technical exams, and lecture series by successful individuals in their fields. The society is open to all technical branches of engineering.",
+      "contactEmail": "iei_sc@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/IEI.png",
+      "faculty": [
+        {
+          "name": "Dr. Gagandeep Kaur",
+          "department": "Associate Professor, EIED",
+          "email": "gagandeep@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gagandeep Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Thapar Learn",
+              "email": "gagandeep@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Gagandeep-Kaur/MTAx/OTU=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Anterpreet Kaur Bedi",
+          "department": "Assistant Professor, EIED",
+          "email": "anterpreet.bedi@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Anterpreet Kaur Bedi",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "anterpreet.bedi@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTQ5OQ==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782735",
+        "sourceId": "69b3c8031047a732f5782735",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:25.522Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "institutions-innovation-council-iic",
+      "name": "Institution's Innovation Council (IIC)",
+      "shortName": "IIC",
+      "description": "The Ministry of Human Resource Development (MHRD) in India has established the Innovation Cell (MIC) to inspire students in colleges and universities to innovate and start their own ventures. As part of this initiative, the Institution's Innovation Council (IIC) at Thapar Institute of Engineering and Technology (TIET) in Patiala is actively working towards this goal. The IIC at TIET Patiala is dedicated to supporting students in turning their innovative ideas into reality, thereby contributing to the overall culture of entrepreneurship and innovation on campus.",
+      "contactEmail": "iic-tiet@thapar.edu",
+      "websites": [
+        "https://sites.google.com/view/iic-tiet/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/view/iic-tiet/home",
+      "logoReference": "http://thapar.edu/upload/images/IIC.png",
+      "faculty": [
+        {
+          "name": "Dr. Gaganpreet Kaur",
+          "department": "Assistant Professor, ECED",
+          "email": "gaganpreet.kaur@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gaganpreet Kaur",
+              "designation": "Assistant Professor-III",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "gaganpreet.kaur@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTI2NQ==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, ECED\", official \"Assistant Professor-III\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Sumit Kumar",
+          "department": "Assistant Professor, CSED",
+          "email": "Kumar.sumit@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Sumit Kumar",
+              "designation": "Assistant Professor - I",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "kumar.sumit@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTU0Nw==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor - I\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578276f",
+        "sourceId": "69b3c8031047a732f578276f",
+        "sourceType": "society",
+        "sourceSubtype": "entrepreneurship",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-29T20:22:53.008Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "international-association-of-students-in-economics-and-comme",
+      "name": "International Association of Students in Economics and Commercial Sciences (AIESEC) - Patiala Chapter",
+      "shortName": "AIESEC",
+      "description": "AIESEC is an international youth-run non-profit organization present in 130+ countries. AIESEC in Patiala is the local chapter of AIESEC India. AIESEC was started in 1948 to attain peace and fulfillment of humankind’s potential through leadership development, achieved through cross-cultural exchanges.",
+      "contactEmail": "aiesec_sc@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/AIESEC.png",
+      "faculty": [
+        {
+          "name": "Dr. Deep Mann",
+          "department": "Assistant Professor, CSED",
+          "email": "deep.mann@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Deep Mann",
+              "designation": "Assistant Professor (Contractual -II)",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "deep.mann@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTY2Mg==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor (Contractual -II)\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578272e",
+        "sourceId": "69b3c8031047a732f578272e",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-09-03T07:43:20.977Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "name_longer_than_current_limit_80",
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "lead-society",
+      "name": "LEAD SOCIETY",
+      "shortName": null,
+      "description": "LEAD society provides platform to students of all disciplines to organize industrial visits, lectures and workshops. It is a one stop society for institute-industry collaboration for students.",
+      "contactEmail": "lead_sc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/lead-tiet"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/lead-tiet",
+      "logoReference": "http://thapar.edu/upload/images/LEAD.png",
+      "faculty": [
+        {
+          "name": "Dr. Jainy Sachdeva",
+          "department": "Assistant Professor, EIED",
+          "email": null,
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed",
+            "personal_email_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "name_and_department",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Jainy Sachdeva",
+              "designation": "Professor",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "jainysachdeva@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTEwNw==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, EIED\", official \"Professor\""
+            ]
+          }
+        },
+        {
+          "name": "Mr. Jitender Kaushal",
+          "department": "Assistant Professor, EIED",
+          "email": "jitender.kaushal@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782772",
+        "sourceId": "69b3c8031047a732f5782772",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:31:51.758Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "literary-society",
+      "name": "Literary Society",
+      "shortName": null,
+      "description": "The primary objective of Literary Society is to inculcate among students a keen sense of language and appreciation for myriad literary expressions, forms and genres.",
+      "contactEmail": "litsoc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/litsoc"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/litsoc",
+      "logoReference": "http://thapar.edu/upload/images/LitSoc.png",
+      "faculty": [
+        {
+          "name": "Dr. Ruchika Jain",
+          "department": "Assistant Professor, TSLAS",
+          "email": "ruchika.jain@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "DR. RUCHIKA JAIN",
+              "designation": "Assistant Professor",
+              "listedUnder": "Thapar School of Liberal Arts & Sciences (TSLAS)",
+              "email": "ruchika.jain@thapar.edu",
+              "profileUrl": "https://tslas.thapar.edu/facultymaster/49",
+              "listingUrl": "https://tslas.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/schools/thapar-school-of-liberal-arts-sciences-tslas-1"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Sapanpreet Kaur",
+          "department": "Assistant Professor, DHSS",
+          "email": "sapanpreet.kaur@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782778",
+        "sourceId": "69b3c8031047a732f5782778",
+        "sourceType": "society",
+        "sourceSubtype": "debate-/-literary",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-09-21T11:57:07.637Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "materials-and-physics-society-maps",
+      "name": "Materials and Physics Society (MAPS)",
+      "shortName": "MAPS",
+      "description": "To generate an interactive environment that encourages conditions for learning and stimulates personal and professional growth, providing exposure to new ideas and creativity. Major activities organized: Expert lectures on physical science, quizzes, paper presentations, organization of seminars etc.",
+      "contactEmail": "maps@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/MAPS.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Debabrata Deb",
+          "department": "Associate Professor, SPMS",
+          "email": "debabrata.deb@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        },
+        {
+          "name": "Dr. Saurabh Malik",
+          "department": "Associate Professor, DPMS",
+          "email": "soumarik@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578277b",
+        "sourceId": "69b3c8031047a732f578277b",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-08-18T07:46:43.975Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "mechatronics-and-robotics-society-mars",
+      "name": "Mechatronics and Robotics Society (MARS)",
+      "shortName": "MARS",
+      "description": "MARS (Mechatronics and Robotics Society) is the official robotics and automation society of Thapar Institute of Engineering and Technology. We specialize in building cutting-edge robotic systems through interdisciplinary collaboration in mechanical, design, control, electronics, and AI. Since 2023, MARS has been proudly representing TIET in the International Rover Challenge (IRC), one of the world’s most prestigious robotics competitions. In IRC 2025, we achieved a remarkable 2nd position globally, showcasing our expertise with a fully functional Mars rover prototype designed and built in-house. Beyond competitive robotics, we work on multiple projects ranging from autonomous cleaning robots and robotic arms to warehouse automation systems. Through workshops, mentorship, and hands-on innovation, MARS empowers students to shape the future of robotics and automation.",
+      "contactEmail": "mars@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "https://thapar.edu/upload/images/Mechatronics%20&%20Robotics1.png",
+      "faculty": [
+        {
+          "name": "Dr. Ashish Singla",
+          "department": "Associate Professor, MED",
+          "email": "ashish.singla@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Ashish Singla",
+              "designation": "Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "ashish.singla@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTE2NA==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": [
+              "designation: published \"Associate Professor, MED\", official \"Professor\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Sachin Kansal",
+          "department": "Assistant Professor, CSED",
+          "email": "sachin.kansal@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Sachin Kansal",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "sachin.kansal@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTQyNA==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Associate Professor\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578277e",
+        "sourceId": "69b3c8031047a732f578277e",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:27:47.427Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "microsoft-learn-student-chapter",
+      "name": "Microsoft Learn Student Chapter",
+      "shortName": null,
+      "description": "The aim is to provide guidance, technical trainings, and project guidance that improve students' knowledge and learning skills.",
+      "contactEmail": "msc@thapar.edu",
+      "websites": [
+        "https://mlsctiet.com/"
+      ],
+      "websiteAsPublished": "https://mlsctiet.com/",
+      "logoReference": "http://thapar.edu/upload/images/MSC.png",
+      "faculty": [
+        {
+          "name": "Dr. Saif Nalband",
+          "department": "Assistant Professor, CSED",
+          "email": "saif.nalband@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Saif Nalband",
+              "designation": "Assistant Professor - I",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "saif.nalband@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTU1Mw==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor - I\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Anjula Mehto",
+          "department": "Assistant Professor, CSED",
+          "email": "anjula.mehto@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Anjula Mehto",
+              "designation": "Assistant Professor (Term)",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "anjula.mehto@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTUwNg==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor (Term)\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578273d",
+        "sourceId": "69b3c8031047a732f578273d",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-07-06T11:36:57.628Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "music-and-dramatic-society-mudra",
+      "name": "Music and Dramatic Society (MUDRA)",
+      "shortName": "MUDRA",
+      "description": "The objective of this society is to hone the extra-curricular skills of students in the area of Music, Dramatics and developing managerial prowess contributing towards their overall personality. It organizes several big events such as MUDRA night and Izhaar.",
+      "contactEmail": "mudra@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/MUDRA.png",
+      "faculty": [
+        {
+          "name": "Dr. D.P. Singh",
+          "department": "Associate Professor, SPMS",
+          "email": "dpsingh@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        },
+        {
+          "name": "Dr. Anupam Garg",
+          "department": "Assistant Professor, CSED",
+          "email": "anupam.garg@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Anupam Garg",
+              "designation": "Assistant Professor (Contractual)",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "anupam.garg@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTg0OA==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor (Contractual)\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782781",
+        "sourceId": "69b3c8031047a732f5782781",
+        "sourceType": "society",
+        "sourceSubtype": "cultural-/-visual-arts",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:30:49.822Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "national-cadet-corps",
+      "name": "National Cadet Corps",
+      "shortName": null,
+      "description": "The NCC Army Wing at Thapar Institute of Engineering and Technology aims to develop discipline, leadership, and strong character among students while instilling patriotism and a sense of national service. It provides basic military training, promotes physical fitness, and encourages teamwork, shaping cadets into responsible and confident citizens.",
+      "contactEmail": "ncc@thapar.edu",
+      "websites": [
+        "https://ncc-thapar.vercel.app/"
+      ],
+      "websiteAsPublished": "https://ncc-thapar.vercel.app/",
+      "logoReference": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_National_Cadet_Corps_%28India%29.png/960px-Emblem_of_National_Cadet_Corps_%28India%29.png",
+      "faculty": [
+        {
+          "name": "Kumar Gaurav (CTO, NCC)",
+          "department": "Assistant Librarian, Nava Nalanda Central Library",
+          "email": "kumar.gaurav@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69bbd4a33b06571bbb1fdb0e",
+        "sourceId": "69bbd4a33b06571bbb1fdb0e",
+        "sourceType": "units",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-19T10:49:07.866Z",
+        "sourceUpdatedAt": "2026-05-06T07:25:28.447Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "image_on_third_party_host: upload.wikimedia.org"
+        ]
+      }
+    },
+    {
+      "key": "national-service-scheme",
+      "name": "National Service Scheme",
+      "shortName": null,
+      "description": "National Service scheme at TIET is a part of the nationwide mission of providing service in social sphere. The society of Thapar Institute organizes activities for the welfare of society and celebrates the days of national importance. Major activities include organization of Blood donation camps, health check-up camps, cleanliness drives etc. It is also a part of the nation wide \"Swachh Bharat\" mission of the GOI.",
+      "contactEmail": "nss@thapar.edu",
+      "websites": [
+        "https://www.thapar.edu/students/pages/nss-coordinators"
+      ],
+      "websiteAsPublished": "https://www.thapar.edu/students/pages/nss-coordinators",
+      "logoReference": "http://thapar.edu/upload/images/NSS.png",
+      "faculty": [
+        {
+          "name": "Dr. Surya Prakash",
+          "department": "Associate Professor, EIED",
+          "email": "surya.prakash@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Surya Prakash",
+              "designation": "Professor",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "surya.prakash@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTEwMg==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Associate Professor, EIED\", official \"Professor\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b7a9ba1d5b673146bd8bb6",
+        "sourceId": "69b7a9ba1d5b673146bd8bb6",
+        "sourceType": "units",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-16T06:56:58.100Z",
+        "sourceUpdatedAt": "2026-05-06T07:25:30.891Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "owasp-student-chapter",
+      "name": "OWASP Student Chapter",
+      "shortName": null,
+      "description": "OWASP Student Chapter aims to provide excellence in network and security, encouraging members to be more digitally secure. The chapter organizes workshops, guest lectures on various fields, and competitions to test knowledge.",
+      "contactEmail": "owasp_sc@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/OWASP.png",
+      "faculty": [
+        {
+          "name": "Dr. Maninder Kaur",
+          "department": "Assistant Professor, CSED",
+          "email": "manindersohal@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Maninder Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "manindersohal@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/OTY1",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Associate Professor\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Simran Setia",
+          "department": "Assistant Professor, CSED",
+          "email": "simran.setia@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Simran Setia",
+              "designation": "Assistant Professor - I",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "simran.setia@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTU5MA==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor - I\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578273f",
+        "sourceId": "69b3c8031047a732f578273f",
+        "sourceType": "chapter",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:34.074Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "paryavaran-welfare-society-pws",
+      "name": "Paryavaran Welfare Society (PWS)",
+      "shortName": "PWS",
+      "description": "In the ongoing era, our fragile earth needs acute attention for its prevalence, PWS endures to maintain the biodiversity, conservation of water, air and energy resources.",
+      "contactEmail": "pws@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/pwsthapar"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/pwsthapar",
+      "logoReference": "http://thapar.edu/upload/images/PWS.png",
+      "faculty": [
+        {
+          "name": "Dr. Amit Dhir",
+          "department": "Associate Professor, SEE",
+          "email": "amit.dhir@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782784",
+        "sourceId": "69b3c8031047a732f5782784",
+        "sourceType": "society",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:32:56.673Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "pratigya-society",
+      "name": "Pratigya Society",
+      "shortName": null,
+      "description": "PRATIGYA, a society, is working consistently for social welfare. This society develops teams of student volunteers from the undergraduate, post-graduate, and Management programs, who teach the underprivileged kids from classes I to XII. These kids include children of class four employees of Thapar Institute as well as kids residing outside Thapar.",
+      "contactEmail": "pratigyasoc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/view/pratigyasociety"
+      ],
+      "websiteAsPublished": "https://sites.google.com/view/pratigyasociety",
+      "logoReference": "http://thapar.edu/upload/images/Pratigya.png",
+      "faculty": [
+        {
+          "name": "Dr. Rajesh M. Pindoriya",
+          "department": "Assistant Professor, ECED",
+          "email": "pindoriya.rajesh@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Rajesh M. Pindoriya",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "pindoriya.rajesh@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTUwMA==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Garima Singh",
+          "department": "Assistant Professor - I, CSED",
+          "email": "garima.singh@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Garima Singh",
+              "designation": "Assistant Professor - I",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "garima.singh@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTUxMA==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782786",
+        "sourceId": "69b3c8031047a732f5782786",
+        "sourceType": "society",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:22:14.321Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "rotaract-club-tiet",
+      "name": "ROTARACT CLUB - TIET",
+      "shortName": null,
+      "description": "Rotaract club's motto is \"Remodeling a better tomorrow,\" where passionate people come together to exchange ideas and tackle communities' most persistent problems. They provide aid to people in need, spread prosperity, and invest in the next generation through organizing activities such as health check-up camps, distributing sanitary napkins in slums, spreading cancer awareness, among others.",
+      "contactEmail": "rotaractclub_sc@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/files/rot.jpg",
+      "faculty": [
+        {
+          "name": "Ms. Navdeep Dhillon",
+          "department": "Lecturer, SHSS",
+          "email": "navdeep.dhillon@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Dr. Deep Mann",
+          "department": "CSED",
+          "email": "deep.mann@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Deep Mann",
+              "designation": "Assistant Professor (Contractual -II)",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "deep.mann@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTY2Mg==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"CSED\", official \"Assistant Professor (Contractual -II)\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782742",
+        "sourceId": "69b3c8031047a732f5782742",
+        "sourceType": "chapter",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:37.481Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "society-for-community-engineering-sce",
+      "name": "Society for Community Engineering (SCE)",
+      "shortName": "SCE",
+      "description": "The purpose of “Society for Community Engineering (SCE)” is to provide “Innovative, Sustainable and Affordable Engineering Solutions to Patiala”, wherever creative engineering solutions are required.\n This is an initiative of the Department of Mechanical Engineering, but students from any stream can join. The students will identify “problems/need” in Patiala and will develop innovative engineering solutions (products/prototypes).\n Students would acquire skills to:\n1. Develop creative solutions to complex problems: identify problems, design and develop engineering solutions optimized for sustainability and affordability.\n2. Secure innovation through patents, opportunity to develop startups\n3. Pitch for fundraising\n4. Develop community, alumni and industry network\n5. Address national missions such as “Make in India” and “Atmanirbhar Bharat”",
+      "contactEmail": null,
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": null,
+      "faculty": [
+        {
+          "name": "Dr. S.S. Mallick",
+          "department": "Assistant Professor, MED",
+          "email": "ssmallick@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. S.S.Mallick",
+              "designation": "Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "ssmallick@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTE1Nw==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, MED\", official \"Professor\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Pankaj Kumar",
+          "department": "Assistant Professor, MED",
+          "email": "pankaj.kumar@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Pankaj Kumar",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "pankaj.kumar@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTQwMw==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b932265969ae61932319b3",
+        "sourceId": "69b932265969ae61932319b3",
+        "sourceType": "society",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-17T10:51:18.087Z",
+        "sourceUpdatedAt": "2026-04-29T20:23:06.883Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_contact_email",
+          "missing_website",
+          "missing_image"
+        ]
+      }
+    },
+    {
+      "key": "society-for-promotion-of-indian-classical-music-and-culture",
+      "name": "Society for Promotion of Indian Classical Music & Culture Amongst Youth (SPIC MACAY)",
+      "shortName": "SPIC MACAY",
+      "description": "SPIC MACAY is a non-political nationwide voluntary movement that organises programmes of classical music and dance, folk arts, crafts, yog, classic cinema screenings, heritage walks, etc. inside school and college campuses throughout the world to make students more aware of Indian and world heritage. This initiative makes education more holistic and meaningful as it highlights all that is abstract, subtle, inspiring, and mystical in the world, teaching one to look within oneself.",
+      "contactEmail": "spicmacay@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/spicmacay-tiet-patiala/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/spicmacay-tiet-patiala/home",
+      "logoReference": "http://thapar.edu/upload/images/Spic Macay.png",
+      "faculty": [
+        {
+          "name": "Ms. Vaibhav Sakshi",
+          "department": "Assistant Professor, TSLAS",
+          "email": "vaibhav.sakshi@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Ms. Vaibhav Sakshi",
+              "designation": "Assistant Professor",
+              "listedUnder": "Thapar School of Liberal Arts & Sciences (TSLAS)",
+              "email": "vaibhav.sakshi@thapar.edu",
+              "profileUrl": "https://tslas.thapar.edu/facultymaster/95",
+              "listingUrl": "https://tslas.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/schools/thapar-school-of-liberal-arts-sciences-tslas-1"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Anil Arora",
+          "department": "Assistant Professor, ECED",
+          "email": "anil.arora@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Anil Arora",
+              "designation": "Assistant Professor",
+              "listedUnder": "Experiential Learning Centre",
+              "email": "anil.arora@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Anil-Arora/Mjcw/OTM=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/experiential-learning-centre1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/experiential-learning-centre1"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782789",
+        "sourceId": "69b3c8031047a732f5782789",
+        "sourceType": "society",
+        "sourceSubtype": "cultural-/-visual-arts",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-09-21T11:48:41.914Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "name_longer_than_current_limit_80"
+        ]
+      }
+    },
+    {
+      "key": "society-of-automotive-engineers-collegiate-club-of-tiet",
+      "name": "Society of Automotive Engineers Collegiate Club of TIET",
+      "shortName": null,
+      "description": "The objective of the society is to create awareness among students about new technologies in the automotive industry through expert lectures, seminars, workshops, quizzes, industrial visits, and more.SAE Collegiate Club of TIET\nClub ID: SAEICCNIS077\nAutomotive Teams under Mechanical Department\n(a) Team Fateh\n(b) Team Ultron",
+      "contactEmail": "sae_sc@thapar.edu",
+      "websites": [
+        "https://www.teamfateh.com/",
+        "https://www.ultronmotorsports.com"
+      ],
+      "websiteAsPublished": "https://www.teamfateh.com/,https://www.ultronmotorsports.com",
+      "logoReference": "http://thapar.edu/upload/images/SAELogo.png",
+      "faculty": [
+        {
+          "name": "Dr. Manoj Badoni",
+          "department": "Associate Professor, EIED",
+          "email": "manoj.badoni@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Manoj Badoni",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "manoj.badoni@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTM5OA==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Jay Prakash Tripathi",
+          "department": "Assistant Professor, MED",
+          "email": "jay.tripathi@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Jay Prakash Tripathi",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "jay.tripathi@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTE5Ng==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782745",
+        "sourceId": "69b3c8031047a732f5782745",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:28:01.146Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "multiple_websites_in_one_field"
+        ]
+      }
+    },
+    {
+      "key": "society-of-intelligent-systems-sis",
+      "name": "Society of Intelligent Systems (SIS)",
+      "shortName": "SIS",
+      "description": "The objectives of SIS are to reflect modern trends by focusing on cutting-edge technologies such as machine learning, deep learning, and large language models, driving innovation in robotics and automation. It broadens society’s interdisciplinary focus, fostering collaboration with different domains to drive innovation in intelligent systems and autonomous technologies.",
+      "contactEmail": "sis@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "https://media.licdn.com/dms/image/v2/D560BAQGLeiY0RHCwKQ/company-logo_200_200/B56ZvgRTCWHQAM-/0/1768994191132?e=1775692800&v=beta&t=XpRBOZjHzQLYJW9G1EUnClgxZ1_4j5QjClQujeis9Hk",
+      "faculty": [
+        {
+          "name": "Dr. Raja Rout",
+          "department": "Assistant Professor, MED",
+          "email": "raja.rout@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Raja Rout",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "raja.rout@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTQ4Mw==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b934c834bb8962eff6cb34",
+        "sourceId": "69b934c834bb8962eff6cb34",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-17T11:02:32.364Z",
+        "sourceUpdatedAt": "2026-04-30T11:28:03.128Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website",
+          "image_on_third_party_host: media.licdn.com"
+        ]
+      }
+    },
+    {
+      "key": "spiritual-scientists-alliance-ssa",
+      "name": "Spiritual Scientists’ Alliance (SSA)",
+      "shortName": "SSA",
+      "description": "To impart knowledge and inculcate a way of life which strikes a perfect balance between spiritual peace and rational work ethics. It includes a fest named 'Virsa the essence of Punjab'. Virsa stands for a great culture, a historic way of life. It perfectly depicts how to strike a perfect balance between work, leisure, and spirituality, which is important to lead a healthy, fulfilling life these days & Gurpurab Celebrations.",
+      "contactEmail": "ssa@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/virsa"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/virsa",
+      "logoReference": "http://thapar.edu/upload/images/SSA.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Amanpreet Kaur",
+          "department": "Assistant Professor, ECED",
+          "email": "amanpreet.kaur@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Amanpreet Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Thapar Learn",
+              "email": "amanpreet.kaur@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Amanpreet-Kaur/MTM1/OTU=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, ECED\", official \"Associate Professor\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Gurpal Singh",
+          "department": "Assistant Professor, CSED",
+          "email": "gurpal.singh@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gurpal Singh Chhabra",
+              "designation": "Assistant Professor (Term)",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "gurpal.singh@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTAwMw==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "name: published \"Dr. Gurpal Singh\", official \"Dr. Gurpal Singh Chhabra\"",
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor (Term)\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578278f",
+        "sourceId": "69b3c8031047a732f578278f",
+        "sourceType": "society",
+        "sourceSubtype": "cultural-/-visual-arts",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:31:15.149Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "student-alumni-interaction-cell-saic",
+      "name": "Student Alumni Interaction Cell (SAIC)",
+      "shortName": "SAIC",
+      "description": "SAIC makes continuous efforts to encourage alumni interaction. It helps in Co-ordinating with Alumni Association for Organising Alumni Reunions, Global Leadership Summit and for conducting Invited Talks.",
+      "contactEmail": "saic@thapar.edu",
+      "websites": [
+        "https://www.thapar.edu/students/pages/saic"
+      ],
+      "websiteAsPublished": "https://www.thapar.edu/students/pages/saic",
+      "logoReference": "http://thapar.edu/upload/images/SAIC.png",
+      "faculty": [
+        {
+          "name": "Mansi Bhargava",
+          "department": "Head - Alumni Relations",
+          "email": "mansi.bhargava@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b7adee0f325e81c727f43a",
+        "sourceId": "69b7adee0f325e81c727f43a",
+        "sourceType": "cell",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-16T07:14:54.694Z",
+        "sourceUpdatedAt": "2026-05-06T07:25:22.755Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "tedx-tiet",
+      "name": "TEDx TIET",
+      "shortName": null,
+      "description": "TEDx TIET aims at bringing the best orators and speakers to the institute platform under the TED initiative. The 20-minute sessions cover social and technical issues and are recorded and uploaded on YouTube and TED links.",
+      "contactEmail": "tedx@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/tedxtiet"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/tedxtiet",
+      "logoReference": "http://thapar.edu/upload/images/Tedx.png",
+      "faculty": [
+        {
+          "name": "Ms. Navdeep Dhillon",
+          "department": "Lecturer, SHSS",
+          "email": "navdeep.dhillon@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782747",
+        "sourceId": "69b3c8031047a732f5782747",
+        "sourceType": "chapter",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:44.627Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "thapar-venture-club-tvc",
+      "name": "THAPAR VENTURE CLUB (TVC)",
+      "shortName": "TVC",
+      "description": "TVC aims at developing the spirit of entrepreneurship among the students of Thapar Institute of Engineering and Technology. It not only ignites the minds but also nurtures the ideas of students . TVC is committed to build a strong platform for budding entrepreneurs as a career, as a path to success, as a journey of wisdom.",
+      "contactEmail": "edc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/edctiet"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/edctiet",
+      "logoReference": "https://thapar.edu/upload/images/EDC.png",
+      "faculty": [
+        {
+          "name": "Dr. Gaganpreet Kaur",
+          "department": "Assistant Professor, ECED",
+          "email": "gaganpreet.kaur@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gaganpreet Kaur",
+              "designation": "Assistant Professor-III",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "gaganpreet.kaur@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTI2NQ==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, ECED\", official \"Assistant Professor-III\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Anamika Sharma",
+          "department": "Assistant Professor, CSED",
+          "email": "anamika.sharma@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Anamika Sharma",
+              "designation": "Assistant Professor - I",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "anamika.sharma@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTUxMg==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor - I\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Sumit Kumar",
+          "department": "Assistant Professor, CSED",
+          "email": "kumar.sumit@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Sumit Kumar",
+              "designation": "Assistant Professor - I",
+              "listedUnder": "Department of Computer Science & Engineering",
+              "email": "kumar.sumit@thapar.edu",
+              "profileUrl": "https://csed.thapar.edu/facultydetails/MTU0Nw==",
+              "listingUrl": "https://csed.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/computer-science-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, CSED\", official \"Assistant Professor - I\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782758",
+        "sourceId": "69b3c8031047a732f5782758",
+        "sourceType": "society",
+        "sourceSubtype": "entrepreneurship",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-08-06T06:22:47.412Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "tiet-fitness-club",
+      "name": "TIET Fitness Club",
+      "shortName": null,
+      "description": "TIET Fitness Club aims to encourage and promote the adoption of professional standards, ethical practice and conduct in the provision of Health and Fitness services. This platform is used to promote the widespread participation of students, staff, and faculty to national initiatives regarding Health and Fitness under the aegis of Fit India Campaign.",
+      "contactEmail": "tietfitnessclub@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/TFC.png",
+      "faculty": [
+        {
+          "name": "Dr. Devender Kumar",
+          "department": "Assistant Professor, MED",
+          "email": "devenderkr@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Devender Kumar",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "devenderkr@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTE2OQ==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Rajendra Kumar",
+          "department": "Assistant Professor, MED",
+          "email": "rajendra.kumar@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Rajendra Kumar",
+              "designation": "Associate Professor",
+              "listedUnder": "Department of Mechanical Engineering",
+              "email": "rajendra.kumar@thapar.edu",
+              "profileUrl": "https://med.thapar.edu/facultydetails/MTE4OA==",
+              "listingUrl": "https://med.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/mechanical-engineering-department"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, MED\", official \"Associate Professor\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782720",
+        "sourceId": "69b3c8031047a732f5782720",
+        "sourceType": "club",
+        "sourceSubtype": "physical-fitness",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:27:07.295Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "tu-toastmasters-club",
+      "name": "TU Toastmasters Club",
+      "shortName": null,
+      "description": "Thapar Toastmasters Club, a chapter of Toastmasters International, is an organization that helps its members to improve their public speaking, communication, and leadership skills. The club facilitates members to overcome their stage fear, improve communication skills, and become better orators and leaders of tomorrow.",
+      "contactEmail": "toastmasters_sc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/toastmastersclub/home?authuser=0"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/toastmastersclub/home?authuser=0",
+      "logoReference": "http://thapar.edu/upload/images/Toastmasters.png",
+      "faculty": [
+        {
+          "name": "Mr. H.S. Bawa",
+          "department": "Industrial Coordinator",
+          "email": "hsbawa@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "H.S. Bawa",
+              "designation": "Head",
+              "listedUnder": "Center for Industrial Liaison & Placement",
+              "email": "hsbawa@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/H.S.-Bawa/MTQz/NQ==",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/center-for-industrial-liasion-placement-cilp",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/center-for-industrial-liasion-placement-cilp"
+            },
+            "discrepancies": [
+              "designation: published \"Industrial Coordinator\", official \"Head\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Apurva Bakshi",
+          "department": "Assistant Professor, SHSS",
+          "email": "abakshi@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782723",
+        "sourceId": "69b3c8031047a732f5782723",
+        "sourceType": "club",
+        "sourceSubtype": "debate-/-literary",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:27:11.795Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "team-oorja",
+      "name": "Team Oorja",
+      "shortName": null,
+      "description": "Team Oorja, a supercharged automotive crew bursting with energy, creativity, and an unquenchable thirst for greatness. We hail from the prestigious Thapar Institute of Engineering and Technology (TIET), where our passion and talent unite. Our team's adventure has been marked by constant expansion and impressive accomplishments, showing our unwavering commitment and tireless drive for greatness.",
+      "contactEmail": "team_oorja@thapar.edu",
+      "websites": [
+        "https://teamoorja.com/"
+      ],
+      "websiteAsPublished": "https://teamoorja.com/",
+      "logoReference": null,
+      "faculty": [
+        {
+          "name": "Dr. Gagandeep Kaur",
+          "department": "Associate Professor, EIED",
+          "email": "gagandeep@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gagandeep Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Thapar Learn",
+              "email": "gagandeep@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Gagandeep-Kaur/MTAx/OTU=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782792",
+        "sourceId": "69b3c8031047a732f5782792",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-08-18T10:42:25.864Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "logo_embedded_as_data_uri_in_source_not_kept"
+        ]
+      }
+    },
+    {
+      "key": "thapar-amateur-astronomers-society-taas",
+      "name": "Thapar Amateur Astronomers Society (TAAS)",
+      "shortName": "TAAS",
+      "description": "TAAS explores the cosmos with science and engineering with the objective of cultivating scientific temperament, nourishing inquisitive young minds and encouraging innovation in those who do not get a chance in the daily load of the engineering course. This society creates a platform for students who are interested in applying their knowledge and skills in the field of Astronomy and opens up opportunities for students willing to work as professionals in the subject.",
+      "contactEmail": "taas.astronomers@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/taas/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/taas/home",
+      "logoReference": "http://thapar.edu/upload/images/TAAS.png",
+      "faculty": [
+        {
+          "name": "Dr. Mamta Gulati",
+          "department": "Assistant Professor, SOM",
+          "email": "mamta.gulati@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "needs_review",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "an official entry has the same name but a different department (published \"Assistant Professor, SOM\", official \"Thapar School of Liberal Arts & Sciences (TSLAS)\"), so it may be a different person",
+            "official": {
+              "name": "Dr. Mamta Gulati",
+              "designation": "Assistant Professor",
+              "listedUnder": "Thapar School of Liberal Arts & Sciences (TSLAS)",
+              "email": null,
+              "profileUrl": "https://tslas.thapar.edu/facultymaster/83",
+              "listingUrl": "https://tslas.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/schools/thapar-school-of-liberal-arts-sciences-tslas-1"
+            }
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782794",
+        "sourceId": "69b3c8031047a732f5782794",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-08-07T07:36:13.450Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "thapar-electoral-club",
+      "name": "Thapar Electoral Club",
+      "shortName": null,
+      "description": "1. To organise various events and student activities as desired by the Election Commissioner of Punjab/ Deputy Commissioner of Punjab/ Tehsildar Election of Patiala.\n2. To encourage young voters about their voting rights through various student activities in campus. \n3. To assist students and other staff in enrolling and making their voting id card through an online portal. \n4. To attend time to time different meetings as conducted by the deputy commissioner's office. \n5. To participate in various competitive events as conducted by the Election Commissioner of Punjab.\n6. To arrange training facilities for campus ambassadors and nodal officers.",
+      "contactEmail": "electoralclubthapar@gmail.com",
+      "websites": [
+        "https://electoralclub.vercel.app/"
+      ],
+      "websiteAsPublished": "https://electoralclub.vercel.app/",
+      "logoReference": "https://electoralclub.vercel.app/logo-192.png",
+      "faculty": [
+        {
+          "name": "Dr. Rakesh Kumar Sharma",
+          "department": "Associate Professor, SHSS",
+          "email": "rakesh.kumar@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Dr. Shilpi Tyagi",
+          "department": "Assistant Professor, SHSS",
+          "email": "Shilpi.tyagi@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69bbd7f81b0d820416e2931b",
+        "sourceId": "69bbd7f81b0d820416e2931b",
+        "sourceType": "club",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-19T11:03:20.288Z",
+        "sourceUpdatedAt": "2026-05-06T07:23:46.509Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [
+          "contactEmail"
+        ],
+        "possibleDuplicateOf": [
+          "electoral-club"
+        ],
+        "flags": [
+          "contact_email_not_thapar_domain",
+          "image_on_third_party_host: electoralclub.vercel.app",
+          "possible_duplicate_kept_separate: Electoral Club"
+        ]
+      }
+    },
+    {
+      "key": "thapar-institute-counselling-cell-ticc",
+      "name": "Thapar Institute Counselling Cell (TICC)",
+      "shortName": "TICC",
+      "description": "Thapar Institute Counselling Cell (TICC) was established in January 2016 as part of the Department of Student Affairs (DoSA) at TIET, with a primary focus on promoting the holistic well-being of students through comprehensive mental health counselling services, in adherence to UGC guidelines. TICC serves as a crucial support system, offering guidance and assistance to individuals in effectively navigating the complexities and stressors of student life. By providing a safe and nurturing environment, TICC empowers students to develop resilience, coping mechanisms, and overall mental well-being.",
+      "contactEmail": "ticc@thapar.edu",
+      "websites": [
+        "https://ticc.thapar.edu/"
+      ],
+      "websiteAsPublished": "https://ticc.thapar.edu/",
+      "logoReference": "https://ticc.thapar.edu/assets/image.png",
+      "faculty": [
+        {
+          "name": "Dr. Sonam Dullat",
+          "department": "Sr. Manager (Student Counsellor), Counselling Cell (TICC)",
+          "email": "sonam.dullat@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "not found in the official faculty lists"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b7acba0f325e81c727f2f6",
+        "sourceId": "69b7acba0f325e81c727f2f6",
+        "sourceType": "cell",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-16T07:09:46.357Z",
+        "sourceUpdatedAt": "2026-05-06T07:25:24.978Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "thapar-mathematical-society",
+      "name": "Thapar Mathematical Society",
+      "shortName": null,
+      "description": "Thapar Mathematical Society promotes mathematics and its applications among young people and in society by providing them a platform for interaction through expert talks, events, activities, and workshops.",
+      "contactEmail": "mathematical_soc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/thapar-mathematical-society"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/thapar-mathematical-society",
+      "logoReference": "http://thapar.edu/upload/images/TMS.png",
+      "faculty": [
+        {
+          "name": "Dr. Kavita",
+          "department": "Associate Professor, SOM",
+          "email": "kavita@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        },
+        {
+          "name": "Yashpreet Kaur",
+          "department": "Assistant Professor, DOM",
+          "email": "yashpreet.kaur@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782797",
+        "sourceId": "69b3c8031047a732f5782797",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-09-25T06:54:06.270Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "thapar-model-united-nations-tumun",
+      "name": "Thapar Model United Nations (TUMUN)",
+      "shortName": "TUMUN",
+      "description": "This Society is for all those who want to master the art of negotiation. Thapar Institute of Engineering and Technology, Model United Nations brings you the best platform for debate and negotiations and to get a rich experience in these activities.",
+      "contactEmail": "tumun@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/thapar-mun-society/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/thapar-mun-society/home",
+      "logoReference": "http://thapar.edu/upload/images/TUMUN.png",
+      "faculty": [
+        {
+          "name": "Dr. Muskaan Arora",
+          "department": "Assistant Professor, TSLAS",
+          "email": "muskaan.arora@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Muskaan Arora",
+              "designation": "Assistant Professor",
+              "listedUnder": "Thapar School of Liberal Arts & Sciences (TSLAS)",
+              "email": "muskaan.arora@thapar.edu",
+              "profileUrl": "https://tslas.thapar.edu/facultymaster/61",
+              "listingUrl": "https://tslas.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/schools/thapar-school-of-liberal-arts-sciences-tslas-1"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Gagandeep Kaur",
+          "department": "Associate Professor, EIED",
+          "email": "gagandeep@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Gagandeep Kaur",
+              "designation": "Associate Professor",
+              "listedUnder": "Thapar Learn",
+              "email": "gagandeep@thapar.edu",
+              "profileUrl": "https://www.thapar.edu/faculties/view/Dr.-Gagandeep-Kaur/MTAx/OTU=",
+              "listingUrl": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/centers/centre-for-academic-practices-and-student-learning1"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578279e",
+        "sourceId": "69b3c8031047a732f578279e",
+        "sourceType": "society",
+        "sourceSubtype": "debate-/-literary",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-09-22T05:39:16.632Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "thapar-movie-club-tmc",
+      "name": "Thapar Movie Club (TMC)",
+      "shortName": "TMC",
+      "description": "Thapar Movie Club aims to promote movie making on the academic, social and cultural subjects that impact the society. Inviting famous personalities related to movie making for interaction with TIET community is the other objective of the club.",
+      "contactEmail": "tmc@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/thaparmovieclub/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/thaparmovieclub/home",
+      "logoReference": "http://thapar.edu/upload/images/TMC.jpg",
+      "faculty": [
+        {
+          "name": "Dr. Rahul Upadhyay",
+          "department": "Assistant Professor, ECED",
+          "email": "rahul.upadhyay@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Rahul Upadhyay",
+              "designation": "Associate Professor and Associate Dean",
+              "listedUnder": "Department of Electronics & Communication Engineering",
+              "email": "rahul.upadhyay@thapar.edu",
+              "profileUrl": "https://eced.thapar.edu/facultydetails/MTI0NQ==",
+              "listingUrl": "https://eced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electronics-communication-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, ECED\", official \"Associate Professor and Associate Dean\""
+            ]
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578271f",
+        "sourceId": "69b3c8031047a732f578271f",
+        "sourceType": "club",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:23:51.600Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "thapar-society-of-civil-engineers-tsce",
+      "name": "Thapar Society of Civil Engineers (TSCE)",
+      "shortName": "TSCE",
+      "description": "TSCE was formed with the main aim of providing a platform to all the budding civil engineers to update their skills in civil engineering design and field work. TSCE organizes workshops, guest lectures, design competitions, paper reading contests in the field of civil engineering.",
+      "contactEmail": "tsce@thapar.edu",
+      "websites": [
+        "https://sites.google.com/view/thapar-tsce"
+      ],
+      "websiteAsPublished": "https://sites.google.com/view/thapar-tsce",
+      "logoReference": "http://thapar.edu/upload/images/TSCE.png",
+      "faculty": [
+        {
+          "name": "Mr. Tanuj Chopra",
+          "department": "Assistant Professor, CED",
+          "email": null,
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed",
+            "personal_email_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "name_and_department",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Tanuj Chopra",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Civil Engineering",
+              "email": "tchopra@thapar.edu",
+              "profileUrl": "https://ced.thapar.edu/facultydetails/OTQy",
+              "listingUrl": "https://ced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/civil-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Heaven Singh",
+          "department": "Assistant Professor, CED",
+          "email": "heaven.singh@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Heaven Singh",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Civil Engineering",
+              "email": "heaven.singh@thapar.edu",
+              "profileUrl": "https://ced.thapar.edu/facultydetails/OTQ0",
+              "listingUrl": "https://ced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/civil-engineering"
+            },
+            "discrepancies": []
+          }
+        },
+        {
+          "name": "Dr. Vivek Gupta",
+          "department": "Assistant Professor, CED",
+          "email": "vivek.gupta1@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Vivek Gupta",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Civil Engineering",
+              "email": "vivek.gupta1@thapar.edu",
+              "profileUrl": "https://ced.thapar.edu/facultydetails/MTQzNw==",
+              "listingUrl": "https://ced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/civil-engineering"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f578279a",
+        "sourceId": "69b3c8031047a732f578279a",
+        "sourceType": "society",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-04-30T11:28:17.884Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    },
+    {
+      "key": "thapar-standards-club",
+      "name": "Thapar Standards Club",
+      "shortName": null,
+      "description": "BIS is the National Standard Body of India established under the BIS Act 2016 for the harmonious development of the activities of standardization, marking and quality certification of goods and for matters connected therewith or incidental thereto.",
+      "contactEmail": "BIS@thapar.edu",
+      "websites": [],
+      "websiteAsPublished": null,
+      "logoReference": "http://thapar.edu/upload/images/BIS.png",
+      "faculty": [
+        {
+          "name": "Dr. Vivek Gupta",
+          "department": "Assistant Professor, CSED",
+          "email": "vivek.gupta1@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Vivek Gupta",
+              "designation": "Assistant Professor",
+              "listedUnder": "Department of Civil Engineering",
+              "email": "vivek.gupta1@thapar.edu",
+              "profileUrl": "https://ced.thapar.edu/facultydetails/MTQzNw==",
+              "listingUrl": "https://ced.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/civil-engineering"
+            },
+            "discrepancies": []
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782709",
+        "sourceId": "69b3c8031047a732f5782709",
+        "sourceType": "club",
+        "sourceSubtype": "technical-/-academic",
+        "sourceCreatedAt": "2026-03-13T08:17:07.927Z",
+        "sourceUpdatedAt": "2026-05-06T07:23:56.318Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": [
+          "missing_website"
+        ]
+      }
+    },
+    {
+      "key": "youth-united-thapar-chapter",
+      "name": "Youth United - Thapar Chapter",
+      "shortName": null,
+      "description": "Youth United encourages the development of society as a whole through activities like publishing periodicals on social issues, organizing community service events, and visits. It organizes painting competitions for children, visits to institutions like Pingalwara, old age homes, schools for the deaf and dumb, and the \"Joy of Giving Week\" to inculcate cultural and social values among the residents of the Thapar Technology campus.",
+      "contactEmail": "yu@thapar.edu",
+      "websites": [
+        "https://sites.google.com/thapar.edu/youth-united-patiala-chapter/home"
+      ],
+      "websiteAsPublished": "https://sites.google.com/thapar.edu/youth-united-patiala-chapter/home",
+      "logoReference": "http://thapar.edu/upload/images/YU.png",
+      "faculty": [
+        {
+          "name": "Dr. Mukesh Dalal",
+          "department": "Assistant Professor, EIED",
+          "email": "mukesh.dalal@thapar.edu",
+          "sourceRole": "President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "verified",
+            "matchBasis": "institutional_email",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "official": {
+              "name": "Dr. Mukesh Dalal",
+              "designation": "Assistant Professor-I",
+              "listedUnder": "Department of Electrical & Instrumentation Engineering",
+              "email": "mukesh.dalal@thapar.edu",
+              "profileUrl": "https://eied.thapar.edu/facultydetails/MTU2Ng==",
+              "listingUrl": "https://eied.thapar.edu/faculty",
+              "directoryEntry": "https://www.thapar.edu/faculties/category/departments/electrical-instrumentation-engineering"
+            },
+            "discrepancies": [
+              "designation: published \"Assistant Professor, EIED\", official \"Assistant Professor-I\""
+            ]
+          }
+        },
+        {
+          "name": "Dr. Rajesh Dhayal",
+          "department": "Assistant Professor, SOM",
+          "email": "rajesh.dhayal@thapar.edu",
+          "sourceRole": "Vice President",
+          "redactions": [
+            "photo_link_removed"
+          ],
+          "verification": {
+            "status": "no_official_record",
+            "source": "https://www.thapar.edu/faculties",
+            "checkedAt": "2026-10-25",
+            "reason": "the official directory lists no people for this department or unit"
+          }
+        }
+      ],
+      "source": {
+        "site": "https://studentsocieties.thapar.edu/",
+        "recordUrl": "https://studentsocieties.thapar.edu/api/organizations/69b3c8031047a732f5782749",
+        "sourceId": "69b3c8031047a732f5782749",
+        "sourceType": "chapter",
+        "sourceSubtype": "social",
+        "sourceCreatedAt": "2026-03-13T08:17:07.928Z",
+        "sourceUpdatedAt": "2026-05-06T07:24:48.911Z"
+      },
+      "review": {
+        "sourceStatus": "official_published",
+        "appReview": "pending",
+        "questionableFields": [],
+        "possibleDuplicateOf": [],
+        "flags": []
+      }
+    }
+  ]
+}

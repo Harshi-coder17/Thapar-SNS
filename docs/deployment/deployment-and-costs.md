@@ -32,6 +32,7 @@ Neon offers **Singapore (`aws-ap-southeast-1`)**; Mumbai is not listed (Neon reg
 
 ### Fly.io (service)
 - One Machine, `shared-cpu-1x`, **512 MB** proposed: the 256 MB preset is likely too small for Node + file validation; measure in 3a.
+- Must run with `NODE_ENV=production` and without `SERVICE_DISABLED_JOBS`. Otherwise the scheduled story deletion (FR-SOC-3) stays off, as it does in local development (OI-63). The service logs "scheduled jobs disabled in this environment" at start when any job is off; check that this line is absent after deploying.
 - Must never auto-stop. The service exposes WSS, so it has an `[http_service]`. Set `auto_stop_machines = "off"` and `auto_start_machines = false` (Fly autostop docs).
 - Health check endpoint (`/healthz`: process up, last sweep time, DB reachable, backlog age).
 - Restart policy: always. Graceful shutdown: stop accepting work, finish or release leases, close sockets with a "reconnect" code.

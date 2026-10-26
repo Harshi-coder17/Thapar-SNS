@@ -1,6 +1,6 @@
 // Prisma schema for Thapar SNS.
-// Slice 1a: generator and datasource only. Tables arrive with their owning slice
-// (identity in 1b); see docs/database/database-design.md.
+// Tables are prefixed with their owning module (ADR-0011); a module reads and writes only its own
+// tables. Identity tables arrive in Slice 1b; see docs/database/database-design.md.
 
 generator client {
   provider = "prisma-client"
@@ -9,4 +9,1140 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------------------------
+// identity module (Slice 1b). Shapes follow Better Auth 1.7.10's core tables (ADR-0005), with
+// UUID primary keys [SPEC] and TIMESTAMPTZ timestamps [SPEC]. With `generateId: "uuid"` Better Auth
+// omits ids on insert, so Prisma generates them (`@default(uuid())`, client-side, no SQL change).
+// ---------------------------------------------------------------------------------------------
+
+enum UserRole {
+  STUDENT
+  FACULTY
+  ADMIN
+
+  @@map("identity_user_role")
+}
+
+model User {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  /// Lower-cased; must be @<AUTH_ALLOWED_EMAIL_DOMAIN> and verified by Google (OI-51).
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  /// Global role [SPEC §9.3]. Only ever set server-side (Better Auth field input: false).
+  role          UserRole  @default(STUDENT)
+  createdAt     DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt     DateTime  @updatedAt @db.Timestamptz(6)
+  sessions      Session[]
+  accounts      Account[]
+
+  // Profile (FR-AUTH-2). Null until the first-time profile is completed; a CHECK constraint
+  // (migration SQL) requires all of them once profile_completed_at is set.
+  /// Private: visible only to the user and admins (OI-27). Stored upper-cased.
+  rollNumber         String?     @unique
+  branchCode         String?
+  branch             Branch?     @relation(fields: [branchCode], references: [code], onDelete: Restrict)
+  /// Year of study, 1 to 5 (CHECK constraint in migration SQL).
+  year               Int?        @db.SmallInt
+  profileCompletedAt DateTime?   @db.Timestamptz(6)
+  skills             UserSkill[]
+
+  // Back-relations from other modules' tables (foreign keys only; modules never query each other's
+  // tables, docs/architecture/modules.md §2 rule 3).
+  societiesCreated   Society[]                   @relation("SocietyCreatedBy")
+  societyMemberships SocietyMembership[]
+  societyRequests    SocietyMembershipRequest[]  @relation("SocietyRequestUser")
+  societyDecisions   SocietyMembershipRequest[]  @relation("SocietyRequestDecidedBy")
+  societyFollows     SocietyFollow[]
+  societyPosts       SocietyPost[]
+  societiesVerified  Society[]                   @relation("SocietyVerifiedBy")
+  societyHeadGrants  SocietyHeadGrant[]          @relation("SocietyHeadGrantUser")
+  headGrantsGiven    SocietyHeadGrant[]          @relation("SocietyHeadGrantGrantedBy")
+  headGrantsRevoked  SocietyHeadGrant[]          @relation("SocietyHeadGrantRevokedBy")
+  facultyVerified    SocietyFacultyAssociation[] @relation("SocietyFacultyVerifiedBy")
+
+  /// Admin ban (OI-28): a banned user cannot sign in; their sessions are revoked when banned.
+  bannedAt     DateTime? @db.Timestamptz(6)
+  bannedReason String?
+
+  assets               Asset[]
+  notifications        Notification[]
+  eventsCreated        Event[]             @relation("EventCreatedBy")
+  eventInterests       EventInterest[]
+  eventRegistrations   EventRegistration[]
+  mateRequests         MateRequest[]
+  mateResponses        MateResponse[]
+  mateConnectionsAsReq MateConnection[]    @relation("MateConnectionRequester")
+  mateConnectionsAsRes MateConnection[]    @relation("MateConnectionResponder")
+  chatMessages         ChatMessage[]
+  studyMaterials       StudyMaterial[]
+  studyMaterialVotes   StudyMaterialVote[]
+  archiveProjects      ArchiveProject[]    @relation("ArchiveSubmitter")
+  archiveReviews       ArchiveProject[]    @relation("ArchiveReviewer")
+  archiveVotes         ArchiveVote[]
+  archiveComments      ArchiveComment[]
+  facultyProfile       FacultyProfile?
+  facultyClaims        FacultyClaim[]      @relation("FacultyClaimant")
+  facultyDecisions     FacultyClaim[]      @relation("FacultyClaimDecider")
+  calendarEntries      CalendarEntry[]     @relation("CalendarOwner")
+  calendarCreated      CalendarEntry[]     @relation("CalendarCreatedBy")
+  placementRecords     PlacementRecord[]
+  reportsFiled         ModerationReport[]  @relation("ReportReporter")
+  reportsResolved      ModerationReport[]  @relation("ReportResolver")
+
+  @@map("identity_users")
+}
+
+/// Programmes a student can belong to (FR-AUTH-2). Reference data, seeded by migration; admins
+/// curate it later (Slice 5). Inactive entries stay for existing users but cannot be chosen.
+model Branch {
+  code             String            @id
+  name             String            @unique
+  active           Boolean           @default(true)
+  sortOrder        Int               @default(0)
+  users            User[]
+  studyMaterials   StudyMaterial[]
+  placementRecords PlacementRecord[]
+
+  @@map("identity_branches")
+}
+
+/// Controlled skill/interest vocabulary (FR-AUTH-2, spec §4.4.1 "controlled set", OI-42).
+model SkillTag {
+  slug         String             @id
+  label        String             @unique
+  category     String
+  active       Boolean            @default(true)
+  sortOrder    Int                @default(0)
+  users        UserSkill[]
+  mateRequests MateRequestSkill[]
+
+  @@map("identity_skill_tags")
+}
+
+model UserSkill {
+  userId  String   @db.Uuid
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tagSlug String
+  tag     SkillTag @relation(fields: [tagSlug], references: [slug])
+
+  @@id([userId, tagSlug])
+  @@index([tagSlug])
+  @@map("identity_user_skills")
+}
+
+model Session {
+  id        String   @id @default(uuid()) @db.Uuid
+  /// SHA-256 of the session token (base64url, ADR-0006). The raw token exists only in the cookie.
+  token     String   @unique
+  expiresAt DateTime @db.Timestamptz(6)
+  /// Used for the 30-day absolute lifetime (OI-05).
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  /// Last user activity (2026-10-26 session policy): drives the inactivity limit. Updated only by user
+  /// actions (the activity signal and submitted changes), never by background requests.
+  lastActiveAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+  ipAddress String?
+  userAgent String?
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("identity_sessions")
+}
+
+model Account {
+  id                    String    @id @default(uuid()) @db.Uuid
+  /// Google's stable `sub` identifier.
+  accountId             String
+  providerId            String
+  userId                String    @db.Uuid
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime? @db.Timestamptz(6)
+  refreshTokenExpiresAt DateTime? @db.Timestamptz(6)
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt             DateTime  @updatedAt @db.Timestamptz(6)
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+  @@map("identity_accounts")
+}
+
+model Verification {
+  id         String   @id @default(uuid()) @db.Uuid
+  identifier String
+  value      String
+  expiresAt  DateTime @db.Timestamptz(6)
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime @updatedAt @db.Timestamptz(6)
+
+  @@index([identifier])
+  @@map("identity_verifications")
+}
+
+/// Shared rate-limit counters (spike condition C5: database storage, never secondary storage).
+model RateLimit {
+  id          String @id @default(uuid()) @db.Uuid
+  key         String @unique
+  count       Int
+  lastRequest BigInt
+
+  @@map("identity_rate_limits")
+}
+
+// ---------------------------------------------------------------------------------------------
+// admin module. Audit log [SPEC actor table, SPEC-ADMIN]: append-only, enforced by a trigger
+// (migration SQL). actor_id/target_id are plain UUIDs (no foreign keys) so history survives deletions.
+// ---------------------------------------------------------------------------------------------
+
+model AuditLog {
+  id             String   @id @default(uuid()) @db.Uuid
+  /// The acting user; null for system actions (e.g. admin bootstrap from configuration).
+  actorId        String?  @db.Uuid
+  action         String
+  targetType     String
+  targetId       String?
+  details        Json     @default("{}")
+  /// ADR-0013 §3.4: the identity the actor acted for, e.g. ("society", <society id>). Null when the
+  /// actor acted as themselves (or as a platform admin).
+  onBehalfOfType String?
+  onBehalfOfId   String?  @db.Uuid
+  createdAt      DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([targetType, targetId])
+  @@index([onBehalfOfType, onBehalfOfId])
+  @@index([createdAt])
+  @@map("admin_audit_logs")
+}
+
+// ---------------------------------------------------------------------------------------------
+// societies module (Slice 2a: FR-SOC-1..4, OI-10, OI-11, OI-38; revised by ADR-0013 / OI-56).
+// Management access comes only from an active row in societies_head_grants (SPEC-SOC-PERM, per
+// row). Every active Head has the same full permissions. Membership display groups and titles are
+// organisational information and grant nothing. Following grants nothing. Platform admins keep
+// oversight and recovery actions.
+// ---------------------------------------------------------------------------------------------
+
+/// How a society displays a member (display only; never a permission). Heads are shown from
+/// their active head grant, whatever their group.
+enum SocietyMemberGroup {
+  CORE
+  GENERAL
+
+  @@map("societies_member_group")
+}
+
+enum SocietyHeadGrantReason {
+  /// Existing HEAD membership converted by the ADR-0013 migration.
+  MIGRATED
+  CREATED_WITH_SOCIETY
+  ADDED
+  HANDOVER
+  ADMIN_RECOVERY
+
+  @@map("societies_head_grant_reason")
+}
+
+enum SocietyHeadRevokeReason {
+  REMOVED
+  HANDOVER
+
+  @@map("societies_head_revoke_reason")
+}
+
+enum SocietyRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+
+  @@map("societies_request_status")
+}
+
+enum SocietyPostType {
+  UPDATE
+  RECRUITMENT
+  STORY
+
+  @@map("societies_post_type")
+}
+
+enum SocietyPostVisibility {
+  PUBLIC
+  MEMBERS
+
+  @@map("societies_post_visibility")
+}
+
+/// Society categories (FR-SOC-1, FR-SOC-4 filter). Reference data seeded by migration ([PROPOSED] list).
+model SocietyCategory {
+  slug      String    @id
+  label     String    @unique
+  active    Boolean   @default(true)
+  sortOrder Int       @default(0)
+  societies Society[]
+
+  @@map("societies_categories")
+}
+
+model Society {
+  id              String                      @id @default(uuid()) @db.Uuid
+  /// URL name, lower-case letters, digits and hyphens; unique.
+  slug            String                      @unique
+  /// Unique ignoring case (index on lower(name) in migration SQL).
+  name            String
+  /// Optional acronym or short name, e.g. "CCS".
+  shortName       String?
+  /// Optional (ADR-0013): imported organisations may have none; the page says so.
+  description     String?
+  /// Optional (OI-55, owner 2026-10-25): never force an organisation into a category.
+  categorySlug    String?
+  category        SocietyCategory?            @relation(fields: [categorySlug], references: [slug], onDelete: Restrict)
+  /// https links shown on the profile (SPEC-SOC-PERM "social links"): website, instagram, linkedin.
+  socialLinks     Json                        @default("{}")
+  contactEmail    String?
+  /// OI-38: inactive societies are hidden from the directory but stay readable by direct link.
+  isActive        Boolean                     @default(true)
+  createdById     String?                     @db.Uuid
+  createdBy       User?                       @relation("SocietyCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  // Provenance (ADR-0013 §3.5): where an imported record came from, and who confirmed it.
+  /// Stable import key (OI-57); unique when present.
+  sourceKey       String?                     @unique
+  /// The official directory's own labels (e.g. "chapter", "technical-/-academic"), kept as published and
+  /// distinct from the application category (mapped explicitly, source-categories.ts).
+  sourceType      String?
+  sourceSubtype   String?
+  sourceUrl       String?
+  sourceFetchedAt DateTime?                   @db.Timestamptz(6)
+  /// Null = unverified (imported and not yet reviewed). Admin-created societies are verified.
+  verifiedAt      DateTime?                   @db.Timestamptz(6)
+  verifiedById    String?                     @db.Uuid
+  verifiedBy      User?                       @relation("SocietyVerifiedBy", fields: [verifiedById], references: [id], onDelete: SetNull)
+  createdAt       DateTime                    @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime                    @updatedAt @db.Timestamptz(6)
+  memberships     SocietyMembership[]
+  requests        SocietyMembershipRequest[]
+  follows         SocietyFollow[]
+  posts           SocietyPost[]
+  headGrants      SocietyHeadGrant[]
+  faculty         SocietyFacultyAssociation[]
+  // Logo and banner (FR-SOC-1, Slices 2d/3a): APPROVED assets only (assets module). Null = none yet;
+  // pages show initials and the brand-colour banner instead. logoSourceUrl keeps the provenance of an
+  // imported official logo.
+  logoAssetId     String?                     @unique @db.Uuid
+  logoAsset       Asset?                      @relation("SocietyLogo", fields: [logoAssetId], references: [id], onDelete: SetNull)
+  bannerAssetId   String?                     @unique @db.Uuid
+  bannerAsset     Asset?                      @relation("SocietyBanner", fields: [bannerAssetId], references: [id], onDelete: SetNull)
+  logoSourceUrl   String?
+  events          Event[]
+
+  @@index([categorySlug])
+  @@map("societies_societies")
+}
+
+/// Membership (FR-SOC-2 as revised by OI-56): who belongs to the society, and how it displays them.
+/// `group` and `position` are organisational information only and never grant permissions.
+model SocietyMembership {
+  societyId String             @db.Uuid
+  society   Society            @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  userId    String             @db.Uuid
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group     SocietyMemberGroup @default(GENERAL)
+  /// Optional free-text title chosen by the society, e.g. "General Secretary" (max 60).
+  position  String?
+  joinedAt  DateTime           @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime           @updatedAt @db.Timestamptz(6)
+
+  @@id([societyId, userId])
+  @@index([userId])
+  @@map("societies_memberships")
+}
+
+/// OI-10: students request to join; the Head approves or rejects. One PENDING request per student
+/// and society (partial unique index in migration SQL); decided requests are kept as history.
+model SocietyMembershipRequest {
+  id          String               @id @default(uuid()) @db.Uuid
+  societyId   String               @db.Uuid
+  society     Society              @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  userId      String               @db.Uuid
+  user        User                 @relation("SocietyRequestUser", fields: [userId], references: [id], onDelete: Cascade)
+  message     String?
+  status      SocietyRequestStatus @default(PENDING)
+  decidedById String?              @db.Uuid
+  decidedBy   User?                @relation("SocietyRequestDecidedBy", fields: [decidedById], references: [id], onDelete: SetNull)
+  decidedAt   DateTime?            @db.Timestamptz(6)
+  createdAt   DateTime             @default(now()) @db.Timestamptz(6)
+
+  @@index([societyId, status])
+  @@index([userId])
+  @@map("societies_membership_requests")
+}
+
+/// Following a society (owner decision 2026-10-24): open to every signed-in student, no approval,
+/// no permissions. It only selects what appears in the follower's feed.
+model SocietyFollow {
+  societyId String   @db.Uuid
+  society   Society  @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+
+  @@id([societyId, userId])
+  @@index([userId])
+  @@map("societies_follows")
+}
+
+/// FR-SOC-3 posts. `body` holds HTML that passed the server-side allow-list sanitiser on write
+/// (stories hold plain text). A post is a draft until `publishedAt` is set; stories are published
+/// at once and expire 24 hours later (`expiresAt`, filtered on every read; cleanup job in 3a).
+model SocietyPost {
+  id                  String                @id @default(uuid()) @db.Uuid
+  societyId           String                @db.Uuid
+  society             Society               @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  authorId            String?               @db.Uuid
+  author              User?                 @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  type                SocietyPostType
+  visibility          SocietyPostVisibility @default(PUBLIC)
+  title               String?
+  body                String
+  // Recruitment fields (OI-11); empty arrays mean "open to all years / branches".
+  rolesSought         String[]              @default([])
+  eligibleYears       Int[]                 @default([]) @db.SmallInt
+  eligibleBranchCodes String[]              @default([])
+  deadline            DateTime?             @db.Timestamptz(6)
+  applicationUrl      String?
+  publishedAt         DateTime?             @db.Timestamptz(6)
+  expiresAt           DateTime?             @db.Timestamptz(6)
+  createdAt           DateTime              @default(now()) @db.Timestamptz(6)
+  updatedAt           DateTime              @updatedAt @db.Timestamptz(6)
+
+  @@index([societyId, publishedAt(sort: Desc)])
+  @@index([publishedAt(sort: Desc)])
+  @@map("societies_posts")
+}
+
+/// Head authorisation (ADR-0013 §3.1): the ONLY source of society-management access. Every active
+/// grant gives the same full permissions. Rows are never deleted: revocation sets `revokedAt`, so
+/// the table is the tenure history. One active grant per society and user (partial unique index);
+/// at least one active grant per active society (service, under a row lock on the society).
+model SocietyHeadGrant {
+  id           String                   @id @default(uuid()) @db.Uuid
+  societyId    String                   @db.Uuid
+  society      Society                  @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  userId       String                   @db.Uuid
+  user         User                     @relation("SocietyHeadGrantUser", fields: [userId], references: [id], onDelete: Cascade)
+  grantedAt    DateTime                 @default(now()) @db.Timestamptz(6)
+  grantedById  String?                  @db.Uuid
+  grantedBy    User?                    @relation("SocietyHeadGrantGrantedBy", fields: [grantedById], references: [id], onDelete: SetNull)
+  grantReason  SocietyHeadGrantReason
+  revokedAt    DateTime?                @db.Timestamptz(6)
+  revokedById  String?                  @db.Uuid
+  revokedBy    User?                    @relation("SocietyHeadGrantRevokedBy", fields: [revokedById], references: [id], onDelete: SetNull)
+  revokeReason SocietyHeadRevokeReason?
+
+  @@index([societyId])
+  @@index([userId])
+  @@map("societies_head_grants")
+}
+
+/// Faculty associated with a society by a source (ADR-0013 §3.5), recorded exactly as published.
+/// Not accounts and not permissions. Visible to platform admins only until verified.
+model SocietyFacultyAssociation {
+  id               String          @id @default(uuid()) @db.Uuid
+  societyId        String          @db.Uuid
+  society          Society         @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  name             String
+  department       String?
+  email            String?
+  /// The source's own label, e.g. "President", "Vice President", "Faculty Advisor".
+  sourceRole       String
+  sourceUrl        String?
+  verifiedAt       DateTime?       @db.Timestamptz(6)
+  verifiedById     String?         @db.Uuid
+  verifiedBy       User?           @relation("SocietyFacultyVerifiedBy", fields: [verifiedById], references: [id], onDelete: SetNull)
+  createdAt        DateTime        @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime        @updatedAt @db.Timestamptz(6)
+  /// The matching official faculty-directory profile (faculty module), when one was identified.
+  facultyProfileId String?         @db.Uuid
+  facultyProfile   FacultyProfile? @relation(fields: [facultyProfileId], references: [id], onDelete: SetNull)
+  /// How the person was linked to the official record: institutional_email | name_and_department.
+  matchBasis       String?
+
+  @@index([societyId])
+  @@map("societies_faculty_associations")
+}
+
+// ---------------------------------------------------------------------------------------------
+// assets (shared module, Slices 2d/3a, ADR-0007, SPEC-ASSET). Files go browser -> quarantine prefix
+// via a signed PUT, never through the API server. The worker validates them (magic bytes, true MIME,
+// size, SHA-256) and copies valid ones to the published prefix. Forward-only state machine.
+// ---------------------------------------------------------------------------------------------
+
+enum AssetStatus {
+  AWAITING_UPLOAD
+  UPLOADED
+  SCANNING
+  APPROVED
+  QUARANTINED
+  REJECTED
+  EXPIRED
+
+  @@map("assets_status")
+}
+
+enum AssetPurpose {
+  STUDY_MATERIAL
+  SOCIETY_LOGO
+  SOCIETY_BANNER
+  ARCHIVE_SCREENSHOT
+  FACULTY_PHOTO
+
+  @@map("assets_purpose")
+}
+
+model Asset {
+  id              String       @id @default(uuid()) @db.Uuid
+  /// Null for system imports (official logos and faculty photos).
+  ownerId         String?      @db.Uuid
+  owner           User?        @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  purpose         AssetPurpose
+  originalName    String
+  declaredMime    String
+  detectedMime    String?
+  declaredSize    Int
+  actualSize      Int?
+  sha256Declared  String
+  sha256Actual    String?
+  /// Quarantine object key (deterministic from the id).
+  quarantineKey   String       @unique
+  publishedKey    String?      @unique
+  thumbnailKey    String?      @unique
+  status          AssetStatus  @default(AWAITING_UPLOAD)
+  rejectionReason String?
+  /// Provenance for imported files (official source URL).
+  sourceUrl       String?
+  /// AWAITING_UPLOAD rows expire after this time (OI-39: 1 hour).
+  expiresAt       DateTime     @db.Timestamptz(6)
+  approvedAt      DateTime?    @db.Timestamptz(6)
+  createdAt       DateTime     @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime     @updatedAt @db.Timestamptz(6)
+
+  societyLogo   Society?           @relation("SocietyLogo")
+  societyBanner Society?           @relation("SocietyBanner")
+  studyMaterial StudyMaterial?
+  archiveShot   ArchiveScreenshot?
+  facultyPhoto  FacultyProfile?
+
+  @@index([ownerId, createdAt])
+  @@index([status, expiresAt])
+  @@map("assets_assets")
+}
+
+// ---------------------------------------------------------------------------------------------
+// outbox (shared, Slice 3a, ADR-0004, docs/database/background-jobs.md). The single source of truth for
+// pending background work; written in the same transaction as the domain change.
+// ---------------------------------------------------------------------------------------------
+
+enum OutboxStatus {
+  PENDING
+  PROCESSING
+  DONE
+  DEAD
+
+  @@map("outbox_status")
+}
+
+model OutboxEvent {
+  id           String       @id @default(uuid()) @db.Uuid
+  eventType    String
+  /// Ids only: no secrets, no file bytes.
+  payload      Json         @default("{}")
+  dedupeKey    String?      @unique
+  status       OutboxStatus @default(PENDING)
+  attemptCount Int          @default(0)
+  lastError    String?
+  availableAt  DateTime     @default(now()) @db.Timestamptz(6)
+  lockedBy     String?
+  lockedUntil  DateTime?    @db.Timestamptz(6)
+  createdAt    DateTime     @default(now()) @db.Timestamptz(6)
+  processedAt  DateTime?    @db.Timestamptz(6)
+
+  @@index([status, availableAt])
+  @@map("outbox_events")
+}
+
+// ---------------------------------------------------------------------------------------------
+// notifications (shared, Slice 3a, OI-26): in-app only, pushed live when connected.
+// ---------------------------------------------------------------------------------------------
+
+model Notification {
+  id          String    @id @default(uuid()) @db.Uuid
+  recipientId String    @db.Uuid
+  recipient   User      @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  type        String
+  /// Small display data and a link; no secrets.
+  payload     Json      @default("{}")
+  /// Idempotency: one notification per source event and recipient.
+  sourceKey   String
+  readAt      DateTime? @db.Timestamptz(6)
+  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@unique([sourceKey, recipientId])
+  @@index([recipientId, createdAt(sort: Desc)])
+  @@map("notifications_notifications")
+}
+
+// ---------------------------------------------------------------------------------------------
+// events module (Slice 2b: FR-EVT-1..5, UC-07, OI-12, OI-13, OI-14, OI-34, OI-36). Society events are
+// created by an active Head of the society (ADR-0013); campus events (societyId null) by platform admins.
+// Stored status is DRAFT | PUBLISHED | CANCELLED; LIVE and COMPLETED are derived from the time window
+// (and written back by a scheduled job).
+// ---------------------------------------------------------------------------------------------
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  LIVE
+  COMPLETED
+  CANCELLED
+
+  @@map("events_status")
+}
+
+enum RegistrationStatus {
+  REGISTERED
+  WAITLISTED
+  CANCELLED
+
+  @@map("events_registration_status")
+}
+
+model Event {
+  id                 String              @id @default(uuid()) @db.Uuid
+  societyId          String?             @db.Uuid
+  society            Society?            @relation(fields: [societyId], references: [id], onDelete: Restrict)
+  title              String
+  /// Sanitised HTML.
+  description        String
+  venue              String
+  startAt            DateTime            @db.Timestamptz(6)
+  endAt              DateTime            @db.Timestamptz(6)
+  capacity           Int
+  status             EventStatus         @default(DRAFT)
+  /// Custom registration fields (OI-12), validated JSON array.
+  registrationSchema Json                @default("[]")
+  registeredCount    Int                 @default(0)
+  interestCount      Int                 @default(0)
+  /// Bumped on every interest change; realtime payloads carry it (absolute value + version).
+  interestVersion    Int                 @default(0)
+  createdById        String?             @db.Uuid
+  createdBy          User?               @relation("EventCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  publishedAt        DateTime?           @db.Timestamptz(6)
+  cancelledAt        DateTime?           @db.Timestamptz(6)
+  cancelReason       String?
+  createdAt          DateTime            @default(now()) @db.Timestamptz(6)
+  updatedAt          DateTime            @updatedAt @db.Timestamptz(6)
+  interests          EventInterest[]
+  registrations      EventRegistration[]
+
+  @@index([status, startAt])
+  @@index([societyId, startAt])
+  @@map("events_events")
+}
+
+model EventInterest {
+  eventId   String   @db.Uuid
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+
+  @@id([eventId, userId])
+  @@index([userId])
+  @@map("events_interests")
+}
+
+model EventRegistration {
+  id          String             @id @default(uuid()) @db.Uuid
+  eventId     String             @db.Uuid
+  event       Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId      String             @db.Uuid
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status      RegistrationStatus
+  responses   Json               @default("{}")
+  /// Waitlist order (FIFO, OI-14): the time the registration last entered the waitlist.
+  queuedAt    DateTime           @default(now()) @db.Timestamptz(6)
+  cancelledAt DateTime?          @db.Timestamptz(6)
+  createdAt   DateTime           @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime           @updatedAt @db.Timestamptz(6)
+
+  @@unique([eventId, userId])
+  @@index([eventId, status, queuedAt])
+  @@index([userId])
+  @@map("events_registrations")
+}
+
+// ---------------------------------------------------------------------------------------------
+// findmates module (Slices 2c and 4a: FR-MATE-1..5, UC-10, ACT-1..9, OI-15, OI-16, OI-17).
+// ---------------------------------------------------------------------------------------------
+
+enum MateType {
+  HACKATHON
+  PROJECT
+  CASUAL
+
+  @@map("findmates_type")
+}
+
+enum MateRequestStatus {
+  OPEN
+  CLOSED
+  EXPIRED
+
+  @@map("findmates_request_status")
+}
+
+enum MateResponseStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+
+  @@map("findmates_response_status")
+}
+
+model MateRequest {
+  id              String             @id @default(uuid()) @db.Uuid
+  creatorId       String             @db.Uuid
+  creator         User               @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  title           String
+  /// Sanitised HTML (UC-10 step 5).
+  description     String
+  type            MateType
+  /// OI-15: optional subject code or name, so FR-MATE-2's subject filter works.
+  subject         String?
+  teamSize        Int
+  currentCount    Int                @default(1)
+  status          MateRequestStatus  @default(OPEN)
+  expiresAt       DateTime           @db.Timestamptz(6)
+  /// MET-1: time to the first accepted response.
+  firstAcceptedAt DateTime?          @db.Timestamptz(6)
+  closedAt        DateTime?          @db.Timestamptz(6)
+  createdAt       DateTime           @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime           @updatedAt @db.Timestamptz(6)
+  skills          MateRequestSkill[]
+  responses       MateResponse[]
+  connections     MateConnection[]
+
+  @@index([status, expiresAt])
+  @@index([creatorId])
+  @@map("findmates_requests")
+}
+
+model MateRequestSkill {
+  requestId String      @db.Uuid
+  request   MateRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  tagSlug   String
+  tag       SkillTag    @relation(fields: [tagSlug], references: [slug])
+
+  @@id([requestId, tagSlug])
+  @@index([tagSlug])
+  @@map("findmates_request_skills")
+}
+
+model MateResponse {
+  id          String             @id @default(uuid()) @db.Uuid
+  requestId   String             @db.Uuid
+  request     MateRequest        @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  responderId String             @db.Uuid
+  responder   User               @relation(fields: [responderId], references: [id], onDelete: Cascade)
+  message     String
+  status      MateResponseStatus @default(PENDING)
+  decidedAt   DateTime?          @db.Timestamptz(6)
+  createdAt   DateTime           @default(now()) @db.Timestamptz(6)
+  connection  MateConnection?
+
+  @@unique([requestId, responderId])
+  @@map("findmates_responses")
+}
+
+model MateConnection {
+  id          String        @id @default(uuid()) @db.Uuid
+  requestId   String        @db.Uuid
+  request     MateRequest   @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  responseId  String        @unique @db.Uuid
+  response    MateResponse  @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  requesterId String        @db.Uuid
+  requester   User          @relation("MateConnectionRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  responderId String        @db.Uuid
+  responder   User          @relation("MateConnectionResponder", fields: [responderId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now()) @db.Timestamptz(6)
+  messages    ChatMessage[]
+
+  @@index([requesterId])
+  @@index([responderId])
+  @@map("findmates_connections")
+}
+
+model ChatMessage {
+  id           String         @id @default(uuid()) @db.Uuid
+  connectionId String         @db.Uuid
+  connection   MateConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  senderId     String?        @db.Uuid
+  sender       User?          @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  /// Plain text (sanitised; rendered as text).
+  body         String
+  hiddenAt     DateTime?      @db.Timestamptz(6)
+  createdAt    DateTime       @default(now()) @db.Timestamptz(6)
+
+  @@index([connectionId, createdAt])
+  @@map("findmates_chat_messages")
+}
+
+// ---------------------------------------------------------------------------------------------
+// studymaterial module (Slice 2d: FR-MAT-1..4, UC-13, OI-18, OI-19). Listed only when the asset is
+// APPROVED (quarantine-first).
+// ---------------------------------------------------------------------------------------------
+
+enum MaterialType {
+  NOTES
+  PYQ
+  REFERENCE
+
+  @@map("studymaterial_type")
+}
+
+model StudyMaterial {
+  id          String              @id @default(uuid()) @db.Uuid
+  uploaderId  String?             @db.Uuid
+  uploader    User?               @relation(fields: [uploaderId], references: [id], onDelete: SetNull)
+  assetId     String              @unique @db.Uuid
+  asset       Asset               @relation(fields: [assetId], references: [id], onDelete: Restrict)
+  /// Upper-cased subject code, e.g. "UCS503".
+  subjectCode String
+  title       String
+  description String?
+  type        MaterialType
+  semester    Int                 @db.SmallInt
+  branchCode  String
+  branch      Branch              @relation(fields: [branchCode], references: [code], onDelete: Restrict)
+  upvoteCount Int                 @default(0)
+  hiddenAt    DateTime?           @db.Timestamptz(6)
+  deletedAt   DateTime?           @db.Timestamptz(6)
+  createdAt   DateTime            @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime            @updatedAt @db.Timestamptz(6)
+  votes       StudyMaterialVote[]
+
+  @@index([subjectCode, semester])
+  @@map("studymaterial_materials")
+}
+
+model StudyMaterialVote {
+  materialId String        @db.Uuid
+  material   StudyMaterial @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  userId     String        @db.Uuid
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime      @default(now()) @db.Timestamptz(6)
+
+  @@id([materialId, userId])
+  @@map("studymaterial_votes")
+}
+
+// ---------------------------------------------------------------------------------------------
+// archive module (Slice 4c: FR-ARC-1..3, OI-21 admin review, OI-22 votes, OI-23 FK comments).
+// ---------------------------------------------------------------------------------------------
+
+enum ArchiveStatus {
+  SUBMITTED
+  APPROVED
+  REJECTED
+
+  @@map("archive_status")
+}
+
+model ArchiveProject {
+  id           String              @id @default(uuid()) @db.Uuid
+  submitterId  String?             @db.Uuid
+  submitter    User?               @relation("ArchiveSubmitter", fields: [submitterId], references: [id], onDelete: SetNull)
+  title        String
+  /// Sanitised HTML.
+  description  String
+  githubUrl    String
+  status       ArchiveStatus       @default(SUBMITTED)
+  reviewedById String?             @db.Uuid
+  reviewedBy   User?               @relation("ArchiveReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewNote   String?
+  reviewedAt   DateTime?           @db.Timestamptz(6)
+  upvoteCount  Int                 @default(0)
+  createdAt    DateTime            @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime            @updatedAt @db.Timestamptz(6)
+  tags         ArchiveProjectTag[]
+  screenshots  ArchiveScreenshot[]
+  votes        ArchiveVote[]
+  comments     ArchiveComment[]
+
+  @@index([status, createdAt])
+  @@map("archive_projects")
+}
+
+model ArchiveProjectTag {
+  projectId String         @db.Uuid
+  project   ArchiveProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tag       String
+
+  @@id([projectId, tag])
+  @@index([tag])
+  @@map("archive_project_tags")
+}
+
+model ArchiveScreenshot {
+  projectId String         @db.Uuid
+  project   ArchiveProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assetId   String         @unique @db.Uuid
+  asset     Asset          @relation(fields: [assetId], references: [id], onDelete: Restrict)
+  position  Int            @db.SmallInt
+
+  @@id([projectId, position])
+  @@map("archive_screenshots")
+}
+
+model ArchiveVote {
+  projectId String         @db.Uuid
+  project   ArchiveProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String         @db.Uuid
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now()) @db.Timestamptz(6)
+
+  @@id([projectId, userId])
+  @@map("archive_votes")
+}
+
+model ArchiveComment {
+  id        String           @id @default(uuid()) @db.Uuid
+  projectId String           @db.Uuid
+  project   ArchiveProject   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  authorId  String?          @db.Uuid
+  author    User?            @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  parentId  String?          @db.Uuid
+  parent    ArchiveComment?  @relation("CommentThread", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   ArchiveComment[] @relation("CommentThread")
+  /// 1 to 3 (SPEC-ARC-DEPTH; CHECK constraint in migration SQL).
+  depth     Int              @db.SmallInt
+  /// Sanitised HTML.
+  body      String
+  hiddenAt  DateTime?        @db.Timestamptz(6)
+  createdAt DateTime         @default(now()) @db.Timestamptz(6)
+
+  @@index([projectId, createdAt])
+  @@map("archive_comments")
+}
+
+// ---------------------------------------------------------------------------------------------
+// faculty module (Slice 4b: FR-FAC-1..3, ADR-0010, SPEC-FAC-SEED). Seeded from the official TIET faculty
+// directory (owner-approved data, 2026-10-25); user_id null until a claim is approved.
+// ---------------------------------------------------------------------------------------------
+
+enum FacultyClaimStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  REVOKED
+
+  @@map("faculty_claim_status")
+}
+
+model FacultyProfile {
+  id              String                      @id @default(uuid()) @db.Uuid
+  userId          String?                     @unique @db.Uuid
+  user            User?                       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name            String
+  department      String
+  designation     String
+  /// Institutional email as published.
+  email           String?
+  cabin           String?
+  specialization  String?
+  officeHours     String?
+  photoAssetId    String?                     @unique @db.Uuid
+  photoAsset      Asset?                      @relation(fields: [photoAssetId], references: [id], onDelete: SetNull)
+  photoSourceUrl  String?
+  profileUrl      String?
+  /// Official page the record was taken from.
+  sourceUrl       String
+  /// Stable import key (institutional email, else profile URL).
+  sourceKey       String                      @unique
+  sourceFetchedAt DateTime?                   @db.Timestamptz(6)
+  /// True once a claim is approved (FR-FAC-3).
+  isVerified      Boolean                     @default(false)
+  /// Official presentation order (owner 2026-10-25): the unit's position on thapar.edu/faculties and the
+  /// person's position on that unit's page (head first, then by seniority). Null for profiles without it.
+  unitOrder       Int?
+  listingOrder    Int?
+  createdAt       DateTime                    @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime                    @updatedAt @db.Timestamptz(6)
+  claims          FacultyClaim[]
+  societyLinks    SocietyFacultyAssociation[]
+
+  @@index([department])
+  @@index([unitOrder, listingOrder])
+  @@map("faculty_profiles")
+}
+
+model FacultyClaim {
+  id          String             @id @default(uuid()) @db.Uuid
+  profileId   String             @db.Uuid
+  profile     FacultyProfile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  claimantId  String             @db.Uuid
+  claimant    User               @relation("FacultyClaimant", fields: [claimantId], references: [id], onDelete: Cascade)
+  status      FacultyClaimStatus @default(PENDING)
+  message     String?
+  decidedById String?            @db.Uuid
+  decidedBy   User?              @relation("FacultyClaimDecider", fields: [decidedById], references: [id], onDelete: SetNull)
+  reason      String?
+  decidedAt   DateTime?          @db.Timestamptz(6)
+  createdAt   DateTime           @default(now()) @db.Timestamptz(6)
+
+  @@index([profileId, status])
+  @@map("faculty_claims")
+}
+
+// ---------------------------------------------------------------------------------------------
+// calendar module (Slice 4d: FR-CAL-1..3, OI-24, OI-25). Academic and campus entries by admins,
+// personal entries by their owner; society events come from the events module at read time.
+// RFC 5545 rules are expanded into a 90-day rolling window of occurrences by the worker.
+// ---------------------------------------------------------------------------------------------
+
+enum CalendarLayer {
+  ACADEMIC
+  CAMPUS
+  SOCIETY
+  PERSONAL
+
+  @@map("calendar_layer")
+}
+
+model CalendarEntry {
+  id          String               @id @default(uuid()) @db.Uuid
+  ownerId     String?              @db.Uuid
+  owner       User?                @relation("CalendarOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  layer       CalendarLayer
+  title       String
+  description String?
+  location    String?
+  startAt     DateTime             @db.Timestamptz(6)
+  endAt       DateTime             @db.Timestamptz(6)
+  allDay      Boolean              @default(false)
+  /// RFC 5545 RRULE (without the "RRULE:" prefix); null for one-off entries.
+  rrule       String?
+  /// Bumped on every change to the rule or times; the expansion job is idempotent per version.
+  ruleVersion Int                  @default(0)
+  /// Occurrences exist up to this instant (exclusive).
+  expandedTo  DateTime?            @db.Timestamptz(6)
+  createdById String?              @db.Uuid
+  createdBy   User?                @relation("CalendarCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime             @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime             @updatedAt @db.Timestamptz(6)
+  occurrences CalendarOccurrence[]
+
+  @@index([layer, startAt])
+  @@index([ownerId])
+  @@map("calendar_entries")
+}
+
+model CalendarOccurrence {
+  entryId  String        @db.Uuid
+  entry    CalendarEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  startsAt DateTime      @db.Timestamptz(6)
+  endsAt   DateTime      @db.Timestamptz(6)
+
+  @@id([entryId, startsAt])
+  @@index([startsAt])
+  @@map("calendar_occurrences")
+}
+
+// ---------------------------------------------------------------------------------------------
+// placement module (Slice 4e: PLC-1..5, ADR-0009, docs/requirements/placement-matrix.md). Aggregates
+// only: no per-student data.
+// ---------------------------------------------------------------------------------------------
+
+enum OfferType {
+  FULL_TIME
+  INTERNSHIP
+
+  @@map("placement_offer_type")
+}
+
+model PlacementRecord {
+  id             String    @id @default(uuid()) @db.Uuid
+  /// e.g. "2025-26".
+  academicYear   String
+  programme      String
+  branchCode     String
+  branch         Branch    @relation(fields: [branchCode], references: [code], onDelete: Restrict)
+  /// Empty string = all companies (the unique key needs a non-null value).
+  company        String    @default("")
+  offerType      OfferType
+  offerCount     Int
+  eligibleCount  Int?
+  placedCount    Int?
+  /// Median CTC in lakh per annum, only as published by the source (placement-matrix.md §3.2).
+  medianCtcLpa   Decimal?  @db.Decimal(6, 2)
+  ctcBand        String?
+  sourceCitation String
+  sourceDate     DateTime  @db.Date
+  createdById    String?   @db.Uuid
+  createdBy      User?     @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt      DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime  @updatedAt @db.Timestamptz(6)
+
+  @@unique([academicYear, programme, branchCode, company, offerType])
+  @@map("placement_records")
+}
+
+// ---------------------------------------------------------------------------------------------
+// admin module: moderation reports (Slice 5, OI-28). Hiding content is done by the owning module.
+// ---------------------------------------------------------------------------------------------
+
+enum ReportTargetType {
+  SOCIETY_POST
+  STUDY_MATERIAL
+  ARCHIVE_PROJECT
+  ARCHIVE_COMMENT
+  CHAT_MESSAGE
+
+  @@map("admin_report_target")
+}
+
+enum ReportStatus {
+  OPEN
+  RESOLVED
+  DISMISSED
+
+  @@map("admin_report_status")
+}
+
+model ModerationReport {
+  id           String           @id @default(uuid()) @db.Uuid
+  targetType   ReportTargetType
+  targetId     String           @db.Uuid
+  reporterId   String?          @db.Uuid
+  reporter     User?            @relation("ReportReporter", fields: [reporterId], references: [id], onDelete: SetNull)
+  reason       String
+  status       ReportStatus     @default(OPEN)
+  resolvedById String?          @db.Uuid
+  resolvedBy   User?            @relation("ReportResolver", fields: [resolvedById], references: [id], onDelete: SetNull)
+  resolution   String?
+  createdAt    DateTime         @default(now()) @db.Timestamptz(6)
+  resolvedAt   DateTime?        @db.Timestamptz(6)
+
+  @@unique([targetType, targetId, reporterId])
+  @@index([status, createdAt])
+  @@map("admin_moderation_reports")
 }

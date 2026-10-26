@@ -5,16 +5,16 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/shared/ui/cn";
 
-import { isActive, primaryNav, secondaryNav } from "./nav";
+import { adminNav, isActive, primaryNav, secondaryNav } from "./nav";
 
-const SECTIONS = { primary: primaryNav, secondary: secondaryNav } as const;
+const SECTIONS = { primary: primaryNav, secondary: secondaryNav, admin: adminNav } as const;
 
 /**
  * Navigation list. The active item always matches the current route (fixes montage panels 6, 7, 9).
  * Takes a section name rather than the items: icons are components and cannot be passed from
  * Server Components to this Client Component.
  */
-export function SidebarNav({ section, label, onNavigate }: { section: keyof typeof SECTIONS; label: string; onNavigate?: () => void }) {
+export function SidebarNav({ section, label, onNavigate, badges = {} }: { section: keyof typeof SECTIONS; label: string; onNavigate?: () => void; badges?: Record<string, number> }) {
   const pathname = usePathname();
   const items = SECTIONS[section];
   return (
@@ -36,6 +36,12 @@ export function SidebarNav({ section, label, onNavigate }: { section: keyof type
               >
                 <Icon className="size-[18px] shrink-0" aria-hidden />
                 {item.label}
+                {badges[item.href] ? (
+                  <span className="ml-auto rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-brand-foreground">
+                    {badges[item.href]! > 99 ? "99+" : badges[item.href]}
+                    <span className="sr-only"> unread</span>
+                  </span>
+                ) : null}
               </Link>
             </li>
           );

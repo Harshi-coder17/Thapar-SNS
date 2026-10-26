@@ -19,6 +19,10 @@ spikes/auth/generated/
 # Tests
 coverage/
 playwright-report/
+# Saved E2E sessions (session cookies)
+playwright/.auth/
+# E2E-only build output (next.config.ts, OI-53)
+.next-e2e/
 test-results/
 blob-report/
 
@@ -39,3 +43,6 @@ npm-debug.log*
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Local database backups (personal data; never committed)
+.local-backups/

@@ -18,7 +18,7 @@ Unit (Vitest), integration (Vitest + test database), API tests (spec names Super
 | Contract | Storage adapter suite (Garage in CI; R2 once at G-1c); API schema-vs-docs check | Per change |
 
 ## 3. Test-only authentication `[PROPOSED]`
-E2E tests cannot use real Google accounts. A **test login provider** is compiled in only when `NODE_ENV=test` and `E2E_AUTH=1`. A build-time check fails any production build that includes it (Slice 1b acceptance). The same domain checks run on test identities.
+E2E tests cannot use real Google accounts. **Implemented (Slice 1b):** an E2E-only test sign-in (`/api/test-auth/sign-in`) that mints a Google-style ID token signed by a throwaway local key and sends it through Better Auth's real ID-token path, so the same domain and verified-email checks apply. It exists only in E2E builds (`E2E_BUILD=1`; route file `route.e2e.ts`), and even there fails closed unless `E2E_TEST_AUTH=1` on a loopback URL off any deployment. `npm run check:build` (CI) proves a normal build excludes it (OI-53, approved 2026-10-24).
 
 ## 4. Data and isolation
 - Each integration test file gets a fresh schema (or transaction rollback). There is no shared mutable state between tests.

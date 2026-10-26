@@ -18,5 +18,7 @@ Decided in Slice 1a, based on Prisma 7 ESM and Next 16 bundling behaviour:
 - Postgres schema-per-module vs table prefixes
 - the service build tool
 
+**Table naming `[APPROVED 2026-10-24]`:** table-name prefixes per module (`identity_users`, `identity_sessions`, …) in the default `public` schema, not one schema per module. Reasons: Better Auth's Prisma adapter and Prisma's multi-schema support both work with prefixes without extra configuration; one migration history; ownership is still visible in every table name and enforced by the module boundary lint rules. The service build tool is still undecided (Slice 3a).
+
 ## Consequences
 One lockfile and one CI pipeline. The service Docker image includes only what `src/service` imports. Revisit option 2 if build coupling becomes painful.

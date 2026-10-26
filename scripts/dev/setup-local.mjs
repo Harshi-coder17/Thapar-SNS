@@ -3,7 +3,8 @@
 //   docker/garage/garage.local.toml        Garage config with a random RPC secret and admin token
 //   docker/garage/credentials.local.env    Garage default access key, secret and bucket
 //   .env                                   copied from .env.example plus the S3 credentials
-// All three paths are gitignored. Secrets are never printed.
+// Missing identity keys (BETTER_AUTH_URL, BETTER_AUTH_SECRET, AUTH_ALLOWED_EMAIL_DOMAIN) are then
+// added to .env; existing values are never changed. All paths are gitignored; secrets are never printed.
 import { randomBytes } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
@@ -35,4 +36,21 @@ if (!existsSync(".env")) {
   writeOnce(".env", appEnv);
 } else {
   console.log("setup:local: kept existing .env");
+}
+
+// Identity settings for local development (docs/auth/google-oauth-setup.md §3). Google credentials
+// are never generated: the owner adds GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET when they exist.
+const envText = readFileSync(".env", "utf8");
+const hasValue = (key) => new RegExp(`^${key}=\\S+`, "m").test(envText);
+const additions = [
+  ["BETTER_AUTH_URL", "http://localhost:3000"],
+  ["BETTER_AUTH_SECRET", randomBytes(32).toString("base64url")],
+  ["AUTH_ALLOWED_EMAIL_DOMAIN", "thapar.edu"],
+].filter(([key]) => !hasValue(key));
+if (additions.length > 0) {
+  // Drop empty placeholder lines for these keys, then append the generated values.
+  const keys = new Set(additions.map(([key]) => key));
+  const kept = envText.split("\n").filter((line) => !keys.has(line.split("=")[0]) || /=\S+/.test(line));
+  writeFileSync(".env", `${kept.join("\n").trimEnd()}\n${additions.map(([key, value]) => `${key}=${value}`).join("\n")}\n`, { mode: 0o600 });
+  console.log(`setup:local: added ${additions.map(([key]) => key).join(", ")} to .env`);
 }

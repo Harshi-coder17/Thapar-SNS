@@ -1,6 +1,6 @@
 # Auth Spike Findings: Better Auth 1.7.10 + session-token hashing wrapper
 
-Status: **spike complete 2026-10-23; awaiting owner review at gate G-1b-spike.** Nothing here is production-approved until that review (ADR-0005, ADR-0006).
+Status: **spike complete 2026-10-23; reviewed and approved by the owner 2026-10-24 (gate G-1b-spike)** with conditions C1 to C7. The spike code is evidence and a design reference; production code is written separately in `src/modules/identity` and must preserve C1 to C7, with the relevant tests rerun before production use.
 
 Recommendation: **GO, with conditions C1 to C7 below.** Every "Go" test passed. The source audit found no session-token path outside the wrapped adapter. The gaps found are closed by configuration or by small, tested replacements.
 
@@ -66,8 +66,8 @@ Recommendation: **GO, with conditions C1 to C7 below.** Every "Go" test passed. 
 - **C6:** No Better Auth plugins beyond what a reviewed ADR adds.
 - **C7:** No logging of session objects in hooks or errors.
 
-## 5. Decisions needed from the owner
-1. **G-1b-spike:** approve Better Auth + wrapper for production under C1 to C7, or choose the Arctic fallback.
-2. **ADR-0006:** accept the single hashed session token as satisfying FR-AUTH-3 (no separate access/refresh pair).
-3. **OI-05:** rotation and lifetime. Proposed: 7-day sliding, **30-day absolute cap**, new token at sign-in and revoke-all on privilege change, no periodic rotation. T10 is implemented once decided.
-4. **OI-51:** allowed email domain (FR-AUTH-1 says @thapar.edu only; see `open-issues.md`).
+## 5. Owner decisions (2026-10-24)
+1. **G-1b-spike:** approved. Better Auth with C1 to C7 is the basis for implementation.
+2. **ADR-0006:** approved: single hashed session token, provided expiration and immediate revocation are secure.
+3. **OI-05:** approved: 7-day sliding, **30-day absolute maximum enforced server-side**, new token at sign-in, no periodic rotation. (T10 is implemented and tested in the production identity module, not in the spike.)
+4. **OI-51:** approved: keep `@thapar.edu` only (FR-AUTH-1), enforced server-side from verified Google claims; unverified and lookalike addresses rejected.

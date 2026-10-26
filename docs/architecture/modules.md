@@ -7,7 +7,7 @@ The spec lists the API modules (§4.2) as Identity, Societies, Events, FindMates
 | Module | Owns tables (proposed) | Spec owner (Table 5.2, historical) | Implementer |
 |---|---|---|---|
 | identity | users, user_skills, sessions, accounts, verifications | – (shared infra) | Claude (owner reviews) |
-| societies | societies, society_memberships, society_posts | Person A | Claude (owner reviews) |
+| societies | societies_categories, societies_societies, societies_memberships, societies_membership_requests, societies_follows, societies_posts (Slice 2a) | Person A | Claude (owner reviews) |
 | events | events, event_interests, event_registrations | Person B | Claude (owner reviews) |
 | findmates | mate_requests, mate_responses, mate_connections, chat_messages | Person C | Claude (owner reviews) |
 | studymaterial | study_materials, study_material_votes | Person D | Claude (owner reviews) |
@@ -51,7 +51,7 @@ These are the cross-module calls known today. Each is filled in when its slice s
 | Module | Public operation | Used by |
 |---|---|---|
 | identity | `getUser(id)`, `getUsers(ids)`, `requireSession(req)`, `revokeSession(sessionId)`, `revokeUserSessions(userId)`, `setRole(userId, role)` (system/admin) | all |
-| societies | `getMembershipRole(userId, societyId)`, `canManageEvents(userId, societyId)`, `getSocietySummaries(ids)` | events, calendar |
+| societies | `getSocietyActor(userId, societyId)` (implemented 2026-10-25, ADR-0013 §3.7: the society when the user holds an active Head grant for that active society, else null; call it on every request), `getSocietySummaries(ids)` (to add in 2b) | events, calendar |
 | events | `listEventsForCalendar(range, actor)`, `getEventSummaries(ids)` | calendar |
 | assets | `createUploadIntent(actor, spec)`, `completeUpload(actor, assetId)`, `getDownloadUrl(actor, assetId)`, `assertApproved(assetId)` | studymaterial, archive, societies |
 | notifications | `notify(tx, recipientId, type, payload)` (writes via outbox) | events, findmates, studymaterial, archive, faculty |

@@ -6,10 +6,10 @@ import { useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/shared/ui/sheet";
 
-import { SidebarContent } from "./sidebar-content";
+import { type ShellUser, SidebarContent } from "./sidebar-content";
 
 /** Mobile drawer (montage panel 12): the same sidebar content in a slide-over panel. */
-export function MobileNav() {
+export function MobileNav({ user }: { user: ShellUser }) {
   const [open, setOpen] = useState(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -19,7 +19,7 @@ export function MobileNav() {
         </Button>
       </SheetTrigger>
       <SheetContent title="Navigation">
-        <SidebarContent onNavigate={() => setOpen(false)} />
+        <SidebarContent user={user} onNavigate={() => setOpen(false)} />
       </SheetContent>
     </Sheet>
   );

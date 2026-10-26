@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
+import { connection } from "next/server";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
+
+import { ServiceWorker } from "@/shared/layout/service-worker";
+import { StyleNonce } from "@/shared/security/style-nonce";
 
 import "./globals.css";
 
@@ -19,13 +24,20 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   colorScheme: "light",
-  themeColor: "#ffffff",
+  themeColor: "#8c0828",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+// Every page renders per request so Next.js can apply the CSP nonce from src/proxy.ts.
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  await connection();
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <StyleNonce nonce={nonce} />
+        <ServiceWorker />
+        {children}
+      </body>
     </html>
   );
 }

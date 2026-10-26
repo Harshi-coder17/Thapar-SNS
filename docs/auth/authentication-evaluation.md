@@ -103,13 +103,13 @@ A thin decorator around the Prisma adapter, applied **only to the `session` mode
   - optional rotation
 - Trade-off: hashing is satisfied natively, but the team owns more security-critical code, which needs more review and tests.
 
-## 5. Rotation policy (OI-05) `[PROPOSED]`
+## 5. Rotation policy (OI-05) `[APPROVED 2026-10-24]` except where marked
 | Event | Behaviour |
 |---|---|
-| Sign-in | Always a new session and token (session-fixation defence) |
-| Privilege change (role set, faculty claim approved, admin granted/removed) | Revoke all of the user's sessions → re-login |
+| Sign-in | Always a new session and token (session-fixation defence) `[APPROVED]` |
+| Privilege change (role set, faculty claim approved, admin granted/removed) | Revoke all of the user's sessions → re-login `[PROPOSED]` |
 | Ban | Revoke all (Better Auth ban behaviour) |
-| Periodic | **Option A (proposed):** none; rely on immediate revocation + 7-day sliding + **30-day absolute** cap. **Option B:** rotate every 24 h with a short grace window for concurrent requests (more complex; gives theft signals) |
+| Periodic | **Option A `[APPROVED 2026-10-24]`:** no periodic rotation; immediate revocation + 7-day sliding expiry + **30-day absolute cap enforced server-side**. (Option B, 24-hour rotation, was not chosen.) |
 
 ## 6. Recovery procedures `[PROPOSED]`
 | Scenario | Procedure |

@@ -26,3 +26,9 @@ Side effects: outbox events …, audit …
 Requirement IDs: FR-…
 Tests: path::name
 ```
+
+## Contract files
+
+- [identity.md](identity.md): sign-in, session, profile completion, admin session revocation.
+- [societies.md](societies.md): societies, Heads, membership, posts (Slice 2a).
+- [platform.md](platform.md): uploads, events, Find Mates and chat, study material, faculty, archive, calendar, placement, notifications, realtime, reports and administration (Slices 2b to 6).

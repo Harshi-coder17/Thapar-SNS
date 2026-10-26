@@ -13,7 +13,61 @@
 - PostgreSQL on Neon (ADR-0003); local development and integration tests use Docker PostgreSQL of the **same major version**.
 - Prisma ORM 7.10.1 (ADR-0008) with `@prisma/adapter-pg`.
 - Features Prisma can't model go in raw SQL migration steps: `pg_trgm` extension, generated `tsvector` columns, GIN indexes, partial indexes, check constraints.
-- Module table separation: one Postgres schema per module vs table-name prefixes is decided in Slice 1a (ADR-0011).
+- Module table separation `[APPROVED 2026-10-24]`: table-name prefixes per module in the `public` schema (`identity_*`, then `societies_*`, …), see ADR-0011.
+- Migrations: `prisma/migrations/` (committed). Applied with `npm run db:migrate` (`prisma migrate deploy`): `20261024000000_identity_init`, `20261024010000_identity_profile_admin_audit`, `20261025000000_societies`, `20261025010000_societies_heads_identity` (ADR-0013).
+
+### Implemented: identity (Slice 1b)
+| Table | Purpose | Key constraints |
+|---|---|---|
+| `identity_users` | One row per Google identity that passed the domain policy | `id uuid`, `email` unique (lower-cased), `role identity_user_role` default `STUDENT` |
+| `identity_sessions` | Server-side sessions | `token` unique: stores **SHA-256(token)** only (ADR-0006); `expires_at`, `created_at` (absolute caps), `lastActiveAt` (inactivity limit, written at most every 30 s; `docs/auth/session-policy.md`), `userAgent` (device class, fixed at sign-in); FK to user, cascade |
+| `identity_accounts` | Google account link | unique (`provider_id`, `account_id`); `account_id` is Google's `sub` |
+| `identity_verifications` | Short-lived OAuth state (PKCE verifier) | expires in 10 minutes |
+| `identity_rate_limits` | Auth rate-limit counters (C5) | `key` unique |
+| `identity_users` (profile columns) | `roll_number`, `branch_code`, `year`, `profile_completed_at` (FR-AUTH-2) | roll number unique; year 1 to 5; CHECK: completed profile has all fields |
+| `identity_branches` | Programme reference data (seeded, `[PROPOSED]` list) | `code` pk, `name` unique; FK from users (RESTRICT) |
+| `identity_skill_tags` | Controlled tag vocabulary (OI-42, 65 seeded) | `slug` pk, `label` unique, `active` |
+| `identity_user_skills` | A user's 3 to 10 tags | pk (`user_id`, `tag_slug`) |
+| `admin_audit_logs` (admin module) | Append-only audit log | trigger rejects UPDATE, DELETE, TRUNCATE; `actor_id`/`target_id` without FKs so history survives |
+
+### Implemented: societies (Slice 2a, revised by ADR-0013 on 2026-10-25)
+| Table | Purpose | Key constraints |
+|---|---|---|
+| `societies_categories` | Category reference data (OI-55, 9 seeded, `[PROPOSED]`) | `slug` pk, `label` unique |
+| `societies_societies` | Society profile and identity (FR-SOC-1): name, slug, optional `shortName`, optional description, **optional** category, `socialLinks` jsonb (https only), contact email, `isActive` (OI-38), creator; provenance `sourceKey`, `sourceUrl`, `sourceFetchedAt`, `verifiedAt`/`verifiedById`; official listing labels `sourceType`, `sourceSubtype` (kept exactly as published; mapped to a category by an explicit table, `source-categories.ts`) | `slug` unique and URL-safe (CHECK); unique `lower(name)`; name 3..150, description NULL or 1..4000, short name 1..30, source URL https (CHECKs); `sourceKey` unique; category FK RESTRICT (nullable) |
+| `societies_memberships` | Who belongs to the society and how it **displays** them: `group` CORE / GENERAL and an optional free-text `position` (title). **Grants nothing** | pk (`societyId`, `userId`); position 1..60 (CHECK) |
+| `societies_head_grants` | **The only source of management access** (ADR-0013): one row per Head tenure; `grantReason` MIGRATED / CREATED_WITH_SOCIETY / ADDED / HANDOVER / ADMIN_RECOVERY; `revokedAt`, `revokedById`, `revokeReason` REMOVED / HANDOVER. Never deleted (history) | **one active grant per society and person** (partial unique index `WHERE revokedAt IS NULL`); revocation needs a reason (CHECK); at least one active grant per active society is enforced by the service under `SELECT ... FOR UPDATE` on the society row |
+| `societies_faculty_associations` | Faculty linked to a society by a source, exactly as published (`sourceRole`); not accounts, not permissions; `verifiedAt`/`verifiedById` | visible to platform admins only until verified |
+| `societies_membership_requests` | Join requests and decisions (OI-10), kept as history | **one PENDING request per student and society** (partial unique index); decided requests need `decidedAt` (CHECK); message ≤ 500 |
+| `societies_follows` | Following (owner decision 2026-10-24); grants nothing | pk (`societyId`, `userId`) |
+| `societies_posts` | Updates, recruitment drives, stories (FR-SOC-3, OI-11); `body` is sanitised HTML (stories: plain text); `publishedAt` null = draft | CHECKs: stories are public, published and expire, and have no title; only stories expire; recruitment posts list 1..10 roles, other types carry no recruitment fields; years ⊂ 1..5; application URL https; body ≤ 20000 |
+
+`admin_audit_logs` gained `onBehalfOfType` / `onBehalfOfId` (nullable, indexed): a Head acting in the society workspace is recorded as the individual on behalf of the society.
+
+Migration `20261025010000_societies_heads_identity` copied every old HEAD membership into an active grant (`MIGRATED`) and turned EDITOR / EVENT_MANAGER into CORE members with the titles "Editor" / "Event Manager" before dropping the old `role` column; it aborts if any HEAD row was not converted. Rehearsed on a copy of the local database and verified by `tests/integration/societies/migration.test.ts`.
+
+Foreign keys to `identity_users` (cross-module FKs for integrity only, modules.md §2 rule 3). Logo and banner columns were added with the asset tables (Slice 2d, migration `20261026000000_platform_modules`).
+
+All ids are UUIDs (generated by Prisma), all timestamps `timestamptz`.
+
+### Implemented: platform modules (Slices 2b to 6, migration `20261026000000_platform_modules`, 2026-10-25)
+Additive only: no existing column or row was changed. Rehearsed on a temporary copy of the local database, then applied; `prisma migrate diff` reports no drift.
+
+| Module | Tables | Key constraints |
+|---|---|---|
+| assets | `assets_assets` (quarantine, published and thumbnail keys; declared and actual size, MIME, SHA-256; status; rejection reason; source URL for official imports) | keys unique; size > 0, SHA-256 hex, APPROVED needs a published key, REJECTED needs a reason (CHECKs) |
+| outbox | `outbox_events` (type, payload, dedupe key, status, attempts, lease) | `dedupeKey` unique; partial index on due rows |
+| notifications | `notifications_notifications` | unique (`sourceKey`, `recipientId`): re-runs never duplicate |
+| events | `events_events`, `events_interests`, `events_registrations` | end after start, capacity 1..100000, 0 ≤ registered ≤ capacity, title 3..150 (CHECKs); pk (event, user) for interest; unique (event, user) registration (FR-EVT-5) |
+| findmates | `findmates_requests`, `findmates_request_skills`, `findmates_responses`, `findmates_connections`, `findmates_chat_messages` | team size 2..10, 1 ≤ current count ≤ team size (CHECKs); unique (request, responder); one connection per response |
+| studymaterial | `studymaterial_materials`, `studymaterial_votes` | semester 1..10, votes ≥ 0 (CHECKs); pk (material, user) vote; full-text index (title, subject code, description) |
+| archive | `archive_projects`, `archive_project_tags`, `archive_screenshots`, `archive_votes`, `archive_comments` | GitHub URL pattern, comment depth 1..3, screenshot position 0..4 (CHECKs); pk (project, user) vote; full-text index |
+| faculty | `faculty_profiles`, `faculty_claims` | `sourceKey` unique (stable import key); one PENDING claim per profile and one per claimant (partial unique indexes); full-text and trigram (`pg_trgm`) indexes for typo-tolerant name search |
+| calendar | `calendar_entries` (RRULE, rule version, expanded-to), `calendar_occurrences` | end ≥ start; PERSONAL exactly when it has an owner (CHECKs); pk (entry, start) occurrence |
+| placement | `placement_records` (aggregate counts only, citation and source date) | unique (year, programme, branch, company, offer type); counts ≥ 0 and placed ≤ eligible (CHECKs); no per-student column exists |
+| admin | `admin_moderation_reports` | unique (target, reporter) |
+
+Also added: `identity_users.bannedAt` / `bannedReason`; `societies_societies.logoAssetId`, `bannerAssetId`, `logoSourceUrl`; `societies_faculty_associations.facultyProfileId` and `matchBasis` (link to the official directory profile).
 
 ## 3. Tables by module
 

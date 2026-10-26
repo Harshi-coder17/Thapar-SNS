@@ -19,5 +19,16 @@ FR-FAC-3 lets faculty "claim and verify" profiles after logging in. Students and
 4. Admins can revoke a claim (unlink, unverify, role back to STUDENT), with an audit log entry.
 5. A claimed faculty member can edit only an allow-listed set of fields (office hours, cabin, specialization). Edits are audit-logged.
 
+## Amendment 2026-10-26: one pending claim per account
+- **Who sees the button.** Every signed-in account sees "This is me: claim this profile" on an unclaimed profile. This is intended:
+  - students and faculty share @thapar.edu, and faculty sign in first with the default role, so the server cannot tell them apart;
+  - requesting grants nothing;
+  - the page says the claim is for the named faculty member only and is checked by an administrator.
+- **Defect found.** An account could hold pending claims on any number of profiles. Each profile allows only one pending claim, so one account could block every real faculty member until an administrator rejected each claim.
+- **Fix.**
+  - At most one pending claim per account: a service check plus the partial unique index `faculty_claims_one_pending_per_claimant` (migration `20261030000000`).
+  - The form is not offered to an account that already has a faculty profile or a claim waiting elsewhere.
+- **Unchanged.** Approval, profile edits and revocation stay server-enforced (platform capacity; linked member only). Tests: `tests/integration/platform/authorization.test.ts` ("faculty claims by students").
+
 ## Consequences
 Faculty access depends on admin responsiveness. The admin dashboard needs a claims queue (Slice 4b).

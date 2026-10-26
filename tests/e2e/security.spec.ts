@@ -16,6 +16,7 @@ test.describe("security baseline", () => {
       const headers = response.headers();
       expect(headers["x-content-type-options"]).toBe("nosniff");
       expect(headers["x-frame-options"]).toBe("DENY");
+      expect(headers["cross-origin-opener-policy"]).toBe("same-origin");
       expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
       expect(headers["permissions-policy"]).toContain("camera=()");
       expect(headers["strict-transport-security"]).toMatch(/^max-age=\d{8,}/);
@@ -33,7 +34,7 @@ test.describe("security baseline", () => {
         else if (/\.(js|css|html|json|txt)$/.test(entry)) files.push(full);
       }
     };
-    walk(path.join(root, ".next/static"));
+    walk(path.join(root, ".next-e2e/static")); // the build under test (E2E build, OI-53)
     expect(files.length).toBeGreaterThan(0);
 
     // Values from the local .env (if present) must never reach the browser. Values are compared,

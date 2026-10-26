@@ -209,7 +209,9 @@ describe("sessions with hashed tokens", () => {
     const tampered = await signIn(student());
     const [name, value] = tampered.cookie!.split("=");
     const decoded = decodeURIComponent(value!);
-    const flipped = decoded.slice(0, -2) + (decoded.at(-2) === "A" ? "B" : "A") + decoded.at(-1);
+    // Change a character well inside the signature (the last one before "=" partly encodes padding bits).
+    const at = decoded.length - 10;
+    const flipped = decoded.slice(0, at) + (decoded[at] === "A" ? "B" : "A") + decoded.slice(at + 1);
     expect(await getSession(`${name}=${encodeURIComponent(flipped)}`)).toBeNull();
   });
 

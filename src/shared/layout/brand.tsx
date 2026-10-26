@@ -16,8 +16,8 @@ export function LogoMark({ className = "" }: { className?: string }) {
         alt="TIET logo"
         width={62}
         height={62}
-        className="absolute max-w-none"
-        style={{ left: -17, top: -3 }}
+        // Crop offsets as classes, not a style attribute, to keep inline styles out of the markup.
+        className="absolute top-[-3px] left-[-17px] max-w-none"
         priority
       />
     </span>

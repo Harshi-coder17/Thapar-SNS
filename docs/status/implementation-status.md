@@ -26,4 +26,4 @@ See [pre-deployment-2026-10-25.md](phase-reports/pre-deployment-2026-10-25.md) Â
 ## Repository facts (2026-10-23)
 - `origin` = `https://github.com/Harshi-coder17/Thapar-SNS.git` (private). `main` = `84d73ec` (docs). `feat/platform/skeleton` = `47cb31f` (skeleton and review fixes) + `d002d49` (served TIET logo). Both pushed by the owner.
 - `project-docs/` is the owner's local, read-only baseline and is entirely gitignored. The served logo `public/brand/tiet-logo.png` is committed (byte-identical to the original).
-- Phase 0 created `CLAUDE.md` and `docs/**`. Slice 1a created the skeleton listed in the phase report. No authentication, tables or business logic exist.
+- Phase 0 created `docs/**`. Slice 1a created the skeleton listed in the phase report. No authentication, tables or business logic exist.

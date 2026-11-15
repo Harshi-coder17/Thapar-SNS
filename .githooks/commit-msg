@@ -1,5 +1,5 @@
 #!/bin/sh
-# Rejects commit messages containing an em-dash (U+2014, UTF-8 bytes E2 80 94). CLAUDE.md rule 10.
+# Rejects commit messages containing an em-dash (U+2014, UTF-8 bytes E2 80 94). Project rule (docs/README.md, decision log).
 # Plain shell so it works without Node on PATH. Enabled with: git config core.hooksPath .githooks
 EM_DASH=$(printf '\342\200\224')
 if grep -v '^#' "$1" | grep -q "$EM_DASH"; then

@@ -1,4 +1,4 @@
-// Project rule (CLAUDE.md rule 10): the em-dash character (U+2014) is forbidden everywhere.
+// Project rule: the em-dash character (U+2014) is forbidden everywhere.
 // Patterns are assembled from code points so this file never contains the forbidden forms itself.
 
 const EM_DASH = String.fromCodePoint(0x2014);

@@ -1,6 +1,6 @@
 # Phase Report: Slice 1b (Identity and Authentication)
 
-Date: 2026-10-24. Status: **complete and verified locally; awaiting the owner's final review and commit.** Nothing has been committed or pushed by Claude.
+Date: 2026-10-24. Status: **complete and verified locally; awaiting the owner's final review and commit.** Nothing has been committed or pushed yet.
 
 ## Decisions applied (owner, 2026-10-24)
 - Better Auth 1.7.10 with spike conditions C1 to C7 (ADR-0005); one hashed session token (ADR-0006).
@@ -57,7 +57,7 @@ Problems found and fixed during verification:
 - Sign in end to end with a real `@thapar.edu` account.
 - Confirm with Thapar IT that TIET accounts may use the app (OI-01, before real users).
 - Everything Google-facing was tested automatically against a simulated Google (PKCE, redirect URI, ID-token verification, claims).
-- **Update 2026-10-24: real Google sign-in verified locally by the owner.** The owner created the OAuth client (Testing mode, redirect `http://localhost:3000/api/auth/callback/google`), added the credentials to the local `.env`, signed in with their own @thapar.edu account, completed the profile and used the authenticated pages. Before the test, Claude checked (without displaying values) that both variables were set and well formed, and that the authorization request carried the expected redirect URI, `hd=thapar.edu`, PKCE S256 and only the `openid email profile` scopes. Still to verify: rejection of a real non-@thapar.edu account against real Google (covered automatically against the simulated Google), and the deployed origin (G-1c).
+- **Update 2026-10-24: real Google sign-in verified locally by the owner.** The owner created the OAuth client (Testing mode, redirect `http://localhost:3000/api/auth/callback/google`), added the credentials to the local `.env`, signed in with their own @thapar.edu account, completed the profile and used the authenticated pages. Before the test, the developer checked (without displaying values) that both variables were set and well formed, and that the authorization request carried the expected redirect URI, `hd=thapar.edu`, PKCE S256 and only the `openid email profile` scopes. Still to verify: rejection of a real non-@thapar.edu account against real Google (covered automatically against the simulated Google), and the deployed origin (G-1c).
 
 ## Requires a deployed environment (Slice 1c)
 - HTTPS-only behaviour: `__Secure-` cookie, `upgrade-insecure-requests`, HSTS as served by the host.

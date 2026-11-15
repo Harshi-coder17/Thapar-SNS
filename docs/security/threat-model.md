@@ -89,7 +89,7 @@ In-memory limiting (spec Phase 1) is ineffective on serverless, because each ins
 | A09 Security Logging and Alerting Failures | §7 | 3a, 5 |
 | A10 Mishandling of Exceptional Conditions | Fail-closed error handling, outbox failure matrix | 1b, 3a |
 
-## 9. Non-negotiable rules (also in CLAUDE.md)
+## 9. Non-negotiable rules
 No tokens in localStorage. No raw HTML rendering of user content without the sanitiser. No public bucket. No file bytes through the API. No permission checks based only on global role when a per-row rule exists. No secrets in the repository. No RC/beta dependency without an ADR.
 
 ## 10. Client-trust assumption (SEC-CLIENT, approved 2026-10-23)

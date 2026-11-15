@@ -49,9 +49,9 @@ Phase 0 documentation set, created 2026-10-23. Baseline: `project-docs/Thapar_SN
 | 2026-10-23 | Goal is the complete application; all original requirements preserved | traceability |
 | 2026-10-23 | Phase 0 = documentation only | status |
 | 2026-10-23 | Phase 0 documentation fully approved | status |
-| 2026-10-23 | No em-dash characters anywhere in the project | CLAUDE.md rule 10 |
-| 2026-10-23 | Academic timelines disregarded; own schedule | CLAUDE.md rule 11, OI-02 |
-| 2026-10-23 | Claude is solo implementer; owner reviews all PRs | CLAUDE.md rule 12, OI-03 |
+| 2026-10-23 | No em-dash characters anywhere in the project | owner decision |
+| 2026-10-23 | Academic timelines disregarded; own schedule | OI-02 |
+| 2026-10-23 | Solo implementer; owner reviews all PRs | OI-03 |
 | 2026-10-23 | OI-01 Workspace sign-in verified by the owner separately | open-issues |
 | 2026-10-23 | OI-44 eslint-react, OI-46 7-day cooldown, OI-49 edge-to-edge deferral, G-1b-oauth Google Sign-In | open-issues, ADR-0008 |
 | 2026-10-24 | G-1b-spike: Better Auth with conditions C1 to C7 | ADR-0005, spike-findings |

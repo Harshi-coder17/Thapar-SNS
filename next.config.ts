@@ -14,11 +14,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   // Local images (e.g. the login photograph) are served as AVIF or WebP when the browser accepts them.
   images: { formats: ["image/avif", "image/webp"] },
-  // Next.js 16 `next dev` writes a managed "agent rules" block into AGENTS.md whenever an AI coding
-  // agent runs it. That block contains em-dash characters, which the project forbids everywhere
-  // (CLAUDE.md rule 10, npm run check:em-dash), and it is re-added on every start. Disabled; the same
-  // guidance (read node_modules/next/dist/docs/ for this version) is kept, without em-dashes, in
-  // CLAUDE.md and AGENTS.md.
+  // Next.js 16 `next dev` can write a managed "agent rules" block into a project file on every start.
+  // That block contains em-dash characters, which the project forbids everywhere (npm run
+  // check:em-dash). Disabled.
   agentRules: false,
   // CSP is set per request by src/proxy.ts (nonce); these headers are static.
   async headers() {

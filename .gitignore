@@ -46,3 +46,9 @@ npm-debug.log*
 
 # Local database backups (personal data; never committed)
 .local-backups/
+
+# Local AI assistant instructions (kept on this machine only)
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+.claude/

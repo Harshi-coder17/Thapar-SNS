@@ -14,7 +14,7 @@ export const STUDENT_STATE = "playwright/.auth/student.json";
 export const SIGNED_OUT = { cookies: [], origins: [] };
 export const E2E_STUDENT = { email: "e2e.student@thapar.edu", name: "E2E Student" };
 
-/** Built from a code point so test files stay free of the forbidden character (CLAUDE.md rule 10). */
+/** Built from a code point so test files stay free of the forbidden character (project rule). */
 export const EM_DASH = String.fromCodePoint(0x2014);
 
 /** The sidebar is replaced by a drawer below the Tailwind `lg` breakpoint (1024 px). */

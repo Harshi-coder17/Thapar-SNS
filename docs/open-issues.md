@@ -11,7 +11,7 @@ Gate G-0 passed: Phase 0 approved 2026-10-23. OI-02 and OI-03 resolved by the ow
 | Priority | Issue | Status |
 |---|---|---|
 | – | OI-02 Deadline | **Resolved 2026-10-23**: academic timeline disregarded |
-| – | OI-03 Team and review | **Resolved 2026-10-23**: Claude solo implementer; owner reviews all PRs |
+| – | OI-03 Team and review | **Resolved 2026-10-23**: solo implementer; owner reviews all PRs |
 | 1 | OI-01 Google Workspace access | Owner verifying separately; needed before G-1b-oauth |
 | 2 | OI-11 / OI-31 / OI-42 | Minor; can be decided during 1a–2a |
 
@@ -36,11 +36,11 @@ All other issues are needed only by the slice listed in *Blocks*.
 - *Approval needed:* yes (date).
 - *Resolution:* disregard all academic semester timelines and submission dates in the spec. The project runs on the owner's own fast-paced schedule; slices proceed as each is approved. INC-9 is closed by this decision.
 
-### OI-03 Team mapping, ownership, reviewers, Claude's scope `[RESOLVED 2026-10-23]`
+### OI-03 Team mapping, ownership, reviewers `[RESOLVED 2026-10-23]`
 - *Affects:* SPEC-WORKFLOW, modules.md · *Blocks:* 1a (CODEOWNERS)
-- *Recommended default:* map Persons A–D to names. Each PR is reviewed by the module owner (or another member if the owner authored it), per spec §5.4. Claude implements only approved slices; humans approve merges. Assign an owner for Placement.
+- *Recommended default:* map Persons A–D to names. Each PR is reviewed by the module owner (or another member if the owner authored it), per spec §5.4. Work proceeds only on approved slices; humans approve merges. Assign an owner for Placement.
 - *Approval needed:* yes.
-- *Resolution:* Claude implements the complete application as solo developer/architect across all modules (Persons A to D ownership in spec Table 5.2 no longer applies to implementation). The owner reviews and approves every pull request. CODEOWNERS lists the owner for all paths once a GitHub remote exists.
+- *Resolution:* one solo developer/architect implements the complete application across all modules (Persons A to D ownership in spec Table 5.2 no longer applies to implementation). The owner reviews and approves every pull request. CODEOWNERS lists the owner for all paths once a GitHub remote exists.
 
 ## 3. Authentication and security
 
@@ -72,7 +72,7 @@ All other issues are needed only by the slice listed in *Blocks*.
 - *Implemented 2026-10-24 (bootstrap part, recommended default):* `ADMIN_EMAILS` (allowed-domain addresses only) grants ADMIN at sign-in; the user's existing sessions are revoked and the change is audit-logged (integration AD01). Granting/revoking ADMIN from the admin UI is Slice 5.
 
 ### OI-27 Privacy: roll numbers, profiles, retention, deletion, legal pages `[DEFERRED: legal review by the owner or supervisor]`
-- *Owner decision 2026-10-26:* no final legal text is written by Claude and no compliance is claimed. Terms, Privacy Policy and the account-deletion process stay pending until the owner or the supervisor reviews them.
+- *Owner decision 2026-10-26:* no final legal text is written by the developer and no compliance is claimed. Terms, Privacy Policy and the account-deletion process stay pending until the owner or the supervisor reviews them.
 - *Checked 2026-10-26:* the specification itself requires none of these, so there is no approved technical groundwork left to build:
   - Terms and Privacy pages are montage item G-01 (needs approval);
   - account deletion by request is this issue's recommended default only.
@@ -480,7 +480,7 @@ Recommended defaults applied so the slices could be built (owner instruction 202
 
 - Also applied 2026-10-26: OI-32 (at most 3 navigation clicks from Home to each core task's form, now checked automatically in `tests/e2e/clicks.spec.ts`) and OI-37 (no OTP feature; recorded as a specification inconsistency).
 - Not applicable locally: OI-31 (hosting region) and OI-33 (deployed load test), both deployment decisions for G-1c.
-- Still needing the owner: OI-27, part of whose default is legal text (Terms and Privacy pages, account deletion by request). That text needs the owner's or supervisor's review and is not written by Claude. OI-42 (tag list) and OI-55 (category list) need the owner's confirmation.
+- Still needing the owner: OI-27, part of whose default is legal text (Terms and Privacy pages, account deletion by request). That text needs the owner's or supervisor's review and is not written by the developer. OI-42 (tag list) and OI-55 (category list) need the owner's confirmation.
 
 | Issue | Applied default |
 |---|---|
@@ -580,7 +580,7 @@ Deployment is the final phase and starts only on the owner's explicit authorisat
 | A-08 | Realtime and notification traffic is small (< 1 GB/month egress) |
 | A-09 | Displaying publicly available faculty information with an "unofficial" label is acceptable |
 | A-10 | The owner reviews PRs within each slice's cadence |
-| A-11 | Claude works only on approved slices; the owner approves merges and external actions |
+| A-11 | Work proceeds only on approved slices; the owner approves merges and external actions |
 
 ## 7. Approval gates
 Defined in `status/phases-and-acceptance.md`: **G-0** (Phase 0 review), **G-1a-git**, **G-1b-spike**, **G-1b-oauth**, **G-1c** (any external service, infrastructure, secret or deployment), **G-each** (every slice).

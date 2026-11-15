@@ -6,20 +6,20 @@ The spec lists the API modules (§4.2) as Identity, Societies, Events, FindMates
 
 | Module | Owns tables (proposed) | Spec owner (Table 5.2, historical) | Implementer |
 |---|---|---|---|
-| identity | users, user_skills, sessions, accounts, verifications | – (shared infra) | Claude (owner reviews) |
-| societies | societies_categories, societies_societies, societies_memberships, societies_membership_requests, societies_follows, societies_posts (Slice 2a) | Person A | Claude (owner reviews) |
-| events | events, event_interests, event_registrations | Person B | Claude (owner reviews) |
-| findmates | mate_requests, mate_responses, mate_connections, chat_messages | Person C | Claude (owner reviews) |
-| studymaterial | study_materials, study_material_votes | Person D | Claude (owner reviews) |
-| archive | archive_projects, archive_project_tags, comments* | Person A | Claude (owner reviews) |
-| faculty | faculty_profiles, faculty_claims | Person B | Claude (owner reviews) |
-| calendar | calendar_entries, calendar_occurrences | Person C | Claude (owner reviews) |
-| placement | placement_records | unassigned | Claude (owner reviews) |
-| admin | audit_logs, moderation_reports | Person A | Claude (owner reviews) |
-| assets (shared) | assets | Person D | Claude (owner reviews) |
-| outbox (shared) | outbox_events | Person D (Worker 1), Person C (Worker 2) | Claude (owner reviews) |
-| notifications (shared) | notifications | Person C | Claude (owner reviews) |
-| realtime (shared) | – (no DB access) | Person B | Claude (owner reviews) |
+| identity | users, user_skills, sessions, accounts, verifications | – (shared infra) | Owner |
+| societies | societies_categories, societies_societies, societies_memberships, societies_membership_requests, societies_follows, societies_posts (Slice 2a) | Person A | Owner |
+| events | events, event_interests, event_registrations | Person B | Owner |
+| findmates | mate_requests, mate_responses, mate_connections, chat_messages | Person C | Owner |
+| studymaterial | study_materials, study_material_votes | Person D | Owner |
+| archive | archive_projects, archive_project_tags, comments* | Person A | Owner |
+| faculty | faculty_profiles, faculty_claims | Person B | Owner |
+| calendar | calendar_entries, calendar_occurrences | Person C | Owner |
+| placement | placement_records | unassigned | Owner |
+| admin | audit_logs, moderation_reports | Person A | Owner |
+| assets (shared) | assets | Person D | Owner |
+| outbox (shared) | outbox_events | Person D (Worker 1), Person C (Worker 2) | Owner |
+| notifications (shared) | notifications | Person C | Owner |
+| realtime (shared) | – (no DB access) | Person B | Owner |
 
 \* Comment ownership depends on OI-23.
 
